@@ -1,4 +1,4 @@
-# ramanujan-prime-inequality-and-the-missing-factor
-Computer-assisted bounds for Ramanujan’s prime-counting inequality π(x)² &lt; (ex/log x)π(x/e): the proven range extended to e^753.98, a barrier for zero-based methods, and the exact RH height or zero-free region that would settle it. Along the way: a factor missing from a constant the field has relied on for years.
+# ramanujan-inequality
+Computer-assisted proof that Ramanujan’s prime inequality π(x)² < (ex/log x)·π(x/e) holds for all x ≥ 38,358,837,683, using the Lean-verified zero-free half-plane Re s > 7/8. Also covers unconditional ranges, a spectral barrier, an erratum in explicit ψ(x) bounds, and the exact RH height needed.
 
 
