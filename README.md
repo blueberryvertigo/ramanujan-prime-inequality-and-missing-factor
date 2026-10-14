@@ -38,7 +38,7 @@ Four ranges cover every $x \ge 38{,}358{,}837{,}683$, with overlaps:
 
 | | Result |
 |---|---|
-| **A** | The inequality holds for $N_R \le x \le e^{753.98}$. The previous range ended at $e^{103}$. With refereed inputs only, the range is $e^{672.84}$. |
+| **A** | The inequality holds for $N_R \le x \le e^{753.98}$ (uses the Chirre–Helfgott preprint). The previous range ended at $e^{103}$. With refereed inputs only, the range is $e^{672.84}$. |
 | **C** | It holds for $x \ge e^{3035.01}$, replacing Axler's $e^{3158.442}$, whose proof uses a defective case of a lemma. With two recent preprints the threshold is $e^{2591.01}$. |
 | **B\*, B′** | Either of the following suffices: the half-plane $\operatorname{Re} s > 0.96897$ (using preprints), or a classical zero-free region $\beta \le 1 - 1/(1.7373\log\lvert\gamma\rvert)$ above $3\cdot10^{12}$. |
 | **D** | RH verified up to $4.1602\cdot10^{14}$, about 139 times the current height, suffices. With refereed inputs only, $1.3277\cdot10^{15}$ suffices. |
