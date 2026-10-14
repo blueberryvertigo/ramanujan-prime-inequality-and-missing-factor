@@ -1,0 +1,20 @@
+classical(20) = 18.6164;  EPS[3000] = 4.9679e-15;  EPS[3158] = 3.35421e-15
+[F] coarse: last failing interval ends at L = 3158.5
+[F] fine: last failing interval ends at L = 3157.9319999999425
+[F] verified contiguously for L in [3157.9319999999425, 10000]  (13692 intervals, 1 of the 0.5-wide ones bisected)
+[tail] monotonicity holds for L > 336.781; for all L >= 10000: margin >= 0.9999999090  (main >= 1.0000000000, |corr| <= 4.8e-24, err <= 9.1e-08)
+[gap] L      best eps        needed eps     shortfall
+        643     6.948e-05     1.992e-12  3.49e+07x
+        700     3.106e-05     1.416e-12  2.19e+07x
+        800     8.066e-06      8.28e-13  9.74e+06x
+       1000     1.381e-09      3.38e-13  4.09e+03x
+       1250     1.381e-09     1.381e-13     1e+04x
+       1500     1.381e-09     6.646e-14  2.08e+04x
+       1750     2.684e-10     3.583e-14  7.49e+03x
+       2000     2.475e-12     2.098e-14       118x
+       2250     7.098e-13     1.309e-14      54.2x
+       2500     1.097e-13     8.581e-15      12.8x
+       2750     3.173e-14     5.858e-15      5.42x
+       3000     4.968e-15     4.134e-15       1.2x
+       3100     4.968e-15     3.626e-15      1.37x
+       3150     3.549e-15     3.401e-15      1.04x

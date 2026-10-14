@@ -1,0 +1,5 @@
+Buthe Table 2, e^1000: printed 1.94751e-12; least corrected value 1.98974e-12 at c=35.0, alpha=0.00631 (+2.17%)
+Buthe Table 2, e^4000: printed 1.90866e-12; least corrected value 1.94976e-12 at c=35.0, alpha=0.001585 (+2.15%)
+BKLNW Table 8, b=200: printed 2.18154e-12; least corrected value 2.20935e-12 at c=34.75, alpha=0.03162 (+1.27%)
+BKLNW Table 8, b=600: printed 1.98894e-12; least corrected value 2.02478e-12 at c=35.0, alpha=0.01 (+1.80%)
+Buthe Table 1, e^500: printed 1.47067e-10; least corrected value 1.50799e-10 at c=30.25, alpha=0.01 (+2.54%)

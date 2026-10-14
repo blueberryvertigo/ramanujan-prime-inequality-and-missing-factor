@@ -1,0 +1,9 @@
+A=0.00012, B=0.25, C=1.0, log x0=22.955: min over 44<=L<2073 of bound/eps_pi = 1.585 at L=2072.00
+A=0.826, B=0.25, C=1.0, log x0=1.0: min over 44<=L<2073 of bound/eps_pi = 10912.077 at L=2072.00
+A=1.41, B=0.5, C=1.5, log x0=2.0: min over 44<=L<2073 of bound/eps_pi = 5.290 at L=2072.00
+A=1.76, B=1.0, C=1.5, log x0=3.0: min over 44<=L<2073 of bound/eps_pi = 127.388 at L=2072.00
+A=2.22, B=1.5, C=1.5, log x0=3.0: min over 44<=L<2073 of bound/eps_pi = 3100.029 at L=2072.00
+A=12.4, B=1.5, C=1.9, log x0=1.0: min over 44<=L<2073 of bound/eps_pi = 7.707 at L=2072.00
+A=38.8, B=1.5, C=1.95, log x0=1.0: min over 44<=L<2073 of bound/eps_pi = 9.191 at L=2072.00
+A=121.107, B=1.5, C=2.0, log x0=1.0: min over 44<=L<2073 of bound/eps_pi = 10.934 at L=2072.00
+A=6.6, B=2.0, C=2.0, log x0=3.0: min over 44<=L<2073 of bound/eps_pi = 11.496 at L=2072.00

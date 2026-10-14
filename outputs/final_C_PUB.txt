@@ -1,0 +1,32 @@
+  row log x0 = 2900: eps <= 8.98699e-15 (sigma_2 = 0.992)
+  row log x0 = 2925: eps <= 7.70528e-15 (sigma_2 = 0.992)
+  row log x0 = 2950: eps <= 6.60676e-15 (sigma_2 = 0.992)
+  row log x0 = 2975: eps <= 5.66519e-15 (sigma_2 = 0.992)
+  row log x0 = 3000: eps <= 4.85809e-15 (sigma_2 = 0.992)
+  row log x0 = 3025: eps <= 4.16623e-15 (sigma_2 = 0.992)
+  row log x0 = 3050: eps <= 3.56962e-15 (sigma_2 = 0.993)
+  row log x0 = 3075: eps <= 3.05626e-15 (sigma_2 = 0.993)
+  row log x0 = 3100: eps <= 2.61694e-15 (sigma_2 = 0.993)
+  row log x0 = 3125: eps <= 2.24096e-15 (sigma_2 = 0.993)
+  row log x0 = 3150: eps <= 1.91916e-15 (sigma_2 = 0.993)
+  R = 5.558691: 261 rows in 208 s
+[C, R=5.558691] (R) verified contiguously for L in [3035.0019999999763, 10000] (failure: None)   (266 s)
+   [D, R=5.558691] T = 1.7321e+14: fails at (2072.985, 2073.485)
+   [D, R=5.558691] T = 1.31609e+15: closes
+   [D, R=5.558691] T = 4.77452e+14: fails at (2670.485, 2670.985)
+   [D, R=5.558691] T = 7.92699e+14: fails at (3030.985, 3031.485)
+   [D, R=5.558691] T = 1.0214e+15: closes
+   [D, R=5.558691] T = 8.99814e+14: closes
+   [D, R=5.558691] T = 8.4456e+14: closes
+   [D, R=5.558691] T = 8.18219e+14: closes
+   [D, R=5.558691] T = 8.05358e+14: closes
+   [D, R=5.558691] T = 7.99003e+14: closes
+   [D, R=5.558691] T = 7.95845e+14: fails at (3034.485, 3034.985)
+   [D, R=5.558691] T = 7.97423e+14: closes
+   [D, R=5.558691] T = 7.96633e+14: closes
+   [D, R=5.558691] T = 7.96239e+14: closes
+   [D, R=5.558691] T = 7.96042e+14: fails at (3034.485, 3034.985)
+   [D, R=5.558691] T = 7.96141e+14: closes
+   [D, R=5.558691] T = 7.96091e+14: fails at (3034.985, 3035.485)
+   [D, R=5.558691] T = 7.96116e+14: closes
+[D, R=5.558691] RH to height 7.96116e+14 suffices; fails at 7.96091e+14   (409 s)

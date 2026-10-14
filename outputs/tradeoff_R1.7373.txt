@@ -1,0 +1,2 @@
+   [tradeoff R=1.7373] T = 3.00018e+12 (current verification): closes
+[tradeoff R=1.7373, TR1.7373] current verification height suffices   (270 s)

@@ -1,0 +1,2 @@
+  K = 1000.0: 921 rows in 740 s
+[sensitivity K=1000.0] FKS rows alone verify (C) for L in [1464.0, 3040.5] (grid 0.5; Theorem C threshold would move from 3035.00 to about this)   (842 s)

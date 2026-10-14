@@ -1,0 +1,29 @@
+eps(2300) from Table 10: 1.91944e-12;  Thm 1 as printed, optimised: 1.91484e-12 (c=33.394, alpha=0.002571)
+with log(3c) at those parameters: 2.01831e-12 (+5.40%);  re-optimised with log(3c): 1.95874e-12 (c=34.956, alpha=0.002492) (+2.29%)
+k=1 re-opt: B_k(2300,2325) -> 4.5541e-09  vs printed M_k 4.4627e-09  [EXCEEDS printed M_k]
+k=1 fixed : B_k(2300,2325) -> 4.6926e-09  vs printed M_k 4.4627e-09  [EXCEEDS printed M_k]
+k=1 +2.6% : B_k(2300,2325) -> 4.5678e-09  vs printed M_k 4.4627e-09  [EXCEEDS printed M_k]
+k=1 +8%   : B_k(2300,2325) -> 4.8082e-09  vs printed M_k 4.4627e-09  [EXCEEDS printed M_k]
+k=2 re-opt: B_k(2300,2325) -> 1.0588e-05  vs printed M_k 1.0376e-05  [EXCEEDS printed M_k]
+k=2 fixed : B_k(2300,2325) -> 1.091e-05  vs printed M_k 1.0376e-05  [EXCEEDS printed M_k]
+k=2 +2.6% : B_k(2300,2325) -> 1.062e-05  vs printed M_k 1.0376e-05  [EXCEEDS printed M_k]
+k=2 +8%   : B_k(2300,2325) -> 1.1179e-05  vs printed M_k 1.0376e-05  [EXCEEDS printed M_k]
+k=3 re-opt: B_k(2300,2325) -> 0.024618  vs printed M_k 0.024334  [EXCEEDS printed M_k]
+k=3 fixed : B_k(2300,2325) -> 0.025367  vs printed M_k 0.024334  [EXCEEDS printed M_k]
+k=3 +2.6% : B_k(2300,2325) -> 0.024692  vs printed M_k 0.024334  [EXCEEDS printed M_k]
+k=3 +8%   : B_k(2300,2325) -> 0.025992  vs printed M_k 0.024334  [EXCEEDS printed M_k]
+k=4 re-opt: B_k(2300,2325) -> 57.236  vs printed M_k 57.184  [EXCEEDS printed M_k]
+k=4 fixed : B_k(2300,2325) -> 58.977  vs printed M_k 57.184  [EXCEEDS printed M_k]
+k=4 +2.6% : B_k(2300,2325) -> 57.408  vs printed M_k 57.184  [EXCEEDS printed M_k]
+k=4 +8%   : B_k(2300,2325) -> 60.43  vs printed M_k 57.184  [EXCEEDS printed M_k]
+k=5 re-opt: B_k(2300,2325) -> 1.3307e+05  vs printed M_k 1.3441e+05  [ok]
+k=5 fixed : B_k(2300,2325) -> 1.3712e+05  vs printed M_k 1.3441e+05  [EXCEEDS printed M_k]
+k=5 +2.6% : B_k(2300,2325) -> 1.3347e+05  vs printed M_k 1.3441e+05  [ok]
+k=5 +8%   : B_k(2300,2325) -> 1.4049e+05  vs printed M_k 1.3441e+05  [EXCEEDS printed M_k]
+PT-method eps: 2325:1.8750e-12, 2350:1.7787e-12, 2375:1.6874e-12, 2400:1.6008e-12; decay 0.0527 per 25
+  fine grid (step 1), re-opt: crossover b_c=2304.3; max_b min(eps_Bu,eps_PT)(b)*(b+1)^3 = 0.023991 vs printed 0.024334
+  fine grid (step 1), re-opt: crossover b_c=2304.3; max_b min(eps_Bu,eps_PT)(b)*(b+1)^4 = 55.312 vs printed 57.184
+  fine grid (step 1), re-opt: crossover b_c=2304.3; max_b min(eps_Bu,eps_PT)(b)*(b+1)^5 = 1.2778e+05 vs printed 1.3441e+05
+  fine grid (step 1), fixed: crossover b_c=2290.0; max_b min(eps_Bu,eps_PT)(b)*(b+1)^3 = 0.02427 vs printed 0.024334
+  fine grid (step 1), fixed: crossover b_c=2290.0; max_b min(eps_Bu,eps_PT)(b)*(b+1)^4 = 55.602 vs printed 57.184
+  fine grid (step 1), fixed: crossover b_c=2290.0; max_b min(eps_Bu,eps_PT)(b)*(b+1)^5 = 1.2778e+05 vs printed 1.3441e+05

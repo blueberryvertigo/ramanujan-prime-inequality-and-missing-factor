@@ -1,0 +1,6 @@
+printed B4               B4=75.1090: row1 k=0.800 cM=7.809722e-03 (paper 7.80973e-3; lambda_min 4.55) | row2 k=1.3500 cM=6.091144e-02 (paper 6.09073e-2) -> (A.5) const 2.91910 (paper 2.91890)
+B4 x 1.0205 (log3c)      B4=76.6485: row1 k=0.800 cM=7.841477e-03 (paper 7.80973e-3; lambda_min 4.57) | row2 k=1.3500 cM=6.108892e-02 (paper 6.09073e-2) -> (A.5) const 2.92760 (paper 2.91890)
+B4 x 1.0226 (thesis E2)  B4=76.8067: row1 k=0.800 cM=7.844711e-03 (paper 7.80973e-3; lambda_min 4.57) | row2 k=1.3500 cM=6.110698e-02 (paper 6.09073e-2) -> (A.5) const 2.92847 (paper 2.91890)
+printed B4               row7 k=2.3500 cN=4.865465e+00 cM=4.883451e+00 (paper 4.88346; lambda_min 4.1)
+B4 x 1.0205 (log3c)      row7 k=2.3500 cN=4.896247e+00 cM=4.914348e+00 (paper 4.88346; lambda_min 4.1)
+B4 x 1.0226 (thesis E2)  row7 k=2.3500 cN=4.899390e+00 cM=4.917502e+00 (paper 4.88346; lambda_min 4.1)

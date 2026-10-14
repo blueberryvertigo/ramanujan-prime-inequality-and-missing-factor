@@ -1,0 +1,6 @@
+row b=600: delta <= 4.126e-15 under RH to 1.3277e+15
+row b=1000: delta <= 4.0311e-15 under RH to 1.3277e+15
+row b=2000: delta <= 3.9627e-15 under RH to 1.3277e+15
+row b=3000: delta <= 3.9404e-15 under RH to 1.3277e+15
+[D] RH to 1.3277e+15: (C) verified contiguously for L in [671.85, 3035.502]; failure: None
+total 214 s

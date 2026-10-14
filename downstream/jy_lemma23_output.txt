@@ -1,0 +1,12 @@
+f(2000) = 8.01244e-11   f(2488) = 1.5623858e-12
+Lemma 2.3 parameters (c=33.6, T=c/eps=3.000000e+12, alpha=0): no log3c 1.569362e-12;  with log3c 1.654295e-12 (+5.41%)
+alpha = 0, T = H: optimum no log3c 1.569272e-12 (c=33.60);  optimum with log3c 1.605042e-12 (c=35.16)
+alpha free, with log3c: 1.604805e-12 (c=35.156, alpha=0.0029)
+printed 1.570e-12              eps=1.57000e-12: f(L) >= eps exactly for L <= 2487.367  (gap below 2488: 0.6326)
+with log3c, c=33.6, alpha=0    eps=1.65430e-12: f(L) >= eps exactly for L <= 2480.567  (gap below 2488: 7.433)
+re-opt, alpha=0                eps=1.60504e-12: f(L) >= eps exactly for L <= 2484.496  (gap below 2488: 3.504)
+re-opt, alpha free             eps=1.60480e-12: f(L) >= eps exactly for L <= 2484.515  (gap below 2488: 3.485)
+1.570e-12 x 1.026              eps=1.61082e-12: f(L) >= eps exactly for L <= 2484.029  (gap below 2488: 3.971)
+1.570e-12 x 1.08               eps=1.69560e-12: f(L) >= eps exactly for L <= 2477.363  (gap below 2488: 10.64)
+A needed at L=2488 for printed: 9.43576
+A needed at L=2488 for re-opt alpha free: 9.64494

@@ -1,0 +1,56 @@
+  row log x0 = 2300: eps <= 5.98365e-14 (sigma_2 = 0.991)
+  row log x0 = 2325: eps <= 5.02081e-14 (sigma_2 = 0.991)
+  row log x0 = 2350: eps <= 4.21324e-14 (sigma_2 = 0.991)
+  row log x0 = 2375: eps <= 3.53583e-14 (sigma_2 = 0.991)
+  row log x0 = 2400: eps <= 2.96757e-14 (sigma_2 = 0.991)
+  row log x0 = 2425: eps <= 2.49083e-14 (sigma_2 = 0.991)
+  row log x0 = 2450: eps <= 2.09083e-14 (sigma_2 = 0.991)
+  row log x0 = 2475: eps <= 1.75504e-14 (sigma_2 = 0.992)
+  row log x0 = 2500: eps <= 1.47049e-14 (sigma_2 = 0.992)
+  row log x0 = 2525: eps <= 1.23222e-14 (sigma_2 = 0.992)
+  row log x0 = 2550: eps <= 1.03266e-14 (sigma_2 = 0.992)
+  row log x0 = 2575: eps <= 8.65508e-15 (sigma_2 = 0.992)
+  row log x0 = 2600: eps <= 7.25492e-15 (sigma_2 = 0.992)
+  row log x0 = 2625: eps <= 6.08193e-15 (sigma_2 = 0.992)
+  row log x0 = 2650: eps <= 5.09913e-15 (sigma_2 = 0.992)
+  row log x0 = 2675: eps <= 4.27561e-15 (sigma_2 = 0.992)
+  row log x0 = 2700: eps <= 3.58548e-15 (sigma_2 = 0.992)
+  row log x0 = 2725: eps <= 3.00707e-15 (sigma_2 = 0.992)
+  row log x0 = 2750: eps <= 2.52225e-15 (sigma_2 = 0.992)
+  row log x0 = 2775: eps <= 2.11583e-15 (sigma_2 = 0.992)
+  row log x0 = 2800: eps <= 1.77509e-15 (sigma_2 = 0.992)
+  row log x0 = 2825: eps <= 1.48940e-15 (sigma_2 = 0.992)
+  row log x0 = 2850: eps <= 1.24983e-15 (sigma_2 = 0.992)
+  row log x0 = 2875: eps <= 1.04891e-15 (sigma_2 = 0.992)
+  row log x0 = 2900: eps <= 8.80392e-16 (sigma_2 = 0.992)
+  row log x0 = 2925: eps <= 7.39034e-16 (sigma_2 = 0.992)
+  row log x0 = 2950: eps <= 6.20446e-16 (sigma_2 = 0.992)
+  row log x0 = 2975: eps <= 5.20948e-16 (sigma_2 = 0.992)
+  row log x0 = 3000: eps <= 4.37459e-16 (sigma_2 = 0.992)
+  row log x0 = 3025: eps <= 3.67394e-16 (sigma_2 = 0.992)
+  row log x0 = 3050: eps <= 3.08589e-16 (sigma_2 = 0.992)
+  row log x0 = 3075: eps <= 2.59228e-16 (sigma_2 = 0.992)
+  row log x0 = 3100: eps <= 2.17789e-16 (sigma_2 = 0.992)
+  row log x0 = 3125: eps <= 1.82998e-16 (sigma_2 = 0.992)
+  row log x0 = 3150: eps <= 1.53784e-16 (sigma_2 = 0.992)
+  R = 4.896: 861 rows in 660 s
+[C, R=4.896] (R) verified contiguously for L in [2599.0019999999763, 10000] (failure: None)   (797 s)
+   [D, R=4.896] T = 1.7321e+14: fails at (2072.985, 2073.485)
+   [D, R=4.896] T = 1.31609e+15: closes
+   [D, R=4.896] T = 4.77452e+14: closes
+   [D, R=4.896] T = 2.87575e+14: fails at (2352.985, 2353.485)
+   [D, R=4.896] T = 3.70545e+14: fails at (2506.485, 2506.985)
+   [D, R=4.896] T = 4.20616e+14: fails at (2586.985, 2587.485)
+   [D, R=4.896] T = 4.48134e+14: closes
+   [D, R=4.896] T = 4.34157e+14: closes
+   [D, R=4.896] T = 4.27333e+14: fails at (2597.485, 2597.985)
+   [D, R=4.896] T = 4.30731e+14: closes
+   [D, R=4.896] T = 4.29028e+14: closes
+   [D, R=4.896] T = 4.2818e+14: closes
+   [D, R=4.896] T = 4.27756e+14: fails at (2597.985, 2598.485)
+   [D, R=4.896] T = 4.27968e+14: fails at (2598.485, 2598.985)
+   [D, R=4.896] T = 4.28074e+14: fails at (2598.485, 2598.985)
+   [D, R=4.896] T = 4.28127e+14: fails at (2598.485, 2598.985)
+   [D, R=4.896] T = 4.28153e+14: closes
+   [D, R=4.896] T = 4.2814e+14: closes
+[D, R=4.896] RH to height 4.2814e+14 suffices; fails at 4.28127e+14   (992 s)

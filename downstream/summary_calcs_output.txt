@@ -1,0 +1,27 @@
+A. Johnston-Yang: f(L) = 9.39 L^1.515 exp(-0.8274 sqrt L); Lemma 2.3 value 1.570e-12 (x >= e^2000)
+   f(2488) = 1.562386e-12;  printed 1.570e-12 covers L <= 2487.367
+   log3c  : at JY's params (c=33.6, alpha=0) 1.65430e-12 -> covers L <= 2480.567;  re-optimised 1.60480e-12 -> covers L <= 2484.515
+   thesis : at JY's params (c=33.6, alpha=0) 1.67114e-12 -> covers L <= 2479.251;  re-optimised 1.60810e-12 -> covers L <= 2484.249
+B. Lichtman-Pomerance Prop 2.1: eps_theta <= eps_psi + 1.02 e^{-b/2} + 3 e^{-2b/3}
+   e^45 printed: least eps_psi 1.09037e-08, eps_theta <= 1.10766e-08 vs 1.2e-08: OK (+7.70%)
+   e^45 log3c  : least eps_psi 1.09040e-08, eps_theta <= 1.10769e-08 vs 1.2e-08: OK (+7.69%)
+   e^45 thesis : least eps_psi 1.09041e-08, eps_theta <= 1.10769e-08 vs 1.2e-08: OK (+7.69%)
+   e^50 printed: least eps_psi 1.16379e-09, eps_theta <= 1.17797e-09 vs 1.2e-09: OK (+1.84%)
+   e^50 log3c  : least eps_psi 1.16701e-09, eps_theta <= 1.18118e-09 vs 1.2e-09: OK (+1.57%)
+   e^50 thesis : least eps_psi 1.16731e-09, eps_theta <= 1.18149e-09 vs 1.2e-09: OK (+1.54%)
+   e^55 printed: least eps_psi 2.85743e-10, eps_theta <= 2.86906e-10 vs 2.9e-10: OK (+1.07%)
+   e^55 log3c  : least eps_psi 2.90948e-10, eps_theta <= 2.92111e-10 vs 2.9e-10: FAILS (-0.73%)
+   e^55 thesis : least eps_psi 2.91436e-10, eps_theta <= 2.92599e-10 vs 2.9e-10: FAILS (-0.90%)
+C. BKLNW Table 15: B_k(2300,2325) = eps(2300)*2325^k (+ negligible), printed eps(2300) = 4.4627e-9/2325
+   log3c  : eps(2300) 1.95873e-12 (x1.02047); k=1: 4.5541e-09 > M_k=4.4627e-09; k=2: 1.0588e-05 > M_k=1.0376e-05; k=3: 0.024618 > M_k=0.024334; k=4: 57.236 > M_k=57.184; k=5: 1.3307e+05 <= M_k=1.3441e+05
+   thesis : eps(2300) 1.96278e-12 (x1.02258); k=1: 4.5635e-09 > M_k=4.4627e-09; k=2: 1.061e-05 > M_k=1.0376e-05; k=3: 0.024669 > M_k=0.024334; k=4: 57.354 > M_k=57.184; k=5: 1.3334e+05 <= M_k=1.3441e+05
+D. Bordignon-Starichkova: M1 (1 + 1.5/1000) vs stated 4.47e-9
+   log3c  : M1 -> 4.55406e-09;  M1 (1+1.5e-3) = 4.5609e-09 vs 4.47e-9
+   thesis : M1 -> 4.56346e-09;  M1 (1+1.5e-3) = 4.5703e-09 vs 4.47e-9
+E. FKS1 Lemma 5.2: eps(e^1000) < 2 (2100)^1.5 exp(-0.8476836 sqrt 2100)
+   log3c  : eps(e^1000) 1.98885e-12 vs g(2100) = 2.59339e-12: room +23.3%;  eps(e^40)=1.93378e-8 vs g(1000) = 1.4431e-07
+   thesis : eps(e^1000) 1.99295e-12 vs g(2100) = 2.59339e-12: room +23.2%;  eps(e^40)=1.93378e-8 vs g(1000) = 1.4431e-07
+F. 10^19 row (BKLNW Cor 2.1 / Table 8 b=40 / JRT Lemma 8)
+   printed: least eps(10^19) 1.91942e-08 (c=30.56, T=3.609e+09); vs 1.93378e-8: <=
+   log3c  : least eps(10^19) 1.91948e-08 (c=31.81, T=3.681e+09); vs 1.93378e-8: <=
+   thesis : least eps(10^19) 1.91948e-08 (c=31.81, T=3.681e+09); vs 1.93378e-8: <=

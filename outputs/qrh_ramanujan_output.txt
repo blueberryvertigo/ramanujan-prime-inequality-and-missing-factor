@@ -1,0 +1,10 @@
+   eps_F(110) <= 4.6052e-04
+   eps_F(200) <= 2.0822e-08
+   eps_F(250) <= 6.3570e-11
+   eps_F(300) <= 1.7814e-13
+   eps_F(400) <= 1.1920e-18
+   eps_F(500) <= 6.9825e-24
+   eps_F(672) <= 5.8361e-33
+   eps_F(1000) <= 2.0315e-50
+   eps_F(3000) <= 4.9189e-158
+[F] under Re s > 7/8 zero-free: (R) verified contiguously for L in [247.5, 3036.0] (failure: None)   (29 s)

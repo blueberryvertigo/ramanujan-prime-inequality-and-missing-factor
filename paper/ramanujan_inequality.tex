@@ -1,0 +1,1341 @@
+\documentclass{amsart}
+
+\usepackage[margin=1in]{geometry}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% Lettered main results (Theorems A--E, Corollary E).
+\theoremstyle{plain}
+\newcommand{\lettername}{}
+\newtheorem*{letteredthm*}{\lettername}
+\newenvironment{lthm}[1]{\renewcommand{\lettername}{Theorem #1}\begin{letteredthm*}}{\end{letteredthm*}}
+\newenvironment{lcor}[1]{\renewcommand{\lettername}{Corollary #1}\begin{letteredthm*}}{\end{letteredthm*}}
+
+\numberwithin{equation}{section}
+
+\DeclareMathOperator{\li}{li}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\NN}{38{,}358{,}837{,}683}
+\newcommand{\NNm}{38{,}358{,}837{,}682}
+\newcommand{\HRH}{3{,}000{,}175{,}332{,}800}
+\newcommand{\Main}{\mathrm{Main}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\Err}{\mathrm{Err}}
+\newcommand{\Rpt}{R_{\mathrm{pt}}}
+\newcommand{\Rint}{R_{\mathrm{int}}}
+\newcommand{\Osc}{\mathrm{Osc}}
+\newcommand{\Rem}{\mathrm{Rem}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cARH}{\mathcal{A}^{\mathrm{RH}}}
+\newcommand{\Tb}{\overline{T}}
+\newcommand{\Tsuf}{T_{\mathrm{suf}}}
+\newcommand{\epsCH}{\eps_{\mathrm{CH}}}
+
+\newcommand{\TB}{1.3277\cdot10^{15}}
+\newcommand{\TDhyp}{4.1602\cdot10^{14}}
+\newcommand{\TDuse}{4.16017\cdot10^{14}}
+\newcommand{\TDpre}{2.1488\cdot10^{14}}
+\newcommand{\TDold}{9.3357\cdot10^{14}}
+\newcommand{\TDolduse}{9.33566\cdot10^{14}}
+\newcommand{\Cstar}{C$^*$}
+\newcommand{\Bp}{B$'$}
+\newcommand{\Bstar}{B$^*$}
+\newcommand{\thetaB}{0.945092}
+\newcommand{\PH}[1]{\textbf{[#1]}}
+
+\begin{document}
+
+\title[Ramanujan's prime counting inequality]{Ramanujan's prime counting inequality holds\\ for all $x\ge38{,}358{,}837{,}683$:\\ ranges from the zeros, a spectral barrier, and trade-offs}
+
+% The author name is a handle; a robust command keeps amsart from uppercasing it.
+\DeclareRobustCommand{\authorhandle}{liqsweep}
+\author{\authorhandle}
+\address{X: \texttt{@liqsweep}}
+
+\subjclass[2020]{Primary 11N05; Secondary 11M26, 11Y35}
+\keywords{Ramanujan's inequality, prime counting function, Chebyshev function, explicit estimates, zero-free region, zero-density estimate, zero-free half-plane, Fej\'er kernel, interval arithmetic}
+\date{October 2026}
+
+\begin{abstract}
+Ramanujan proved that $\pi(x)^2<\frac{ex}{\log x}\,\pi(x/e)$ for all sufficiently large $x$. Let $N_R$ be the least integer such that this holds for every real $x\ge N_R$. Dudek and Platt showed that the Riemann hypothesis implies $N_R=\NN$. We prove that $N_R=\NN$, to our knowledge the first determination of $N_R$ without assuming the Riemann hypothesis. The proof uses the zero-free half-plane $\operatorname{Re}s>7/8$ of a recent OpenAI preprint; its main statement for $\zeta$ is formalized in Lean~4 and has been rebuilt independently, while its written proof has not been peer reviewed (Corollary~F). The deduction is Theorem~B: if $\zeta(s)\ne0$ for $\operatorname{Re}s>\thetaB$, then $N_R=\NN$. Its proof uses only refereed inputs, among them an explicit formula of Cully-Hugill and Johnston, together with Bhattacharjee's correction of a theorem of B\"uthe.
+
+Relying only on the peer-reviewed literature, and on preprints where stated, we prove the following by rigorous computer-assisted interval arithmetic.
+(A) The inequality holds for $\NN\le x\le e^{753.98}$; the previous range ended at $e^{103}$. The proof uses the bound $|\psi(x)-x|\le\frac{\pi}{3\cdot10^{12}}x+113.67\sqrt x$ from a recent preprint of Chirre and Helfgott; with refereed inputs and Bhattacharjee's correction, the same method reaches $e^{672.84}$.
+(C) It holds for $x\ge e^{3035.01}$. For this we re-implement Theorem~1.1 of Fiori, Kadiri and Swidinsky, insert the zero-free region of Mossinghoff, Trudgian and Yang and the zero-density constants that rest on the subconvexity bound of Hiary, Patel and Yang, and evaluate it at every integer value of $\log x_0$. This replaces Axler's threshold $e^{3158.442}$, whose proof applies a lemma of Dudek and Platt in a case where that lemma's proof is defective. With the zero-free region of a recent preprint of Bellotti, Trudgian and Yang and the log-free zero-density estimate of a recent preprint of Bellotti, the same method gives $x\ge e^{2591.01}$.
+(B) With preprints of Fiori--Jaskari and Chirre--Helfgott, the half-plane $\operatorname{Re}s>0.96897$ suffices. A zero-free region $\beta\le1-1/(1.7373\log|\gamma|)$ for $|\gamma|>3\cdot10^{12}$ also suffices.
+(D) So does a verification of the Riemann hypothesis up to height $\TDhyp$, about $139$ times the current verification height. The proof combines the zeros up to that height with a zero-free region and zero-density estimates above it. We also tabulate the trade-off between the verification height and the constant of a zero-free region.
+(E) Using a construction of Chirre and Helfgott, we show that arguments that use only non-negativity, analytic continuation, and the location and residues of the poles of the Dirichlet series up to a height $T$ are limited. With $T=3\cdot10^{12}$ they cannot go beyond $e^{754.40}$, so (A) is optimal among such arguments to within $0.41$ in $\log x$; near $e^{3035}$ they need $T>7.9624\cdot10^{14}$, almost twice the height in (D).
+
+Bhattacharjee found that the constant $E_2$ in Theorem~1 of B\"uthe (2016) lacks a factor $\log(3c)$. We show that the rows of Table~8 of Broadbent, Kadiri, Lumley, Ng and Wilk that come from that theorem inherit the error, by $1.3$--$2.2\%$ after re-optimizing the parameters, and trace the consequences in the literature: no published theorem we examined becomes false, but several proofs need a patch or a newer reference. We also identify the errors in two recent preprints that claim the inequality unconditionally.
+\end{abstract}
+
+\maketitle
+
+% ===========================================================================
+\section{Introduction}\label{sec:intro}
+
+Let $\pi(x)$ be the number of primes not exceeding $x$. Ramanujan (see Berndt~\cite{Ber94}) showed that
+\begin{equation*}\label{R}
+\pi(x)^2<\frac{ex}{\log x}\,\pi\!\left(\frac{x}{e}\right)
+\tag{R}
+\end{equation*}
+for all sufficiently large $x$. Both sides of \eqref{R} are of size $x^2/\log^2x$, while their difference is of size $x^2/\log^6x$ (Hassani~\cite{Has21} computed further terms of its asymptotic expansion; see also Lemma~\ref{lem:N6} below). Deciding \eqref{R} at a given $x$ therefore requires bounds for $\pi$ with relative error of order $\log^{-4}x$.
+
+Let $N_R$ be the least integer such that \eqref{R} holds for every real $x\ge N_R$. Dudek and Platt~\cite{DP15} computed that the largest integer counterexample below $10^{11}$ is $x=\NNm$, showed that the Riemann hypothesis (RH) implies $N_R=\NN$, and proved \eqref{R} unconditionally beyond an explicit threshold. Platt and Trudgian~\cite{PT21b} lowered that threshold, and Axler~\cite[Thm.~1.1]{Ax22} stated the threshold $e^{3158.442}$ (see Section~\ref{sec:DP}). At the lower end, Axler~\cite[Thm.~1.3]{Ax17} proved \eqref{R} for $\NN\le x\le10^{19}$, and Johnston~\cite[Thm.~5.1]{Joh22} extended this range to $\NN\le x\le e^{103}$.
+
+\subsection{The main result}
+
+\begin{lcor}{F}
+By the zero-free half-plane $\operatorname{Re}s>7/8$ of~\cite{OAI26}, formalized in Lean~4~\cite{OAI26} and rebuilt independently~\cite{Tom26}, inequality \eqref{R} holds for every real $x\ge\NN$. Hence $N_R=\NN$.
+\end{lcor}
+
+This is, to our knowledge, the first determination of $N_R$ without assuming RH; it confirms the value that Dudek and Platt derived from RH. The half-plane of~\cite{OAI26} is recent, and we cannot rule out unpublished deductions of the same kind. The only ingredients of the proof that have not been refereed are the result of~\cite{OAI26}, which is machine-checked, and Bhattacharjee's correction~\cite{Bha24} of B\"uthe's Theorem~1. The written proof in~\cite{OAI26} has not been peer reviewed; the Lean check certifies the formal statement quoted in Lemma~\ref{lem:OAI}. Corollary~F follows from the next theorem.
+
+\begin{lthm}{B}
+Let $\theta\le\thetaB$, and assume that $\zeta(s)\ne0$ for every $s$ with $\operatorname{Re}s>\theta$. Then \eqref{R} holds for every real $x\ge\NN$. Consequently $N_R=\NN$.
+\end{lthm}
+
+The proof of Theorem~B uses only refereed inputs, namely the explicit formula of Cully-Hugill and Johnston~\cite{CHJ23}, the verification of RH by Platt and Trudgian~\cite{PT21a}, \cite[Lemma~3]{But16}, the results of Dudek--Platt and Axler (Lemma~\ref{lem:base}) and the inputs of Theorem~C below, together with B\"uthe's Theorem~1 as corrected in~\cite{Bha24}, which enters through Proposition~\ref{prop:Aref}. The value $\thetaB$ is the limit of the method to within $10^{-5}$: the verification succeeds for $\theta=\thetaB$ and fails for $\theta=0.945099$, at the lower end $e^{672.5}$ of its range. For $\theta=7/8$ it covers $e^{247.5}\le x\le e^{3036}$, so in Corollary~F the range $[10^{19},e^{247.5}]$ has two independent proofs, Proposition~\ref{prop:Aref} and Theorem~A below, and Proposition~\ref{prop:Aref} still reaches $e^{564.99}$ if every row of B\"uthe's Theorem~1 is doubled (Section~\ref{sec:B}).
+
+\subsection{Results from the peer-reviewed literature and preprints}
+
+Theorems~A--D below are computer-assisted. In Section~\ref{sec:criterion} we reduce \eqref{R} at $x=e^L$ to the positivity of an explicit function of $L$, built from an explicit bound for $|\psi(x)-x|$. This positivity is verified in rigorous interval arithmetic (mpmath, 320-bit precision) on a partition of the relevant range of $L$ into short intervals, and a monotonicity argument covers $L\ge10^4$. Theorem~E is proved analytically; its numerical consequences (Corollary~E) are evaluated by computer.
+
+\begin{lthm}{A}
+Inequality \eqref{R} holds for every real $x$ with $\NN\le x\le e^{753.98}$.
+\end{lthm}
+
+\begin{lthm}{C}
+Inequality \eqref{R} holds for every real $x\ge e^{3035.01}$.
+\end{lthm}
+
+\begin{lthm}{\Cstar}
+Inequality \eqref{R} holds for every real $x\ge e^{2591.01}$.
+\end{lthm}
+
+\begin{lthm}{\Bstar}
+Assume that $\zeta(s)\ne0$ for every $s$ with $\operatorname{Re}s>0.96897$. Then \eqref{R} holds for every real $x\ge\NN$. Consequently $N_R=\NN$.
+\end{lthm}
+
+\begin{lthm}{\Bp}
+Let $0<R\le1.7373$, and assume that $\zeta(\beta+i\gamma)\ne0$ whenever $|\gamma|>3\cdot10^{12}$ and $\beta>1-1/(R\log|\gamma|)$. Then \eqref{R} holds for every real $x\ge\NN$. Consequently $N_R=\NN$.
+\end{lthm}
+
+\begin{lthm}{D}
+Assume that every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le\TDhyp$ satisfies $\beta=1/2$. Then \eqref{R} holds for every real $x\ge\NN$. Consequently $N_R=\NN$.
+\end{lthm}
+
+Theorem~A extends Johnston's range from $e^{103}$ to $e^{753.98}$. It depends on the preprint~\cite{CH25} of Chirre and Helfgott. Above $10^{19}$ its input is their bound $|\psi(x)-x|\le\frac{\pi}{3\cdot10^{12}}x+113.67\sqrt x$~\cite[Cor.~1.3]{CH25}, which rests on the verification of RH up to height $\HRH$ by Platt and Trudgian~\cite{PT21a}. Below $10^{19}$ the inputs are B\"uthe's bound $|\psi(x)-x|\le0.94\sqrt x$~\cite{But18} and Axler's verification~\cite{Ax17}. With refereed inputs and B\"uthe's Theorem~1~\cite{But16} at height $\HRH$, as corrected by Bhattacharjee~\cite{Bha24}, the same method reaches $e^{672.84}$ (Proposition~\ref{prop:Aref}). Neither proof uses Table~8 of Broadbent, Kadiri, Lumley, Ng and Wilk~\cite{BKLNW21}: Bhattacharjee~\cite{Bha24} found that the constant $E_2$ in B\"uthe's Theorem~1 lacks a factor $\log(3c)$, and in Section~\ref{sec:buthe} we show that the rows of that table that come from B\"uthe's theorem reproduce from the formula as printed.
+
+Theorem~C lowers Axler's threshold $e^{3158.442}$ by $123$ in $\log x$. Axler's proof applies Lemma~2.1 of Dudek and Platt~\cite{DP15} in the case where that lemma's proof is defective (Section~\ref{sec:DP}); with the repair recorded in IEANTN~\cite{IEANTN}, Axler's own parameters give only about $e^{3160.3}$. The proof of Theorem~C does not use~\cite[Lemma~2.1]{DP15}, and all its inputs are published. Its main input is Theorem~1.1 of Fiori, Kadiri and Swidinsky~\cite{FKS23}, which bounds $|\psi(x)-x|/x$ for all $x\ge x_0$ in terms of the height to which RH is verified, a zero-free region and zero-density estimates. They tabulate it at $\log x_0=1000$, $2000,2100,\dots,3000$ and $4000,5000,\dots$. We re-implement it, validate the re-implementation against their table (Section~\ref{sec:fks}), insert the zero-free region of Mossinghoff, Trudgian and Yang~\cite{MTY23} and the zero-density constants that~\cite{FKS23} derive from the subconvexity bound of Hiary, Patel and Yang~\cite{HPY24}, and evaluate it at every integer $\log x_0$ in $[2900,3160]$. With the density constants for the older subconvexity bound the same method gives $e^{3040.01}$, with the zero-free-region constant of~\cite{FKS23} as well $e^{3045.01}$, and with their printed rows alone $e^{3157.94}$ (Remark~\ref{rem:Cvar}).
+
+Theorem~\Cstar{} depends on two preprints: the zero-free region of Bellotti, Trudgian and Yang~\cite{BTY26} (Lemma~\ref{lem:ZFR}(ii)) and the log-free zero-density estimate of Bellotti~\cite{Bel24} (Lemma~\ref{lem:density}(ii)). Its proof is the same computation with these inputs, evaluated at every integer $\log x_0$ in $[2400,3000]$.
+
+Theorem~\Bstar{} is the version of Theorem~B with the preprints of Fiori and Jaskari~\cite{FJ26} and Chirre and Helfgott~\cite{CH25}. The exponent is within $10^{-5}$ of the limit of that method: the verification succeeds under $\operatorname{Re}\rho\le0.968978$ and fails under $\operatorname{Re}\rho\le0.968980$, and the binding constraint lies at the left end of the open range, near $x=e^{754}$. The hypotheses of Theorems~B and~\Bstar{} are also implied by the half-plane $\operatorname{Re}s>0.87496$ claimed by Liu~\cite{Liu26}, a preprint that has not been refereed.
+
+Theorem~\Bp{} assumes a zero-free region of the classical shape above the height to which RH is verified. Its proof combines~\cite[Thm.~1.1]{FKS23}, re-implemented with the constant $R$ of the hypothesis, with~\cite[Cor.~1.3]{CH25} and Theorems~A and~C. The verification succeeds for $R=1.73730$ and fails for $R=1.73779$, again with the binding constraint at the left end of the open range. The best known constants are $R=5.558691$~\cite{MTY23} and, in the preprint~\cite{BTY26}, $R=4.896$; Theorem~\Bp{} needs a constant smaller by a factor of about $3.2$, respectively $2.8$. Table~\ref{tab:tradeoff} in Section~\ref{sec:gap} interpolates between Theorems~\Bp{} and~D.
+
+Theorem~D reduces the determination of $N_R$ without~\cite{OAI26} to a single finite computation: a verification of RH up to height $\TDhyp$, about $139$ times the height $\HRH$ reached by Platt and Trudgian~\cite{PT21a}. All its inputs except~\cite{CH25} are published. Its proof combines~\cite[Prop.~9.1]{CH25} at height $T$ with~\cite[Thm.~1.1]{FKS23} recomputed with the verification height $T$; above height $T$ this uses the zero-free region of~\cite{MTY23} and the zero-density constants of Theorem~C. The verification succeeds at height $\TDuse$ and fails at $4.15735\cdot10^{14}$. With the two preprints used in Theorem~\Cstar{} the height drops to $\TDpre$, about $72$ times $\HRH$ (Remark~\ref{rem:Dpre}). If the zeros above $\HRH$ enter only through~\cite[Prop.~9.1]{CH25}, the method needs $7.9612\cdot10^{14}$; with the printed rows of~\cite{FKS23} it needs $\TDold$; and with B\"uthe's Theorem~1 as corrected in~\cite{Bha24} in place of~\cite{CH25}, so that all inputs except~\cite{Bha24} are refereed, it needs $\TB$, about $3.19$ times the height in Theorem~D (Remarks~\ref{rem:Dzeros} and~\ref{rem:DButhe}).
+
+\subsection{A spectral barrier}
+If one relies only on the peer-reviewed literature, Theorems~A and~C leave the range
+\[
+e^{753.98}<x<e^{3035.01}
+\]
+uncovered, and Theorem~\Cstar{} reduces it to $e^{753.98}<x<e^{2591.01}$. Theorem~E shows that this range cannot be closed by arguments that use only analytic information about the poles up to the verified height.
+
+For $T>0$ let $\cA_T$ be the class of sequences $(a_n)_{n\ge1}$ such that (a)~$a_n\ge0$; (b)~the Dirichlet series $A(s)=\sum a_nn^{-s}$ converges absolutely for $\operatorname{Re}s>1$ and continues meromorphically to $\mathbb C$; and (c)~$A$ has a simple pole at $s=1$ with residue~$1$ and no other pole with $|\operatorname{Im}s|\le T$ (Definition~\ref{def:class}). For such $a$ put $\pi_a(y)=\sum_{2\le n\le y}a_n/\log n$. Theorem~E (Section~\ref{sec:barrier}) is an explicit criterion for $\cA_T$ to contain a sequence $a$ with $\pi_a(x)^2>\frac{ex}{\log x}\pi_a(x/e)$ at some $x$ near a given point. The sequences are the Fej\'er-kernel sequences $a_n=F_H(T'\log n)$ of Chirre and Helfgott~\cite[Prop.~3.1]{CH25}. Evaluating the criterion gives the following.
+
+\begin{lcor}{E}
+\textup{(i)} Let $T=\HRH$. For every $L\in[754.40,\,10^4]$ there are $a\in\cA_T$ and $x$ with $L\le\log x\le L+10^{-11}$ such that $\pi_a(x)^2>\frac{ex}{\log x}\,\pi_a(x/e)$.
+
+\textup{(ii)} Let $T\le7.9624\cdot10^{14}$. There are $a\in\cA_T$ and $x$ with $3035.002\le\log x\le3035.002+10^{-5}$ such that $\pi_a(x)^2>\frac{ex}{\log x}\,\pi_a(x/e)$.
+
+\textup{(iii)} Let $T\le9.3344\cdot10^{14}$. There are $a\in\cA_T$ and $x$ with $3157.93\le\log x\le3157.93+10^{-5}$ such that $\pi_a(x)^2>\frac{ex}{\log x}\,\pi_a(x/e)$.
+\end{lcor}
+
+The von Mangoldt function $\Lambda$, with $A(s)=-\zeta'(s)/\zeta(s)$, is not in $\cA_T$. It lies in the larger class $\cARH_T$ in which $A$ may also have poles with $|\operatorname{Im}s|\le T$ on the critical line and in the half-plane $\operatorname{Re}s<0$ (Definition~\ref{def:class}; for $T=\HRH$ by Lemma~\ref{lem:PT}). For $a=\Lambda$, $\pi_a$ is Riemann's prime-power counting function, which differs from $\pi$ by an amount that is negligible here. We call an argument for \eqref{R} \emph{of type (a)--(c) at height $T$} if it is valid for every sequence in $\cARH_T$; its only inputs are then non-negativity, analytic continuation, and the location and residues of the poles up to height $T$ as recorded in~(c). By Corollary~E, such an argument cannot prove \eqref{R} at the points provided there. Consequently:
+\begin{itemize}
+\item For arguments of type (a)--(c) at height $\HRH$ the barrier lies at $\log x=754.39478$. Theorem~A reaches $\log x=753.985$, so its range is optimal among such arguments to within $0.41$ in $\log x$.
+\item Near $x=e^{3035}$, at the top of the open range, arguments of type (a)--(c) need $T>7.9624\cdot10^{14}$; the barrier there is $\Tb(3035.002)=7.96241\cdot10^{14}$. Theorem~D needs only $\TDhyp$, about half of that. Above height $T$ it uses a zero-free region and zero-density estimates, which are not of type (a)--(c).
+\item With $T=\HRH$ the open range cannot be closed by arguments of type (a)--(c): by Corollary~E(i), $\cA_T$ contains counterexamples within $10^{-11}$ in $\log x$ of every point with $754.40\le\log x\le10^4$. The explicit methods for $\psi$ in this range (B\"uthe~\cite{But16}, Chirre and Helfgott~\cite{CH25}, and~\cite{BKLNW21,FKS23}) use, beyond pole data up to height $T$, only zero-free regions and zero-density estimates above $T$. With these, Theorems~C and~\Cstar{} prove \eqref{R} for $x\ge e^{3035.01}$ and $x\ge e^{2591.01}$, where $\cA_T$ still contains counterexamples. Theorems~B, \Bstar, \Bp{} and~D quantify what would suffice to close the rest, and Corollary~F closes it.
+\end{itemize}
+Corollary~E does not say that \eqref{R} fails, or that it is unprovable, anywhere in the open range. It says that arguments of type (a)--(c) do not suffice to prove it there. The counterexamples are far from arithmetic (Remark~\ref{rem:Enot}): Theorem~E is a limitation of a class of methods, not a statement about the primes.
+
+Table~\ref{tab:status} summarizes the situation.
+
+\begin{table}[ht]
+\caption{Status of \eqref{R} for $x\ge\NN$.}\label{tab:status}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.1cm}>{\raggedright\arraybackslash}p{4.2cm}>{\raggedright\arraybackslash}p{5.9cm}}
+\toprule
+Range of $x$ & Before this paper & This paper\\
+\midrule
+$[\NN,\,\infty)$ & under RH \cite{DP15} & Corollary~F (via the Lean-verified half-plane of \cite{OAI26}); the rows below rely only on the peer-reviewed literature and on the preprints named there\\\addlinespace[2pt]
+$[\NN,\,10^{19}]$ & unconditional \cite[Thm.~1.3]{Ax17} & used as input\\\addlinespace[2pt]
+$[10^{19},\,e^{103}]$ & unconditional \cite[Thm.~5.1]{Joh22} & Theorem~A (independent proof)\\\addlinespace[2pt]
+$[e^{103},\,e^{672.84}]$ & open & Theorem~A; also Proposition~\ref{prop:Aref} (refereed inputs and \cite{Bha24})\\\addlinespace[2pt]
+$[e^{672.84},\,e^{753.98}]$ & open & Theorem~A (uses \cite{CH25})\\\addlinespace[2pt]
+$(e^{753.98},\,e^{2591.01})$ & open & open if one relies only on the peer-reviewed literature, and out of reach of arguments of type (a)--(c) at height $\HRH$ (Corollary~E); closed by Corollary~F (Lean-verified \cite{OAI26}); closed by Theorem~B ($\operatorname{Re}\rho\le\thetaB$), Theorem~\Bstar{} ($\operatorname{Re}\rho\le0.96897$), Theorem~\Bp{} ($R\le1.7373$), or Theorem~D (RH up to height $\TDhyp$; $\TDpre$ with \cite{BTY26,Bel24})\\\addlinespace[2pt]
+$[e^{2591.01},\,e^{3035.01})$ & open & Theorem~\Cstar{} (uses \cite{BTY26,Bel24}); without these preprints, as in the previous row\\\addlinespace[2pt]
+$[e^{3035.01},\,\infty)$ & claimed for $x\ge e^{3158.442}$ \cite{Ax22}, via the defective case of \cite[Lemma~2.1]{DP15} & Theorem~C\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Remarks on the literature}
+Section~\ref{sec:lit} records further points. Two recent preprints of De~\cite{De24a,De24b} claim \eqref{R} unconditionally for all $x\ge e^{547}$ and all $x\ge e^{43.51}$, respectively; neither argument is a proof, and we identify the errors. We explain how the defect in~\cite[Lemma~2.1]{DP15} recorded in IEANTN affects Axler's threshold~\cite{Ax22}. Bhattacharjee~\cite{Bha24} found that the constant $E_2$ in B\"uthe's Theorem~1 lacks a factor $\log(3c)$, among other corrections. We show that the rows of~\cite[Table~8]{BKLNW21} derived from that theorem inherit the error, measure the effect after re-optimizing the parameters, and trace the consequences in the literature (Section~\ref{sec:downstream}): no published theorem we examined becomes false, but several proofs need a patch or a newer reference.
+
+\subsection{Organization}
+Section~\ref{sec:inputs} lists the explicit inputs. Section~\ref{sec:criterion} derives the criterion and extracts the main term exactly. Section~\ref{sec:proofs} describes the computations, including the re-implementation of~\cite[Thm.~1.1]{FKS23}, and proves Theorems~A--D and Corollary~F. Section~\ref{sec:barrier} proves Theorem~E and Corollary~E. Section~\ref{sec:gap} discusses what remains without~\cite{OAI26}, and Section~\ref{sec:lit} contains the remarks on the literature.
+
+% ===========================================================================
+\section{Notation and explicit inputs}\label{sec:inputs}
+
+Throughout, $\theta(x)=\sum_{p\le x}\log p$, $\psi(x)=\sum_{p^k\le x}\log p$, $L=\log x$, $r(t)=\theta(t)-t$, and
+\[
+J(x)=\frac{x}{\log x}+\int_2^x\frac{dt}{\log^2t}=\li(x)-\li(2)+\frac{2}{\log2},\qquad j(l)=e^{-l}J(e^l).
+\]
+
+\begin{lemma}[Partial summation]\label{lem:ps}
+For $x\ge2$,
+\[
+\pi(x)=\frac{\theta(x)}{\log x}+\int_2^x\frac{\theta(t)}{t\log^2t}\,dt,
+\qquad\text{hence}\qquad
+\pi(x)-J(x)=\frac{r(x)}{\log x}+\int_2^x\frac{r(t)}{t\log^2t}\,dt.
+\]
+\end{lemma}
+
+\begin{lemma}[Rosser--Schoenfeld {\cite[Thm.~9]{RS62}}]\label{lem:RS}
+$\theta(y)<1.01624\,y$ for all $y>0$. Consequently, with $K=1.01624$,
+\[
+0\le\psi(x)-\theta(x)\le K\Bigl(\sqrt x+x^{1/3}\,\frac{\log x}{\log2}\Bigr)\qquad(x\ge2),
+\]
+and $|r(t)|\le t$ for all $t>0$.
+\end{lemma}
+
+\begin{proof}
+We have $\psi(x)-\theta(x)=\sum_{k\ge2}\theta(x^{1/k})$. The term $k=2$ is at most $K\sqrt x$. Each term with $k\ge3$ is at most $Kx^{1/3}$, and it vanishes unless $x^{1/k}\ge2$, that is, unless $k\le\log x/\log2$. Finally, $0\le\theta(t)<Kt\le2t$ gives $|r(t)|\le t$.
+\end{proof}
+
+\begin{lemma}[B\"uthe {\cite[Thm.~2, (1.5)]{But18}}]\label{lem:Buthe18}
+$|x-\psi(x)|\le0.94\sqrt x$ for $11<x\le10^{19}$.
+\end{lemma}
+
+The next statement is B\"uthe's Theorem~1~\cite{But16} as corrected by Bhattacharjee~\cite[Thm.~7]{Bha24}. Compared with the version arXiv:1410.7015v4 of~\cite{But16}, which already contains the summand $e^{\alpha\eps}-1$ in $E_1$, it has the factor $\log(3c)$ and further corrections in $E_2$, and an additional constant term in $E_3$ (Section~\ref{sec:buthe}). For $c>0$ put
+\begin{gather*}
+\eta_c(t)=\frac{c\,I_0\bigl(c\sqrt{1-t^2}\bigr)}{2\sinh c}\quad(|t|\le1),\\
+\mu_c(\alpha)=\frac12-\int_0^\alpha\eta_c(t)\,dt,\qquad
+|\nu_c(\alpha)|=\frac{I_1(c)}{2\sinh c}-\int_0^\alpha\mu_c(t)\,dt,
+\end{gather*}
+where $I_0,I_1$ are modified Bessel functions; these are the quantities of~\cite[\S5]{But16}.
+
+\begin{lemma}[B\"uthe's Theorem~1, as corrected in~{\cite[Thm.~7]{Bha24}}]\label{lem:Buthe16}
+Let $c\ge3$, $0<\eps<10^{-3}$, $0\le\alpha<1$ and $x_*\ge100$, put $T=c/\eps$, and assume $T\ge5000$,
+\[
+B=\frac{\eps x_*e^{-\eps}|\nu_c(\alpha)|}{2\mu_c(\alpha)}>1\qquad\text{and}\qquad\frac{\eps e^{-2\eps}|\nu_c(\alpha)|}{2\mu_c(\alpha)}<1.
+\]
+Assume that every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le T$ satisfies $\beta=1/2$. Then
+\[
+|\psi(x)-x|\le x\,e^{\alpha\eps}(E_1+E_2+E_3)\qquad\text{for all }x\ge e^{\alpha\eps}x_*,
+\]
+where
+\begin{align*}
+E_1&=e^{2\eps}\log(e^{\eps}x_*)\Bigl[\frac{2\eps|\nu_c(\alpha)|}{\log B}+\frac{2.01\,\eps}{\sqrt{x_*}}+\frac{\log\log(2x_*^2)}{2x_*}\Bigr]+\bigl(e^{\alpha\eps}-1\bigr),\\
+E_2&=\frac{0.16\,(1+3x_*^{-1})}{\sinh c}\,e^{0.71\sqrt{c\eps}}\Bigl[\log\frac{c}{\pi\eps}\,\log c+2\log\frac{c}{\pi\eps}+18.75\,\eps\log\frac{c}{\eps}+1\Bigr],\\
+E_3&=2\bigl(x_*^{-1/2}+x_*^{-1}\bigr)\sum_{0<\gamma\le T}\frac{\ell(\gamma)}{\gamma}+\frac{1.92}{x_*},
+\end{align*}
+with a weight $\ell(\gamma)\le1$. Moreover~\cite[Lemma~3]{But16}, $\sum_{0<\gamma\le t}1/\gamma\le\log^2(t/2\pi)/(4\pi)$ for $t\ge5000$.
+\end{lemma}
+
+\begin{lemma}[Platt--Trudgian~\cite{PT21a}]\label{lem:PT}
+Every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le\HRH$ satisfies $\beta=1/2$.
+\end{lemma}
+
+\begin{lemma}[OpenAI~\cite{OAI26}]\label{lem:OAI}
+$\zeta(s)\ne0$ for every $s$ with $\operatorname{Re}s>7/8$.
+\end{lemma}
+
+The written proof in~\cite{OAI26} has not been peer reviewed. Its main statement for $\zeta$ is formalized in Lean~4 in the repository of~\cite{OAI26}, file \texttt{lean/Comparator\-Challenges/Quasi\-Riemann\-Hypothesis.lean}, as the theorem \texttt{riemannZeta\_ne\_zero\_of\_seven\_eighths\_lt\_re}: for $s\in\mathbb C$ with $7/8<\operatorname{Re}s$, \texttt{riemannZeta}~$s\ne0$. It uses Mathlib's \texttt{riemannZeta}, and \texttt{\#print axioms} lists only \texttt{propext}, \texttt{Classical.choice} and \texttt{Quot.sound}. An independent rebuild~\cite{Tom26}, with Lean~4.34.1 and Mathlib commit \texttt{d13f23b}, compiles all $2{,}924$ modules with no errors and no \texttt{sorry}, and a static scan finds no \texttt{axiom}, \texttt{native\_decide} or \texttt{implemented\_by}. We report these checks from~\cite{OAI26} and~\cite{Tom26}; we have not rebuilt the project ourselves. The correctness of Lemma~\ref{lem:OAI} rests on the Lean kernel and on Mathlib's definition of \texttt{riemannZeta}, which agrees with $\zeta(s)$ for $s\ne1$. In particular every nontrivial zero of $\zeta$ has $\beta\le7/8$.
+
+\begin{lemma}[Cully-Hugill--Johnston~{\cite[Thm.~1.2, Table~4]{CHJ23}}]\label{lem:CHJ}
+For $x\ge e^{40}$ and $\max\{51,\log x\}<T<(\sqrt x-2)/2$,
+\[
+\Bigl|\psi(x)-x+\sum_{|\gamma|\le T}\frac{x^\rho}{\rho}\Bigr|\le\frac{6.431\,x\log x}{T}.
+\]
+\end{lemma}
+
+This is~\cite[Thm.~1.2]{CHJ23} with the row $(\log x_M,\alpha,\lambda,M)=(40,1/2,0.48,6.431)$ of~\cite[Table~4]{CHJ23}. In Section~\ref{sec:B} we use the weaker bound $200\,x(\log x)^2/T$ and bound the sum over the zeros up to $2.45T$. This also covers the version quoted in~\cite[Thm.~3.2]{FKS23}, in which the sum runs up to some $T^*\in[T,2.45T]$, and, by the factor $200$, the bound of Dudek quoted in~\cite[Prop.~3.4]{FKS23}, even after the correction by a factor $20$ mentioned in~\cite[Remark~3.3]{FKS23}.
+
+
+\begin{lemma}[Chirre--Helfgott~\cite{CH25}]\label{lem:CH}
+\begin{enumerate}
+\item[(i)] \cite[Cor.~1.3]{CH25} For every $x\ge1$,
+\[
+|\psi(x)-x|\le\frac{\pi}{3\cdot10^{12}}\,x+113.67\sqrt x.
+\]
+\item[(ii)] \cite[Prop.~9.1 with $\sigma=0$, and~(9.2)]{CH25} Let $T\ge10^7$, and assume that every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le T$ satisfies $\beta=1/2$. Then, for $x>\max(T,10^9)$,
+\[
+|\psi(x)-x|\le\frac{\pi}{T-1-\pi/3}\,x+C_T\sqrt x,\qquad C_T=\frac{\log^2(T/2\pi)}{2\pi}-\frac{\log(T/2\pi)}{6\pi}.
+\]
+\end{enumerate}
+\end{lemma}
+
+Part~(i) rests on Lemma~\ref{lem:PT}. The reference~\cite{CH25} is a preprint. Chirre and Helfgott~\cite[Prop.~3.1]{CH25} show by an explicit construction that the leading constant $\pi/T$ cannot be lowered for bounds that use only non-negativity, analytic continuation and the poles up to height $T$; Section~\ref{sec:barrier} builds on that construction. We write
+\[
+\epsCH(l)=\frac{\pi}{3\cdot10^{12}}+113.67\,e^{-l/2},\qquad
+\eps_T(l)=\frac{\pi}{T-1-\pi/3}+C_Te^{-l/2},
+\]
+so that $|\psi(x)-x|\le\epsCH(\log x)\,x$ for $x\ge1$, and $|\psi(x)-x|\le\eps_T(\log x)\,x$ for $x>\max(T,10^9)$ under the hypothesis of~(ii). Both functions are decreasing in $l$.
+
+\begin{lemma}[Fiori--Kadiri--Swidinsky~\cite{FKS23}]\label{lem:FKS}
+\begin{enumerate}
+\item[(i)] \cite[Thm.~1.1, Table~5]{FKS23} For each tabulated $x_0'$, $|\psi(x)-x|\le\eps_5(x_0')\,x$ for all $x\ge x_0'$. The tabulated values of $\log x_0'$ are $1000,2000,2100,2200,\dots,3000$ and $4000,5000,\dots,10000$; see Table~\ref{tab:FKS5}.
+\item[(ii)] \cite[Cor.~1.4]{FKS23} $|\psi(x)-x|<\eps_1(\log x)\,x$ for all $x>2$, where
+\[
+\eps_1(l)=A_1\,l^{3/2}e^{-c_1\sqrt l},\qquad A_1=9.22022,\quad c_1=0.8476836.
+\]
+\end{enumerate}
+\end{lemma}
+
+The function $\eps_1$ is decreasing for $l>(3/c_1)^2$, in particular for $l>12.6$.
+
+\begin{table}[ht]
+\caption{The entries $\eps_5(x_0')$ of \cite[Table~5]{FKS23}, as printed.}\label{tab:FKS5}
+\small
+\begin{tabular}{rl@{\qquad}rl@{\qquad}rl@{\qquad}rl}
+\toprule
+$\log x_0'$ & $\eps_5$ & $\log x_0'$ & $\eps_5$ & $\log x_0'$ & $\eps_5$ & $\log x_0'$ & $\eps_5$\\
+\midrule
+1000 & $1.3812\cdot10^{-9}$  & 2300 & $3.8059\cdot10^{-13}$ & 2800 & $1.7087\cdot10^{-14}$ & 6000 & $1.2976\cdot10^{-22}$\\
+2000 & $2.4746\cdot10^{-12}$ & 2400 & $2.0426\cdot10^{-13}$ & 2900 & $9.2091\cdot10^{-15}$ & 7000 & $8.5162\cdot10^{-25}$\\
+2100 & $1.3246\cdot10^{-12}$ & 2500 & $1.0972\cdot10^{-13}$ & 3000 & $4.9678\cdot10^{-15}$ & 8000 & $7.7860\cdot10^{-27}$\\
+2200 & $7.0976\cdot10^{-13}$ & 2600 & $5.8978\cdot10^{-14}$ & 4000 & $1.1021\cdot10^{-17}$ & 9000 & $9.2262\cdot10^{-29}$\\
+     &                       & 2700 & $3.1729\cdot10^{-14}$ & 5000 & $2.9942\cdot10^{-20}$ & 10000 & $1.3688\cdot10^{-30}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{lemma}[Zero-free regions]\label{lem:ZFR}
+\begin{enumerate}
+\item[(i)] \textup{(Mossinghoff--Trudgian--Yang~\cite{MTY23})} $\zeta(\sigma+it)\ne0$ for $|t|\ge2$ and $\sigma\ge1-1/(5.558691\log|t|)$.
+\item[(ii)] \textup{(Bellotti--Trudgian--Yang~\cite{BTY26})} $\zeta(\sigma+it)\ne0$ for $t\ge3$ and $\sigma\ge1-1/(4.896\log t)$, and by conjugate symmetry also for $t\le-3$.
+\end{enumerate}
+\end{lemma}
+
+The reference~\cite{BTY26} is a preprint. The bounds of~\cite{FKS23} were computed with the constant $R=5.5666305$ in place of $5.558691$.
+
+\begin{lemma}[Zero-density estimates]\label{lem:density}
+Let $N(\sigma,t)$ be the number of zeros $\beta+i\gamma$ of $\zeta(s)$ with $\beta\ge\sigma$ and $0<\gamma\le t$.
+\begin{enumerate}
+\item[(i)] \cite[Thm.~2.7, Table~7]{FKS23} For each $\sigma\in\{0.990,0.991,\dots,0.999\}$, $N(\sigma,t)\le c_1t^{8(1-\sigma)/3}(\log t)^{5-2\sigma}+c_2\log^2t$ in the range of $t$ used in the proof of~\cite[Thm.~1.1]{FKS23}, with constants $(c_1,c_2)$ given in~\cite[Table~7]{FKS23}. The first block of that table rests on a bound for $|\zeta(1/2+it)|$ with constant $a_1=0.77$, the second on the bound of Hiary, Patel and Yang~\cite{HPY24}, with $a_1=0.618$. \cite[Table~8]{FKS23} gives constants valid on intervals of $\sigma$.
+\item[(ii)] \textup{(Bellotti~\cite[Thm.~1.1, Table~2]{Bel24})} $N(\sigma,t)\le C\,t^{B(1-\sigma)}$ for $\sigma\ge\alpha_0$ and $T_0<t\le T_1$, with $(\log T_0,\log T_1,\alpha_0,C,B)$ given in~\cite[Table~2]{Bel24} on a sequence of ranges starting at $T_0=3\cdot10^{12}$.
+\end{enumerate}
+\end{lemma}
+
+The reference~\cite{Bel24} is a preprint.
+
+\begin{lemma}[Fiori--Jaskari {\cite[Thm.~1.4]{FJ26}}]\label{lem:FJ}
+Let $7/8\le\sigma\le1$, and assume that every zero $\rho$ of $\zeta(s)$ satisfies $\operatorname{Re}\rho\le\sigma$. Let $x_0$ be one of the values in Table~\ref{tab:FJ}. Then, for $x>x_0$,
+\[
+|\psi(x)-x|<x\bigl(A\,(\log x)^2x^{-1/4}+C(x_0)\,x^{\sigma-1}\bigr),\qquad A=0.0198944.
+\]
+\end{lemma}
+
+\begin{table}[ht]
+\caption{The constants $C(x_0)$ of \cite[Thm.~1.4]{FJ26} for $7/8\le\sigma\le1$.}\label{tab:FJ}
+\small
+\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{lcccccccc}
+\toprule
+$\log x_0$ & $5$ & $150$ & $200$ & $300$ & $500$ & $1000$ & $2000$ & $5000$\\
+\midrule
+$C(x_0)$ & $0.02636425$ & $0.02636425$ & $0.02506448$ & $0.01840514$ & $0.01505842$ & $0.01320991$ & $0.01243612$ & $0.01201123$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These are the constants of~\cite[Thm.~1.4]{FJ26} for the range $7/8\le\sigma\le1$; the constant $A=0.0198944$ applies for every $x_0\ge e^5$. The reference~\cite{FJ26} is a preprint.
+
+\begin{lemma}[Dudek--Platt, Axler]\label{lem:base}
+\begin{enumerate}
+\item[(i)] \cite{DP15} Inequality \eqref{R} fails at $x=\NNm$.
+\item[(ii)] \cite[Thm.~1.3]{Ax17} Inequality \eqref{R} holds for every real $x$ with $\NN\le x\le10^{19}$.
+\end{enumerate}
+\end{lemma}
+
+The proof of Lemma~\ref{lem:base}(ii) rests on the computation of~\cite{DP15} and on B\"uthe's bounds from~\cite[Thm.~2]{But18}; it does not use~\cite[Lemma~2.1]{DP15} or~\cite[Thm.~1]{But16}.
+
+\emph{Convention on tables.} Entries of published numerical tables are printed rounded. Every such entry is used after adding one unit in its last printed digit, which is valid for any rounding convention. Constants appearing in the statements of theorems are used as stated.
+
+% ===========================================================================
+\section{Reduction to a one-variable inequality}\label{sec:criterion}
+
+\subsection{Elementary bounds}
+
+\begin{lemma}\label{lem:int}
+For $2<a\le b$,
+\[
+\int_{e^a}^{e^b}\frac{dt}{\log^2t}\le\frac{e^b}{b^2(1-2/a)}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $t\ge e^a$ we have $\frac{d}{dt}\frac{t}{\log^2t}=\frac{1-2/\log t}{\log^2t}\ge\frac{1-2/a}{\log^2t}$. Integrate over $[e^a,e^b]$ and discard $-e^a/a^2$.
+\end{proof}
+
+For $l>0$ define
+\begin{align*}
+\Rpt(l)&=K\Bigl(e^{-l/2}+\frac{l\,e^{-2l/3}}{\log2}\Bigr),\\
+\Rint(l)&=K\Bigl(\frac{2e^{-3l/4}}{\log^22}+\frac{8e^{-l/2}}{l^2}+\frac{3e^{-5l/6}}{\log^22}+\frac{6e^{-2l/3}}{l\log2}\Bigr),
+\end{align*}
+with $K=1.01624$ as in Lemma~\ref{lem:RS}.
+
+\begin{lemma}\label{lem:psitheta}
+For $x=e^l\ge4$,
+\[
+\frac{\psi(x)-\theta(x)}{x}\le\Rpt(l),\qquad
+\frac1x\int_2^x\frac{\psi(t)-\theta(t)}{t\log^2t}\,dt\le\Rint(l).
+\]
+\end{lemma}
+
+\begin{proof}
+The first bound is Lemma~\ref{lem:RS}. For the second, Lemma~\ref{lem:RS} bounds the integrand by $K t^{-1/2}\log^{-2}t+K t^{-2/3}/(\log2\,\log t)$. Split the integral at $\sqrt x$. On $[2,\sqrt x]$ use $\log t\ge\log2$; on $[\sqrt x,x]$ use $\log t\ge l/2$. This gives
+\[
+\int_2^x\frac{dt}{\sqrt t\log^2t}\le\frac{2x^{1/4}}{\log^22}+\frac{8\sqrt x}{l^2},\qquad
+\int_2^x\frac{dt}{t^{2/3}\log t}\le\frac{3x^{1/6}}{\log2}+\frac{6x^{1/3}}{l},
+\]
+and the claim follows after division by $x$.
+\end{proof}
+
+\subsection{\texorpdfstring{The bound for $|\pi-J|$}{The bound for |pi - J|}}
+Let
+\[
+K_0=\int_2^{e^{20}}\frac{dt}{\log^2t}\in\Bigl[0,\ \frac{e^{10}}{\log^22}+\frac{e^{20}}{100}\Bigr],
+\]
+where the upper bound follows by splitting at $e^{10}$; numerically $K_0\le4{,}897{,}497.16$.
+
+\begin{proposition}\label{prop:Delta}
+Let $l\ge20$, $x=e^l$, and let $\eta:[e^{20},x]\to[0,\infty)$ be integrable with $|\psi(t)-t|\le\eta(t)\,t$ on $[e^{20},x]$. Then $|\pi(x)-J(x)|\le x\,D_\eta(l)$, where
+\[
+D_\eta(l)=\frac{\eta(x)+\Rpt(l)}{l}+K_0e^{-l}+e^{-l}\int_{e^{20}}^x\frac{\eta(t)}{\log^2t}\,dt+\Rint(l).
+\]
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:ps}, $|\pi(x)-J(x)|\le|r(x)|/l+\int_2^x|r(t)|\,dt/(t\log^2t)$. On $[2,e^{20}]$ use $|r(t)|\le t$ (Lemma~\ref{lem:RS}); this gives $K_0$. On $[e^{20},x]$ use $|r(t)|\le|\psi(t)-t|+(\psi(t)-\theta(t))\le\eta(t)t+(\psi(t)-\theta(t))$, and apply Lemma~\ref{lem:psitheta} to the contribution of $\psi-\theta$, both at $t=x$ and in the integral.
+\end{proof}
+
+In practice $\eta$ is piecewise constant on unit intervals of $\log t$, and the integral is bounded by Lemma~\ref{lem:int}.
+
+\begin{corollary}\label{cor:segments}
+Let $20\le N\le l$ be an integer and $x=e^l$. Let $\eps(k)$ $(20\le k\le N)$ satisfy $|\psi(t)-t|\le\eps(k)t$ for $t\in[e^k,e^{k+1}]$ when $k<N$, and for $t\in[e^N,x]$ when $k=N$. Let $\eps^{\rm pt}\ge|\psi(x)-x|/x$. Then $|\pi(x)-J(x)|\le x\,D(l)$ with
+\[
+D(l)=\frac{\eps^{\rm pt}+\Rpt(l)}{l}+K_0e^{-l}+C_Ne^{N-l}+\frac{\eps(N)}{l^2(1-2/N)}+\Rint(l),
+\]
+where
+\[
+C_N=\sum_{k=20}^{N-1}\frac{\eps(k)\,e^{k+1-N}}{(k+1)^2(1-2/k)}.
+\]
+\end{corollary}
+
+\begin{proof}
+Apply Proposition~\ref{prop:Delta} with $\eta=\eps(k)$ on $[e^k,e^{k+1})$ for $k<N$ and $\eta=\eps(N)$ on $[e^N,x)$, with $\eta(x)=\eps^{\rm pt}$, and bound each piece of the integral by Lemma~\ref{lem:int}.
+\end{proof}
+
+The constants satisfy $C_{k+1}=e^{-1}C_k+\eps(k)/\bigl((k+1)^2(1-2/k)\bigr)$ with $C_{20}=0$, and this recursion is used to compute them.
+
+\subsection{The criterion}
+
+\begin{proposition}\label{prop:C}
+Let $L\ge21$, and let $d$ be a function with $|\pi(e^l)-J(e^l)|\le e^l d(l)$ for $l\in\{L-1,L\}$. If
+\begin{equation*}\label{C}
+\frac{j(L-1)-d(L-1)}{L}-\bigl(j(L)+d(L)\bigr)^2>0,
+\tag{C}
+\end{equation*}
+then \eqref{R} holds at $x=e^L$. More precisely,
+\[
+\frac{ex}{L}\pi\Bigl(\frac xe\Bigr)-\pi(x)^2\ \ge\ x^2\Bigl[\frac{j(L-1)-d(L-1)}{L}-\bigl(j(L)+d(L)\bigr)^2\Bigr].
+\]
+\end{proposition}
+
+\begin{proof}
+We have $\pi(x/e)\ge J(x/e)-(x/e)d(L-1)=(x/e)\bigl(j(L-1)-d(L-1)\bigr)$ and $0\le\pi(x)\le x\bigl(j(L)+d(L)\bigr)$. Hence $\frac{ex}{L}\pi(x/e)\ge\frac{x^2}{L}\bigl(j(L-1)-d(L-1)\bigr)$ and $\pi(x)^2\le x^2\bigl(j(L)+d(L)\bigr)^2$.
+\end{proof}
+
+Proposition~\ref{prop:C} follows directly from Lemma~\ref{lem:ps}. It does not use Lemma~2.1 of~\cite{DP15}.
+
+\subsection{Exact main term}
+Let $n=12$ and
+\[
+P(u)=\sum_{k=0}^{n-1}k!\,u^{k+1},\qquad A_0=e^{20}\sum_{k=1}^{n-1}\frac{k!}{20^{k+1}},\qquad g(l)=e^{-l}\int_{20}^{l}e^ss^{-13}\,ds.
+\]
+Numerically $A_0=1{,}357{,}383.55\ldots$.
+
+\begin{proposition}\label{prop:rho}
+For $l>25$,
+\[
+j(l)=P(1/l)+\rho(l),\qquad \rho(l)=e^{-l}(K_0-A_0)+12!\,g(l),
+\]
+and, with $\vartheta=4/5$ and $q=13/(\vartheta l)<1$,
+\[
+l^{-13}-e^{-(1-\vartheta)l}(\vartheta l)^{-13}\ \le\ g(l)\ \le\ \frac{l^{-13}}{1-q}+(\vartheta l-20)\,e^{-(1-\vartheta)l}(\vartheta l)^{-13}.
+\]
+\end{proposition}
+
+\begin{proof}
+By definition $j(l)=1/l+e^{-l}K_0+e^{-l}\int_{20}^le^ss^{-2}\,ds$ (substitute $t=e^s$). Integrating by parts eleven times gives
+\[
+\int_{20}^le^ss^{-2}\,ds=\sum_{k=2}^{12}(k-1)!\,\bigl[e^ss^{-k}\bigr]_{20}^{l}+12!\int_{20}^le^ss^{-13}\,ds,
+\]
+and collecting terms gives the stated formula for $j(l)$. For $g$, split the integral at $\vartheta l>20$. On $[20,\vartheta l]$ the integrand $e^ss^{-13}$ is increasing (as $s\ge13$), so this part lies in $[0,(\vartheta l-20)e^{\vartheta l}(\vartheta l)^{-13}]$. On $[\vartheta l,l]$ one more integration by parts gives
+\[
+\int_{\vartheta l}^le^ss^{-13}\,ds=\bigl[e^ss^{-13}\bigr]_{\vartheta l}^{l}+13\int_{\vartheta l}^le^ss^{-14}\,ds,
+\]
+where the last term lies between $0$ and $q\int_{\vartheta l}^le^ss^{-13}\,ds$. Rearranging gives both bounds.
+\end{proof}
+
+\begin{lemma}\label{lem:N6}
+Let $u=1/L$. Then
+\[
+\frac{P\bigl(1/(L-1)\bigr)}{L}-P(1/L)^2=\frac{u^6N_6(u)}{(1-u)^{12}},
+\]
+where $N_6\in\mathbb Z[u]$ has degree $30$ and $N_6(u)=1+2u+43u^2+376u^3+\cdots$. In particular
+\[
+\frac{N_6(u)}{(1-u)^{12}}=1+14u+145u^2+O(u^3),
+\]
+and, for $4\le k\le9$, the coefficient of $u^{k-4}$ in this expansion equals $-d_k$, where $d_k=\sum_{j=0}^{k}j!\bigl((k-j)!-\binom kj\bigr)$ are the coefficients of Hassani's expansion~\cite{Has21}.
+\end{lemma}
+
+\begin{proof}
+Since $1/(L-1)=u/(1-u)$, the left side times $(1-u)^{12}$ equals
+\[
+N(u)=\sum_{k=0}^{11}k!\,u^{k+2}(1-u)^{11-k}-(1-u)^{12}P(u)^2\in\mathbb Z[u].
+\]
+An exact computation shows that the coefficients of $u^0,\dots,u^5$ in $N$ vanish and that $N(u)=u^6N_6(u)$ with $N_6$ as stated. The comparison with $d_k$ is an exact computation in rational arithmetic.
+\end{proof}
+
+With $\pi$ replaced by $J$, Lemma~\ref{lem:N6} and Proposition~\ref{prop:rho} give $\frac{ex}{L}J(x/e)-J(x)^2=\frac{x^2}{L^6}\bigl(1+\frac{14}{L}+O(L^{-2})\bigr)$; this is the classical main term of \eqref{R}. We use the identity to remove the cancellation from the numerical problem. For a majorant $d$ as in Proposition~\ref{prop:C}, define the \emph{normalized margin}
+\begin{equation}\label{eq:margin}
+M(L)=L^6\Bigl[\frac{j(L-1)-d(L-1)}{L}-\bigl(j(L)+d(L)\bigr)^2\Bigr]=\Main(L)+\Corr(L)-\Err(L),
+\end{equation}
+where, with $u=1/L$,
+\begin{align*}
+\Main(L)&=\frac{N_6(u)}{(1-u)^{12}},\\
+\Corr(L)&=L^6\Bigl[\frac{\rho(L-1)}{L}-2P(u)\rho(L)-\rho(L)^2\Bigr],\\
+\Err(L)&=L^6\Bigl[\frac{d(L-1)}{L}+2\bigl(P(u)+\rho(L)\bigr)d(L)+d(L)^2\Bigr].
+\end{align*}
+By Proposition~\ref{prop:C}, $M(L)>0$ implies \eqref{R} at $x=e^L$; more precisely,
+\[
+M(L)\le\frac{L^6}{x^2}\Bigl(\frac{ex}{L}\,\pi\Bigl(\frac xe\Bigr)-\pi(x)^2\Bigr).
+\]
+The terms $\Main$, $\Corr$ and $\Err$ are of size $1$, at most $12!\,L^{-7}$, and roughly $3L^4\sup|\psi(t)-t|/t$, respectively. None of them involves a cancellation, so interval evaluation over $L$-intervals of width up to $0.5$ gives sharp lower bounds for $M$.
+
+% ===========================================================================
+\section{The computations and the proofs of Theorems A--D}\label{sec:proofs}
+
+\subsection{Interval arithmetic}\label{sec:ia}
+All computations use the interval arithmetic of the Python library mpmath (\texttt{mpmath.iv}) at a working precision of $320$ bits. Every operation is rounded outward, so every computed interval contains the exact value of the real expression it represents. Decimal constants are converted from their decimal strings to enclosing intervals. The polynomial $N_6$ is computed in exact integer arithmetic.
+
+For a closed interval $\mathbf L=[a,b]$, the scripts evaluate \eqref{eq:margin} with the interval $\mathbf L$ in place of $L$ and $\mathbf L-1$ in place of $L-1$. The result is an interval containing $M(L)$ for every $L\in\mathbf L$, and a positive lower endpoint proves \eqref{R} on $[e^a,e^b]$. The endpoints $a,b$ are binary floating-point numbers and are represented exactly. Consecutive intervals of a grid share their endpoints, so a run that succeeds on every interval of a grid covers the union exactly. When an interval fails, the runs bisect it, up to $12$ times, before declaring a failure.
+
+The proofs of Theorems~A, B, \Bp, C, \Cstar{} and~D use the routines of \texttt{ch\_ramanujan.py}. They build the majorant of Corollary~\ref{cor:segments} from a list of bounds for $|\psi(t)-t|/t$, each nonincreasing in $t$ on the range where it is used, by taking on every segment $[e^k,e^{k+1}]$, and at every point, the least of the bounds valid there.
+
+The proofs are computer-assisted in this sense: they consist of the analysis of Sections~\ref{sec:inputs}--\ref{sec:criterion} and of this section, together with interval computations whose results are reported below. The computations have not been formally verified in a proof assistant.
+
+\subsection{Proof of Theorem~A}\label{sec:A}
+
+\emph{Segment bounds.} For integers $20\le k\le3400$ define $\eps_A(k)$ as follows:
+\begin{itemize}
+\item if $k\le42$: $\eps_A(k)=0.94\,e^{-k/2}$ (Lemma~\ref{lem:Buthe18}; note $e^{43}<10^{19}$);
+\item if $k=43$: $\eps_A(43)=\max\bigl\{0.94\,e^{-43/2},\ \min\{\eps_1(43),\epsCH(43)\}\bigr\}$;
+\item if $k\ge44$: $\eps_A(k)$ is the least of $\eps_1(k)$, $\epsCH(k)$, and $\eps_5(x_0')$ for the largest tabulated $\log x_0'\le k$.
+\end{itemize}
+Each $\eps_A(k)$ bounds $|\psi(t)-t|/t$ on $[e^k,10^{19}]$ for $k\le42$ and on $[e^k,\infty)$ for $k\ge43$, by Lemmas~\ref{lem:Buthe18}, \ref{lem:CH}(i) and~\ref{lem:FKS} and the monotonicity of $\eps_1$ and $\epsCH$. At $x=e^l$ the pointwise bound is $\eps^{\rm pt}=0.94\,e^{-l/2}$ if $l\le43.749$, and otherwise the least of $\eps_A(\lfloor l\rfloor)$, $\eps_1(l)$ and $\epsCH(l)$. The majorant $d_A$ is $D$ of Corollary~\ref{cor:segments} with these choices and $N=\lfloor l\rfloor$. For $44\le k\le800$ the least of the candidates is $\epsCH(k)$: there $\eps_1(k)\ge\eps_1(800)>8\cdot10^{-6}$, and Table~\ref{tab:FKS5} starts at $\log x_0'=1000$.
+
+\emph{Verification.} The script evaluates $M$ with $d=d_A$ on the grid of step $0.25$ starting at $L=43.749$, bisecting where necessary, and then continues with step $0.002$ from the last verified point. It finds $M>0$ on every interval up to $L_A=753.98499\ldots$; the next interval $[L_A,L_A+0.002]$ fails even after $12$ bisections.
+
+\begin{proof}[Proof of Theorem~A]
+Lemma~\ref{lem:base}(ii) gives \eqref{R} for $\NN\le x\le10^{19}$. The computation above gives $M(L)>0$, hence \eqref{R}, for $43.749\le L\le L_A$, and $e^{43.749}<10^{19}$, $L_A>753.98$.
+\end{proof}
+
+Theorem~A depends on~\cite[Cor.~1.3]{CH25}. By Corollary~E(i), arguments of type (a)--(c) at height $\HRH$ (Section~\ref{sec:barrier}) cannot go beyond $\log x=754.40$; the barrier computed in Section~\ref{sec:corE} lies at $\log x=754.39478$, and Theorem~A is within $0.41$ of it.
+
+\subsection{Refereed inputs only}\label{sec:Aref}
+
+\begin{proposition}\label{prop:Aref}
+Inequality \eqref{R} holds for every real $x$ with $\NN\le x\le e^{672.84}$. The proof uses neither~\cite{CH25} nor~\cite[Table~8]{BKLNW21}: its inputs are Lemmas~\ref{lem:Buthe18}, \ref{lem:Buthe16}, \ref{lem:PT}, \ref{lem:FKS} and~\ref{lem:base}(ii). All of them are refereed except the correction of B\"uthe's Theorem~1 in~\cite{Bha24} (Lemma~\ref{lem:Buthe16}).
+\end{proposition}
+
+\emph{Rows from B\"uthe's Theorem~1.} For $b$ in the grid
+\[
+\mathcal B=\{43.749\}\cup\{44,45,\dots,120\}\cup\{125,130,\dots,800\}\cup\{825,850,\dots,3300\}
+\]
+(314 values), we evaluate Lemma~\ref{lem:Buthe16} with $x_*=e^b$, $T=c/\eps\le\HRH$ (permitted by Lemma~\ref{lem:PT}), and the best of a small set of parameters $(c,T,\alpha)$. For $b<70$ the search runs over $c\in\{28,30,32,33,34,35\}$, over $\alpha\in\{10^{-3},3\cdot10^{-3},10^{-2}\}$, and over $T=\HRH$ and $T=10^{12}$, $3\cdot10^{11}$, $10^{11}$, $3\cdot10^{10}$, $10^{10}$, $3\cdot10^{9}$, $10^{9}$, $3\cdot10^8$. For $b\ge70$ it runs over $T=\HRH$, over $c\in\{33.5,34.25,35,35.75,36.5\}$, and over $\alpha\in\{3\cdot10^{-4},10^{-3},3\cdot10^{-3}\}$. Any admissible choice gives a valid bound; the search only sharpens it.
+
+The quantities in Lemma~\ref{lem:Buthe16} are enclosed as follows. $I_0$ and $I_1$ are summed from their power series ($400$ terms), with a geometric bound for the tail. Since $\eta_c$ is decreasing on $[0,1]$ and $0<\mu_c\le\frac12$ is decreasing on $[0,\alpha]$,
+\begin{gather*}
+\mu_c(\alpha)\in\bigl[\tfrac12-\alpha\eta_c(0),\ \tfrac12-\alpha\eta_c(\alpha)\bigr],\\
+|\nu_c(\alpha)|\in\Bigl[\frac{I_1(c)}{2\sinh c}-\frac\alpha2,\ \frac{I_1(c)}{2\sinh c}-\alpha\mu_c(\alpha)\Bigr].
+\end{gather*}
+In $E_1$ we use the upper end for $|\nu_c(\alpha)|$ and the lower end for $B$, and $E_3$ is bounded by $2(x_*^{-1/2}+x_*^{-1})\frac{\log^2(T/2\pi)}{4\pi}+\frac{1.92}{x_*}$. The second condition in Lemma~\ref{lem:Buthe16} holds for all parameters used here, since $\eps<10^{-3}$, $|\nu_c(\alpha)|<1/2$ and $\mu_c(\alpha)>1/4$. The result is a number $\delta(b)$ with
+\[
+|\psi(x)-x|\le\delta(b)\,x\qquad\text{for all }x\ge e^{b+\alpha\eps}.
+\]
+In all cases $\alpha\eps<10^{-6}$, and we use $\delta(b)$ for $x\ge e^{b+10^{-6}}$. Note that $e^{43.749+10^{-6}}<10^{19}$. Table~\ref{tab:delta} shows some of the rows.
+
+\begin{table}[ht]
+\caption{Some of the rows $\delta(b)$ (rounded up) from Lemma~\ref{lem:Buthe16} with RH up to height $\HRH$. Here $T_{\rm RH}=\HRH$.}\label{tab:delta}
+\small
+\begin{tabular}{rllll}
+\toprule
+$b$ & $\delta(b)$ & $c$ & $T$ & $\alpha$\\
+\midrule
+43.749 & $2.2730\cdot10^{-8}$  & 28 & $3\cdot10^{9}$ & $10^{-2}$\\
+50     & $1.3051\cdot10^{-9}$  & 32 & $10^{11}$ & $10^{-2}$\\
+60     & $1.3621\cdot10^{-11}$ & 35 & $T_{\rm RH}$ & $10^{-2}$\\
+100    & $2.1766\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $3\cdot10^{-3}$\\
+300    & $1.7440\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $3\cdot10^{-3}$\\
+600    & $1.6622\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $3\cdot10^{-3}$\\
+700    & $1.6512\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $3\cdot10^{-3}$\\
+1000   & $1.6317\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $3\cdot10^{-3}$\\
+3000   & $1.6021\cdot10^{-12}$ & 35 & $T_{\rm RH}$ & $10^{-3}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For comparison, \cite[Table~8]{BKLNW21} prints $1.98894\cdot10^{-12}$ at $b=600$. With $\log(3c)$ restored and $(c,\alpha)$ re-optimized, B\"uthe's method at the height used in~\cite{BKLNW21} gives at best about $2.02478\cdot10^{-12}$ there (Section~\ref{sec:buthe}, by quadrature). The rows of Table~\ref{tab:delta} are smaller because they use the larger height of Lemma~\ref{lem:PT}. They are also larger than the constant $\pi/(3\cdot10^{12})=1.0472\cdot10^{-12}$ of Lemma~\ref{lem:CH}(i), which is why Theorem~A goes further.
+
+\emph{Segment bounds.} For integers $20\le k\le3400$ define $\eps_{A'}(k)$ as follows:
+\begin{itemize}
+\item if $k\le42$: $\eps_{A'}(k)=0.94\,e^{-k/2}$ (Lemma~\ref{lem:Buthe18}; note $e^{43}<10^{19}$);
+\item if $k=43$: $\eps_{A'}(43)=\max\{0.94\,e^{-43/2},\ \delta(43.749)\}$;
+\item if $k\ge44$: $\eps_{A'}(k)$ is the least of $\eps_1(k)$, $\delta(b)$ for the largest $b\in\mathcal B$ with $b+10^{-6}\le k$, and $\eps_5(x_0')$ for the largest tabulated $\log x_0'\le k$.
+\end{itemize}
+Each $\eps_{A'}(k)$ bounds $|\psi(t)-t|/t$ on $[e^k,10^{19}]$ for $k\le42$ and on $[e^k,\infty)$ for $k\ge43$, by Lemmas~\ref{lem:Buthe18}, \ref{lem:Buthe16}, \ref{lem:PT} and~\ref{lem:FKS} and the monotonicity of $\eps_1$. At $x=e^l$ the pointwise bound is $\eps^{\rm pt}=0.94\,e^{-l/2}$ if $l\le43.749$, and otherwise the least of $\eps_{A'}(\lfloor l\rfloor)$, $\eps_1(l)$ and $\delta(b)$ for the largest $b\in\mathcal B$ with $b+10^{-6}\le l$. The majorant $d_{A'}$ is $D$ of Corollary~\ref{cor:segments} with these choices and $N=\lfloor l\rfloor$. Since all intervals used have width at most $0.25$ and start at $l\ge42.749$, the validity ranges above cover every $t$ at which $\eps_{A'}(N)$ is applied.
+
+\emph{Verification.} The script \texttt{buthe\_thesis\_run.py}, which runs \texttt{buthe\_ramanujan.py} with $E_2$ and $E_3$ as in Lemma~\ref{lem:Buthe16}, evaluates $M$ with $d=d_{A'}$ on the grid of step $0.25$ starting at $L=43.749$. It finds $M>0$ on every interval up to $L=672.749$, bisecting where necessary; the next interval fails. A second run with step $0.002$ from $672.749$ finds $M>0$ up to $L_{A'}=672.849\ldots$, and the interval $[L_{A'},L_{A'}+0.002]$ fails even after $12$ bisections.
+
+\begin{proof}[Proof of Proposition~\ref{prop:Aref}]
+Lemma~\ref{lem:base}(ii) gives \eqref{R} for $\NN\le x\le10^{19}$. The computation above gives $M(L)>0$, hence \eqref{R}, for $43.749\le L\le L_{A'}$, and $e^{43.749}<10^{19}$, $L_{A'}>672.84$.
+\end{proof}
+
+\subsection{Proof of Theorem~C}\label{sec:C}
+
+\subsubsection{The bound of Fiori, Kadiri and Swidinsky, re-implemented}\label{sec:fks}
+Theorem~1.1 of~\cite{FKS23} states that, for $\log x_0>1000$,
+\[
+|\psi(x)-x|\le\eps(x_0)\,x\quad\text{for all }x\ge x_0,\qquad \eps(x_0)=\eps_1+\eps_2+\eps_3+\eps_4,
+\]
+where $\eps_1,\dots,\eps_4$ are given by~\cite[(3.4), (3.8), (3.17), (3.22)]{FKS23}. These terms depend on the following data:
+\begin{itemize}
+\item the height $H_0$ up to which RH is verified; here $H_0=3\cdot10^{12}$, by Lemma~\ref{lem:PT};
+\item the constants $T_0=30{,}610{,}046{,}000$ and $S_0=39.5797647802$ of~\cite{FKS23}, and Rosser's constants $b_1=0.137$, $b_2=0.443$, $b_3=1.588$ in the bound for the number of zeros up to height $t$;
+\item zero-density estimates (Lemma~\ref{lem:density});
+\item a zero-free region $\sigma\ge1-1/(R\log|t|)$;
+\item parameters $\sigma_1=0.9$, $\sigma_2$, $c=3$, $N$, $K$, with $T=\exp\bigl(c\sqrt{\log x_0/R}\bigr)$.
+\end{itemize}
+The zero-free region enters only through $R$: in $\eps_3$ through the heights $H_\sigma=\max\{H_0,\exp(1/(R(1-\sigma)))\}$ above which the density estimates are applied, and in $\eps_4$ through $t_0$ and the factor $x^{-1/(R\log t)}$. In~\cite{FKS23}, $t_0=\max\{H_{\sigma_2},\exp(\sqrt{\log x/R})\}$ depends on $x$; with the parameters of a row fixed, the bound holds only while $\log x\le R\log^2t_0$. We therefore take $t_0=\max\{H_{\sigma_2},\exp(\sqrt{L_{\max}/R})\}$, where $L_{\max}$ is the right end of the range of $\log x$ on which the row is used, so that $t_0\ge\exp(\sqrt{\log x/R})$ for every $x$ at which the row is used. The density estimate enters $\eps_3$ through the interval constants of~\cite[Table~8]{FKS23} and $\eps_4$ through a bound $\widetilde N(\sigma_2,t)\ge N(\sigma_2,t)$; any such upper bound may be used in $\eps_4$, in particular the pointwise minimum of two of them.
+
+The script \texttt{fks\_eps.py} implements the four terms exactly as printed in~\cite{FKS23}; the rows for Theorems~C and~\Cstar{} use $N=10^4$ and $K=10^5$. As for all tabulated constants (Section~\ref{sec:inputs}), the density constants of~\cite[Tables~7 and~8]{FKS23} and the constants $C$ and $B$ of~\cite[Table~2]{Bel24} are used after adding one unit in their last printed digit. For $\eps_4$ it uses the per-$\sigma$ constants of~\cite[Table~7]{FKS23} at $\sigma_2\in\{0.990,0.991,\dots,0.999\}$, for $\eps_3$ the interval constants of~\cite[Table~8]{FKS23}, and it minimizes over $\sigma_2$ on this grid. Table~\ref{tab:fksval} compares the result, with the constant $R=5.5666305$ used in~\cite{FKS23} and the first block of~\cite[Table~7]{FKS23} ($a_1=0.77$), against~\cite[Table~5]{FKS23}. Our values are $0.4$--$2.8\%$ larger, because Fiori, Kadiri and Swidinsky optimize $\sigma_2$ continuously, with density constants for each $\sigma$ that they do not print; the terms $\eps_1$ and $\eps_2$ reproduce exactly. The evaluation is in double precision (NumPy and SciPy). A $40$-digit mpmath evaluation of the same formulas (\texttt{fks\_eps\_mpcheck.py}) agrees to a relative difference of about $10^{-15}$, and every computed value is multiplied by $1+10^{-9}$ before it is used.
+
+\begin{table}[ht]
+\caption{Our evaluation of \cite[Thm.~1.1]{FKS23} (with $\sigma_2$ on the grid of \cite[Table~7]{FKS23}, $a_1=0.77$ and $R=5.5666305$) against \cite[Table~5]{FKS23}.}\label{tab:fksval}
+\small
+\begin{tabular}{rll}
+\toprule
+$\log x_0$ & ours & \cite[Table~5]{FKS23}\\
+\midrule
+2000 & $2.4843\cdot10^{-12}$ & $2.4746\cdot10^{-12}$\\
+2500 & $1.1143\cdot10^{-13}$ & $1.0972\cdot10^{-13}$\\
+2900 & $9.4623\cdot10^{-15}$ & $9.2091\cdot10^{-15}$\\
+3000 & $5.1066\cdot10^{-15}$ & $4.9678\cdot10^{-15}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{The computation}
+\emph{Rows.} For Theorem~C we use the zero-free region of Lemma~\ref{lem:ZFR}(i), $R=5.558691$, and the second block of~\cite[Table~7]{FKS23} ($a_1=0.618$, Lemma~\ref{lem:density}(i)) in $\eps_4$, and evaluate $\eps(x_0)$ at every integer $\log x_0\in[2900,3160]$. Each row bounds $|\psi(x)-x|/x$ for all $x\ge x_0$ at which it is used. The rows decrease from $8.98693\cdot10^{-15}$ at $\log x_0=2900$ to $1.91915\cdot10^{-15}$ at $\log x_0=3150$.
+
+\emph{Segment bounds.} The segment bounds $\eps_C(k)$ $(20\le k\le10050)$ and the pointwise bounds are formed as in Section~\ref{sec:A}, with the rows above in place of $\epsCH$, so that~\cite{CH25} is not used. For $k\ge44$, $\eps_C(k)$ is the least of $\eps_1(k)$, $\eps_5(x_0')$ for the largest tabulated $\log x_0'\le k$, and the row at the largest integer $\log x_0\le k$ in $[2900,3160]$.
+
+\emph{Verification on $[L_C,10^4]$.} The script \texttt{fks\_fine\_R.py} scans $[2920,3200]$ with step $0.5$ and then the last failing region with step $0.002$. It finds that the last interval with $M\le0$ ends at $L_C=3035.00199\ldots$, and from $L_C$ to $10^4$ it verifies $M>0$ on a grid of step $0.5$, bisecting where necessary.
+
+\emph{The tail $L\ge10^4$.} Here we use only Lemma~\ref{lem:FKS}(ii), splitting the integral in Proposition~\ref{prop:Delta} at $t=e^{l/2}$. With $\eta(t)=\eps_1(20)$ on $[e^{20},e^{l/2}]$ and $\eta(t)=\eps_1(l/2)$ on $[e^{l/2},x]$, Lemma~\ref{lem:int} (with $a=l/2$ on the second piece) gives the majorant
+\begin{align*}
+d_T(l)&=\frac{\eps_1(l)+\Rpt(l)}{l}+K_0e^{-l}\\
+&\quad+\frac{\eps_1(20)\,e^{-l/2}}{(l/2)^2(1-2/20)}+\frac{\eps_1(l/2)}{l^2(1-4/l)}+\Rint(l),
+\end{align*}
+valid for $l\ge40$. Here $\eps_1(20)\approx18.62$.
+
+\begin{lemma}\label{lem:mono}
+For $L\ge338$, $L^6d_T(L)$, $\Err_T(L)=L^6\bigl[\frac{d_T(L-1)}{L}+2j(L)d_T(L)+d_T(L)^2\bigr]$ and $j(L)$ are nonincreasing.
+\end{lemma}
+
+\begin{proof}
+$L^6d_T(L)$ is a sum of the following nonnegative terms, each nonincreasing on the stated range:
+\begin{itemize}
+\item $L^5\eps_1(L)=A_1L^{13/2}e^{-c_1\sqrt L}$, for $L>(13/c_1)^2\approx235.2$;
+\item $L^4\eps_1(L/2)\cdot(1-4/L)^{-1}$, a product of two positive nonincreasing functions for $L>2(11/c_1)^2\approx336.78$;
+\item terms $C\,L^ke^{-\gamma L}$ with $k\le6$ and $\gamma\ge1/2$, coming from $K_0$, $\eps_1(20)$, $\Rpt$ and $\Rint$, nonincreasing for $L>k/\gamma$, hence for $L\ge12$.
+\end{itemize}
+Next, $J'(x)=1/\log x$ gives $j'(l)=1/l-j(l)<0$, since $j(l)>1/l$. Finally, $\Err_T(L)$ is the sum of $\frac{L^5}{(L-1)^6}\cdot(L-1)^6d_T(L-1)$, of $2j(L)\cdot L^6d_T(L)$, and of $L^6d_T(L)\cdot L^{-6}\cdot L^6d_T(L)$. Each is a product of positive nonincreasing functions for $L-1>336.78$.
+\end{proof}
+
+The script checks the thresholds of Lemma~\ref{lem:mono} and, as a numerical sanity check, that $L^6d_T(L)$ decreases along $L=10^4\cdot\{1,2,4,8,64\}$. It then evaluates at $L_1=10^4$:
+\begin{itemize}
+\item an enclosure of $\Main(L)=N_6(u)/(1-u)^{12}$ over the whole interval $u\in[0,10^{-4}]$, that is, over all $L\ge10^4$, with lower end $1.0000000000$ to ten decimals;
+\item $\Err_T(10^4)\le9.1\cdot10^{-8}$;
+\item $|\Corr(10^4)|\le4.8\cdot10^{-24}$.
+\end{itemize}
+By Lemma~\ref{lem:mono}, $\Err_T(L)\le\Err_T(10^4)$ for all $L\ge10^4$. For the correction term, Proposition~\ref{prop:rho} gives $0\le\rho(l)\le2\cdot12!\,l^{-13}$ for $l\ge9999$, and $P(1/L)\le2/L$; hence $|\Corr(L)|\le10^{-20}$ for all $L\ge10^4$. Therefore
+\[
+M(L)\ge\inf_{0\le u\le10^{-4}}\Main-10^{-20}-\Err_T(10^4)\ge0.99999990\qquad(L\ge10^4);
+\]
+the script reports $0.9999999090$ for the same bound with $|\Corr(10^4)|$ in place of $10^{-20}$.
+
+\begin{proof}[Proof of Theorem~C]
+The verification gives $M(L)>0$ for $L_C\le L\le10^4$, and the tail argument gives $M(L)\ge0.99999990$ for $L\ge10^4$. Since $L_C<3035.01$, Proposition~\ref{prop:C} gives \eqref{R} for all $x\ge e^{3035.01}$.
+\end{proof}
+
+The proof uses Lemmas~\ref{lem:ps}, \ref{lem:RS}, \ref{lem:Buthe18}, \ref{lem:FKS}, \ref{lem:ZFR}(i) and~\ref{lem:density}(i), and~\cite[Thm.~1.1]{FKS23} in the re-implementation above; all of these are published. In particular it uses neither~\cite[Lemma~2.1]{DP15}, nor~\cite[Thm.~1]{But16}, nor~\cite{CH25}.
+
+\begin{remark}[Variants]\label{rem:Cvar}
+(a) With the first block of~\cite[Table~7]{FKS23} ($a_1=0.77$) in place of the second, the same computation verifies $M>0$ from $L=3040.00199\ldots$ to $10^4$, which gives \eqref{R} for $x\ge e^{3040.01}$.
+
+(b) If in addition the constant $R=5.5666305$ of~\cite{FKS23} replaces Lemma~\ref{lem:ZFR}(i), the computation verifies $M>0$ from $L=3045.00199\ldots$ to $10^4$, which gives \eqref{R} for $x\ge e^{3045.01}$.
+
+(c) With the printed rows of~\cite[Table~5]{FKS23} and~\cite[Cor.~1.4]{FKS23} only (\texttt{extend\_ramanujan.py}), the method gives \eqref{R} for $x\ge e^{3157.94}$, as follows. \emph{Mode F.} For integers $20\le k\le10050$ let $\eps_F(k)$ be the least of $\eps_1(k)$ and $\eps_5(x_0')$ for the largest tabulated $\log x_0'\le k$ (Lemma~\ref{lem:FKS}). Each $\eps_F(k)$ bounds $|\psi(t)-t|/t$ for all $t\ge e^k$. The script also lists the rows $b=2500$ and $b=3000$ of~\cite[Table~8]{BKLNW21} among the candidates. On the ranges where these rows apply, $\eps_5$ is smaller ($1.0972\cdot10^{-13}$ against $9.06304\cdot10^{-13}$, and $4.9678\cdot10^{-15}$ against $4.59972\cdot10^{-14}$), so they never attain the minimum, and this variant does not depend on them. The pointwise bound at $x=e^l$ is $\min\{\eps_F(\lfloor l\rfloor),\eps_1(l)\}$, and the majorant $d_F$ is $D$ of Corollary~\ref{cor:segments} with $N=\lfloor l\rfloor$. For example, $\eps_F(3000)=4.9679\cdot10^{-15}$ (the entry of Table~\ref{tab:FKS5} plus one unit) and $\eps_F(3158)\approx3.3542\cdot10^{-15}$, which comes from $\eps_1$.
+
+\emph{Verification on $[L_F,10^4]$.} A scan of $[3000,3200]$ with step $0.5$ finds that the last interval with $M\le0$ ends at $3158.5$. A scan of $[3155.5,3159]$ with step $0.002$ finds that the last such interval ends at $L_F=3157.93199\ldots<3157.932$. From $L_F$ to $10^4$, the script verifies $M>0$ on a grid of step $0.5$, bisecting where necessary. This uses $13{,}692$ intervals of width at most $0.5$; exactly one interval of the initial grid had to be subdivided. Since $L_F<3157.94$, the tail argument above completes the proof.
+
+The step from $e^{3157.94}$ to $e^{3045.01}$ comes from the rows at every integer $\log x_0$, which replace the gap between the printed rows at $3000$ and $4000$; the step to $e^{3040.01}$ comes from the constant of~\cite{MTY23}, and the step to $e^{3035.01}$ from the density constants based on~\cite{HPY24}.
+
+(d) With the preprint of Bellotti, that is, with the pointwise minimum of the two bounds of Lemma~\ref{lem:density} in $\eps_4$, and with $R=5.558691$, rows at every integer $\log x_0\in[2850,3160]$ give \eqref{R} for $x\ge e^{2992.01}$; the verification starts at $L=2992.00199\ldots$.
+\end{remark}
+
+\subsection{\texorpdfstring{Proof of Theorem~\Cstar}{Proof of Theorem C*}}\label{sec:Cstar}
+Theorem~\Cstar{} depends on two preprints: on~\cite{BTY26} through Lemma~\ref{lem:ZFR}(ii), and on~\cite{Bel24} through Lemma~\ref{lem:density}(ii). Since $\zeta(s)$ has no zeros with $|\operatorname{Im}s|<14$, Lemma~\ref{lem:ZFR}(ii) can replace Lemma~\ref{lem:ZFR}(i) in~\cite[Thm.~1.1]{FKS23}, with $R=4.896$. In $\eps_4$ we use the pointwise minimum of the two bounds of Lemma~\ref{lem:density}. We evaluate $\eps(x_0)$ with these inputs at every integer $\log x_0\in[2400,3000]$; the rows decrease from $2.86401\cdot10^{-14}$ at $\log x_0=2400$ to $4.11372\cdot10^{-16}$ at $\log x_0=3000$. With these rows in place of those of Section~\ref{sec:C}, \texttt{fks\_fine\_R.py} finds that the last interval with $M\le0$ ends at $L_{C^*}=2591.00199\ldots$, and verifies $M>0$ on a grid of step $0.5$ from $L_{C^*}$ to $10^4$, bisecting where necessary.
+
+\begin{proof}[Proof of Theorem~\Cstar]
+The verification gives $M(L)>0$ for $L_{C^*}\le L\le10^4$, and the tail argument of Section~\ref{sec:C} gives $M(L)>0$ for $L\ge10^4$. Since $L_{C^*}<2591.01$, Proposition~\ref{prop:C} gives \eqref{R} for all $x\ge e^{2591.01}$.
+\end{proof}
+
+\begin{remark}\label{rem:Cstarvar}
+With~\cite{BTY26} alone, that is, with $R=4.896$ and the first block of~\cite[Table~7]{FKS23} in $\eps_4$, rows at every integer $\log x_0\in[2300,3160]$ give \eqref{R} for $x\ge e^{2599.01}$; the verification starts at $L=2599.00199\ldots$.
+\end{remark}
+
+\subsection{Proof of Theorem~B and Corollary~F}\label{sec:B}
+
+\emph{The bound for $\psi$.} Let $0<\theta<1$ and assume that every zero $\beta+i\gamma$ of $\zeta(s)$ satisfies $\beta\le\theta$. Let $L=\log x\ge110$ and $T=e^{L/2-2}$. Then $T>\max\{51,L\}$ and $T<(\sqrt x-2)/2$, so Lemma~\ref{lem:CHJ} applies; we use it in the weaker form described after it. Every zero with $0<\gamma\le H=\HRH$ has $\beta=1/2$ (Lemma~\ref{lem:PT}), every zero has $\beta\le\theta$, $|x^{\rho-1}/\rho|\le x^{\beta-1}/|\gamma|$, the zeros are symmetric under $\gamma\mapsto-\gamma$, and $\sum_{0<\gamma\le t}1/\gamma\le\log^2(t/2\pi)/(4\pi)$ for $t\ge5000$~\cite[Lemma~3]{But16}. Hence $|\psi(x)-x|\le\eps_\theta(L)\,x$, where
+\[
+\eps_\theta(L)=\frac{200L^2}{T}+\frac{2e^{-L/2}\log^2(H/2\pi)}{4\pi}+\frac{2e^{(\theta-1)L}\log^2(2.45T/2\pi)}{4\pi}.
+\]
+The function $\eps_\theta$ is decreasing in $L$ for $L\ge\max\{110,2/(1-\theta)+6\}$, so $\eps_\theta(a)$ bounds $|\psi(x)-x|/x$ for every $x\ge e^a$, and it is increasing in $\theta$. The computations below add $\eps_\theta$ to the bounds of Lemmas~\ref{lem:Buthe18} and~\ref{lem:FKS}, formed into segment and pointwise bounds as in Section~\ref{sec:A} but without $\epsCH$. They use neither~\cite{CH25} nor~\cite{FJ26}.
+
+\emph{The case $\theta=7/8$.} The script \texttt{qrh\_ramanujan.py} gives $\eps_{7/8}(250)\le6.3570\cdot10^{-11}$, $\eps_{7/8}(300)\le1.7814\cdot10^{-13}$, $\eps_{7/8}(672)\le5.8361\cdot10^{-33}$ and $\eps_{7/8}(3000)\le4.9189\cdot10^{-158}$, and verifies $M>0$ on every interval of the grid of step $0.5$ on $[247.5,\,3036.0]$.
+
+\emph{The case $\theta\le\thetaB$.} The script \texttt{qrh\_theta.py} verifies $M>0$ on every interval of the grid of step $0.5$ on $[672.5,\,3036.0]$ for $\theta=\thetaB$. A bisection over $\theta\in[0.875,0.99]$, with $14$ steps, shows that the verification succeeds at $\theta=\thetaB$ and fails at $\theta=0.945099$. At every failing value the first failure is on $[672.5,673.0]$, at the lower end of the range, where Proposition~\ref{prop:Aref} ends.
+
+\begin{proof}[Proof of Theorem~B]
+Let $\theta\le\thetaB$. Under the hypothesis every zero satisfies $\beta\le\theta$, and since $\eps_\theta\le\eps_{\thetaB}$, the computation gives \eqref{R} for $e^{672.5}\le x\le e^{3036}$. Lemma~\ref{lem:base}(ii) and Proposition~\ref{prop:Aref} give \eqref{R} on $[\NN,\allowbreak e^{672.84}]$, and Theorem~C gives it on $[e^{3035.01},\allowbreak\infty)$. Lemma~\ref{lem:base}(i) gives $N_R=\NN$. All inputs are refereed except the correction of B\"uthe's Theorem~1 in~\cite{Bha24}, which enters through Proposition~\ref{prop:Aref}.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~F]
+By Lemma~\ref{lem:OAI}, $\zeta(s)\ne0$ for $\operatorname{Re}s>7/8$. Since $7/8<\thetaB$, Theorem~B gives the claim.
+\end{proof}
+
+\emph{Robustness of Corollary~F.} For $\theta=7/8$ the computation covers $[e^{247.5},e^{3036}]$, so Proposition~\ref{prop:Aref} is needed only on $[10^{19},e^{247.5}]$, and there it has a large margin: if every row of Lemma~\ref{lem:Buthe16} is multiplied by $2$, the verification of Section~\ref{sec:Aref} still succeeds for $43.749\le L\le564.999$ (\texttt{robust\_Aref.py}). Theorem~A, which rests on the independent method of Chirre and Helfgott~\cite{CH25}, also covers $[10^{19},e^{753.98}]$. So for $\theta=7/8$ the range $[10^{19},e^{247.5}]$ has two independent proofs.
+
+\subsection{\texorpdfstring{Proof of Theorem~\Bstar}{Proof of Theorem B*}}\label{sec:Bstar}
+
+Let $\theta_*=0.968978$, and assume that every zero $\rho$ of $\zeta(s)$ satisfies $\operatorname{Re}\rho\le\theta_*$. Lemma~\ref{lem:FJ} with $\sigma=\theta_*$ gives $|\psi(x)-x|\le\eps^{\rm FJ}_{\theta_*}(\log x)\,x$ for $\log x>5$, where
+\[
+\eps^{\rm FJ}_{\theta}(l)=A\,l^2e^{-l/4}+C(x_0)\,e^{(\theta-1)l},\qquad x_0\text{ the largest entry of Table~\ref{tab:FJ} with }\log x_0<l.
+\]
+The function $\eps^{\rm FJ}_{\theta}$ is nonincreasing for $l\ge8$, since $C(x_0)$ is nonincreasing in $x_0$. The segment bounds $\eps_B(k)$ are defined as $\eps_A(k)$ in Section~\ref{sec:A}, with $\eps^{\rm FJ}_{\theta_*}(k)$ added to the list of candidates, and the pointwise bound at $x=e^l$ is the least of that of Section~\ref{sec:A} and $\eps^{\rm FJ}_{\theta_*}(l)$.
+
+\emph{Verification.} With the resulting majorant, the script verifies $M>0$ on every interval of the grid of step $0.5$ on $[752.985,\,3158.5]$, bisecting where necessary.
+
+\emph{Sharpness for the method.} A bisection over $\theta\in[0.875,0.999]$, with $16$ steps, each a full verification of $M>0$ on $[752.985,3158.5]$, shows that the verification succeeds at $\theta=0.968978$ and fails at $\theta=0.968980$. At every failing value the first failure is on the grid interval $[753.985,754.485]$, at the left end of the open range. There Lemma~\ref{lem:CH}(i), the input of Theorem~A, has just ceased to suffice, and Lemma~\ref{lem:FJ} must take over.
+
+\begin{proof}[Proof of Theorem~\Bstar]
+Assume that $\zeta(s)\ne0$ for $\operatorname{Re}s>0.96897$. Then every zero satisfies $\operatorname{Re}\rho\le0.96897<\theta_*$, and the computation gives \eqref{R} for $e^{752.985}\le x\le e^{3158.5}$. Lemma~\ref{lem:base}(ii) and Theorem~A give \eqref{R} on $[\NN,\allowbreak e^{753.98}]$, and Theorem~C gives it on $[e^{3035.01},\allowbreak\infty)$. These ranges cover $[\NN,\infty)$. Lemma~\ref{lem:base}(i) shows that \eqref{R} fails at $\NNm$, so $N_R=\NN$.
+\end{proof}
+
+\begin{remark}\label{rem:78}
+Under the stronger hypothesis $\operatorname{Re}\rho\le7/8$, Lemma~\ref{lem:FJ} with $\sigma=7/8$ and $x_0=e^5$ alone suffices from $L=137$ on. Take $\eta(t)=A\log^2t\,t^{-1/4}+Ct^{-1/8}$ with $C=0.02636425$ in Proposition~\ref{prop:Delta}, and bound the integrals by $\int_{e^{20}}^xAt^{-1/4}\,dt\le\frac43Ax^{3/4}$ and
+\[
+\int_{e^{20}}^x\frac{C\,t^{-1/8}}{\log^2t}\,dt\le\frac{C\,x^{7/8}}{l^2(7/8-4/l)}+\frac{8C}{7\cdot400}\,x^{7/16}
+\]
+(split at $\sqrt x$). The script \texttt{verify\_ramanujan.py} then finds $M>0$ on every interval of $[137,3158.5]$: a scan of $[100,200]$ with step $0.25$ finds that the last interval with $M\le0$ ends at $L=137$, and on $[200,3158.5]$ all $5917$ intervals of width $0.5$ pass. The smallest lower bound there is $1.004447$, attained on $[3158,3158.5]$; the error term is at most $1.93\cdot10^{-41}$ at $L\approx950$. So under Lemma~\ref{lem:OAI}, and with the preprint~\cite{FJ26}, the margin $M(L)$ is of size $1$ throughout the open range.
+\end{remark}
+
+\subsection{\texorpdfstring{Proof of Theorem~\Bp}{Proof of Theorem B'}}\label{sec:Bprime}
+
+Let $R_B=1.73730$, and assume that $\zeta(\beta+i\gamma)\ne0$ whenever $|\gamma|>3\cdot10^{12}$ and $\beta>1-1/(R_B\log|\gamma|)$. Theorem~1.1 of~\cite{FKS23} uses the zero-free region only at heights at least $H_0=3\cdot10^{12}$ (through $H_\sigma\ge H_0$ and $t_0\ge H_0$; Section~\ref{sec:fks}), and below $H_0$ Lemma~\ref{lem:PT} applies. So the re-implementation of Section~\ref{sec:fks} applies with $R=R_B$.
+
+\emph{Rows below $\log x_0=1000$.} Fiori, Kadiri and Swidinsky state their Theorem~1.1 for $\log x_0>1000$. The ingredients of its proof, \cite[Props.~3.4, 3.6, 3.8, 3.11 and~3.14]{FKS23}, require only $x>e^{50}$, $3\log x<T<\sqrt x/3$ and $T>t_0$, which the script checks for every row. As in Section~\ref{sec:fks}, $t_0$ is chosen so that $t_0\ge\exp(\sqrt{\log x/R})$ for every $x$ at which the row is used. We therefore use rows from $\log x_0=700$ on: at every $3$ in $\log x_0$ up to $1200$ and at every $25$ above, with $N=4000$ and $K=4\cdot10^4$. Each row is minimized over $\sigma_2\in\{0.95,0.96,0.97,0.98,0.985,0.990,0.993,0.996\}$, with the constants of the second block of~\cite[Table~7]{FKS23} at $0.990$, $0.993$ and $0.996$ and those of~\cite[Table~8]{FKS23} otherwise.
+
+\emph{Verification.} With these rows added to the candidates of Section~\ref{sec:A}, the script \texttt{zfr\_B.py} verifies $M>0$ on every interval of the grid of step $0.5$ on $[752.985,\,3035.502]$, bisecting where necessary.
+
+\emph{Sharpness for the method.} A bisection over $R\in[1,3]$, with $12$ steps, each a full verification of $M>0$ on $[752.985,3035.502]$, shows that the verification succeeds at $R=1.73730$ and fails at $R=1.73779$. At every failing value the first failure is on the grid interval $[753.985,754.485]$, at the left end of the open range.
+
+\begin{proof}[Proof of Theorem~\Bp]
+Let $R\le1.7373=R_B$. Since $1/(R\log|\gamma|)\ge1/(R_B\log|\gamma|)$, the hypothesis of Theorem~\Bp{} implies the hypothesis above, and the computation gives \eqref{R} for $e^{752.985}\le x\le e^{3035.502}$. Lemma~\ref{lem:base}(ii) and Theorem~A give \eqref{R} on $[\NN,\allowbreak e^{753.98}]$, and Theorem~C gives it on $[e^{3035.01},\allowbreak\infty)$. Lemma~\ref{lem:base}(i) gives $N_R=\NN$.
+\end{proof}
+
+The best known constants are $R=5.558691$ (Lemma~\ref{lem:ZFR}(i)) and, in the preprint~\cite{BTY26}, $R=4.896$ (Lemma~\ref{lem:ZFR}(ii)). Theorem~\Bp{} needs a constant smaller by a factor of about $3.2$, respectively $2.8$.
+
+\subsection{Proof of Theorem~D}\label{sec:D}
+
+Let $T_D=\TDuse$, and assume that every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le T_D$ satisfies $\beta=1/2$. The proof combines three bounds for $|\psi(x)-x|/x$:
+\begin{enumerate}
+\item[(D1)] Lemma~\ref{lem:CH}(ii) at height $T_D$, that is, $\eps_{T_D}$;
+\item[(D2)] Lemma~\ref{lem:CH}(i), that is, $\epsCH$;
+\item[(D3)] \cite[Thm.~1.1]{FKS23}, re-implemented as in Section~\ref{sec:fks} with the inputs of Theorem~C ($R=5.558691$ and the second block of~\cite[Table~7]{FKS23} in $\eps_4$), with $N=4000$, $K=4\cdot10^4$ and $t_0$ chosen as there, but with the verification height $H_0=3\cdot10^{12}$ replaced by $T_D$.
+\end{enumerate}
+
+All inputs except~\cite{CH25} are published.
+
+\emph{Validity of~(D3).} In the proof of~\cite[Thm.~1.1]{FKS23} the height $H_0$ is used in exactly three places, each time only as a height below which every zero has $\beta=1/2$:
+\begin{itemize}
+\item in $\eps_2$, through $B_1(H_0,T)$: the zeros with $1/2<\beta<\sigma_1$ have $\gamma\ge H_0$;
+\item in $H_\sigma=\max\{H_0,\exp(1/(R(1-\sigma)))\}$, through $N(\sigma,H_\sigma)=0$;
+\item in $t_0$ in $\eps_4$, through $H_{\sigma_2}$.
+\end{itemize}
+Under our hypothesis each of these remains valid with $T_D$ in place of $H_0$. The density constants of~\cite[Thm.~2.7]{FKS23} were computed with $H_0=3\cdot10^{12}$; since RH holds up to that height (Lemma~\ref{lem:PT}), they remain valid for every verification height $T\ge3\cdot10^{12}$. We evaluate~(D3) at every $4$ in $\log x_0$ on $[1700,L_C]$, where $L_C=3035.00199\ldots$ is as in Section~\ref{sec:C}.
+
+\emph{Verification.} The segment and pointwise bounds are formed as in Section~\ref{sec:A}, with~(D1) and~(D3) added to the candidates. With the resulting majorant, the script \texttt{hybrid\_D.py} verifies $M>0$ on every interval of the grid of step $0.5$ on $[752.985,\,L_C+0.5]$, bisecting where necessary.
+
+\emph{Sharpness for the method.} A geometric bisection over $T\in[1.5\cdot10^{14},6\cdot10^{14}]$, with $11$ steps, each a full verification of $M>0$ on $[752.985,L_C+0.5]$, shows that the verification succeeds at $T=\TDuse$ and fails at $T=4.15735\cdot10^{14}$. At the failing height the first failure is on the grid interval $[2579.985,2580.485]$, inside the open range.
+
+\begin{proof}[Proof of Theorem~D]
+Since $\TDhyp>T_D$, the hypothesis of Theorem~D implies the hypothesis above, and the computation gives \eqref{R} for $e^{752.985}\le x\le e^{L_C+0.5}$. Lemma~\ref{lem:base}(ii) and Theorem~A cover $\NN\le\allowbreak x\le\allowbreak e^{753.98}$, and Theorem~C covers $x\ge e^{3035.01}$. Lemma~\ref{lem:base}(i) gives $N_R=\NN$.
+\end{proof}
+
+\begin{remark}[With the preprints~\cite{BTY26} and~\cite{Bel24}]\label{rem:Dpre}
+With the inputs of Theorem~\Cstar{} in~(D3), that is, $R=4.896$ and the pointwise minimum of the two bounds of Lemma~\ref{lem:density} in $\eps_4$, with rows on $[1700,L_{C^*}]$, and with Theorem~\Cstar{} in place of Theorem~C, the same computation succeeds at $T=2.14878\cdot10^{14}$ and fails at $T=2.14733\cdot10^{14}$, with the first failure on $[2187.485,2187.985]$. So, given~\cite{BTY26} and~\cite{Bel24}, RH up to height $\TDpre$, about $72$ times $\HRH$, implies $N_R=\NN$.
+\end{remark}
+
+\begin{remark}[The zeros through~\cite{CH25} only]\label{rem:Dzeros}
+Suppose the zeros above $\HRH$ enter only through Lemma~\ref{lem:CH}(ii), that is, (D3) is replaced by the rows of Section~\ref{sec:C}, computed with $H_0=3\cdot10^{12}$. Then the method needs a larger height. The verification on $[752.985,L_C+0.5]$ succeeds at $T=7.96116\cdot10^{14}$ and fails at $T=7.96091\cdot10^{14}$, with the first failure on $[3034.985,3035.485]$; so RH up to height $7.9612\cdot10^{14}$ suffices. With the rows of Remark~\ref{rem:Cvar}(d), which use~\cite{Bel24}, and with \eqref{R} for $x\ge e^{2992.01}$ from there, the verification succeeds at $T=7.51915\cdot10^{14}$ and fails at $T=7.51891\cdot10^{14}$ (first failure on $[2991.985,2992.485]$), so RH up to height $7.5192\cdot10^{14}$ suffices. With the rows of Section~\ref{sec:Cstar} and Theorem~\Cstar, it succeeds at $T=4.22899\cdot10^{14}$ and fails at $T=4.22886\cdot10^{14}$ (first failure on $[2590.985,2591.485]$), so RH up to height $4.2290\cdot10^{14}$ suffices. These runs use \texttt{fks\_fine\_R.py}.
+
+With the printed rows of~\cite{FKS23} only and the version of Theorem~C in Remark~\ref{rem:Cvar}(c), the height is larger again. Let $T_D'=\TDolduse$ and assume RH up to $T_D'$. With $\eps_{T_D'}(k)$ added to the candidates of Section~\ref{sec:A} for $k\ge43$, the script \texttt{ch\_ramanujan.py} verifies $M>0$ on every interval of the grid of step $0.5$ on $[752.985,3158.5]$; together with Theorem~A and Theorem~C, RH up to height $\TDold$ implies $N_R=\NN$. A geometric bisection over $T\in[\HRH,10^{16}]$, with $18$ steps, shows that this verification succeeds at $T=\TDolduse$ and fails at $T=9.33537\cdot10^{14}$, with the first failure on $[3157.485,3157.985]$.
+
+In all of these cases the binding constraint lies at the top of the range covered by the verification.
+\end{remark}
+
+\begin{remark}[B\"uthe's method]\label{rem:DButhe}
+With Lemma~\ref{lem:Buthe16} in place of Lemma~\ref{lem:CH}(ii) the same approach needs a larger height. Let $T^*=\TB$ and assume that every zero $\beta+i\gamma$ of $\zeta(s)$ with $0<\gamma\le T^*$ satisfies $\beta=1/2$. Since $T^*>\HRH$, all rows $\delta(b)$ of Section~\ref{sec:Aref} remain valid. For $b\in\mathcal B$ with $b\ge600$, the script \texttt{confirm\_theorem\_D\_thesis.py} recomputes the rows of Lemma~\ref{lem:Buthe16} with $T=T^*$. It searches over $c\in c_0+\{-1,0,1\}$ with $c_0=35+\log(T^*/\HRH)$ and $\alpha\in\{3\cdot10^{-4},10^{-3}\}$, and for each $b$ it keeps the smaller of the new row and the row of Section~\ref{sec:Aref}. Under the hypothesis the new rows satisfy
+\begin{align*}
+\delta(600)&\le4.1260\cdot10^{-15}, & \delta(1000)&\le4.0311\cdot10^{-15},\\
+\delta(2000)&\le3.9627\cdot10^{-15}, & \delta(3000)&\le3.9404\cdot10^{-15},
+\end{align*}
+more than two orders of magnitude below the rows of Table~\ref{tab:delta}. With the majorant built from these rows exactly as $d_{A'}$ in Section~\ref{sec:Aref}, the script verifies $M>0$ on every interval of the grid of step $0.5$ on $[671.85,3035.502]$, bisecting where necessary. Together with Proposition~\ref{prop:Aref} and Theorem~C, this gives $N_R=\NN$ under RH up to height $\TB$, from refereed inputs and~\cite{Bha24}. A geometric bisection over $T\in[\HRH,10^{17}]$, with $16$ steps (\texttt{buthe\_thesis\_run.py}), shows that this verification succeeds at $T=1.3277\cdot10^{15}$ and fails at $T=1.3275\cdot10^{15}$, with the first failure on the grid interval $[3035.349\ldots,3035.502]$, at the start of Theorem~C. Theorem~D, which uses Lemma~\ref{lem:CH}(ii) instead, needs a height about $3.19$ times smaller.
+\end{remark}
+
+\subsection{An independent check}\label{sec:crosscheck}
+A separate script, which is not part of the proofs, recomputes $L^6\bigl[j(L-1)/L-j(L)^2\bigr]$ directly from mpmath's logarithmic integral, using $J(x)=\li(x)-\li(2)+2/\log2$ and no asymptotic expansion, at $L=43,50,80,103,150,300,642,1000,3158$. Every value lies inside the enclosure of $\Main+\Corr$ used in the proofs.
+
+% ===========================================================================
+\section{A spectral barrier}\label{sec:barrier}
+
+\subsection{The classes}
+
+\begin{definition}\label{def:class}
+Let $T>0$. We write $\cA_T$ for the set of real sequences $a=(a_n)_{n\ge1}$ such that:
+\begin{enumerate}
+\item[(a)] $a_n\ge0$ for all $n$;
+\item[(b)] $A(s)=\sum_{n\ge1}a_nn^{-s}$ converges absolutely for $\operatorname{Re}s>1$ and continues meromorphically to $\mathbb C$;
+\item[(c)] $A$ has a simple pole at $s=1$ with residue $1$, and no other pole with $|\operatorname{Im}s|\le T$.
+\end{enumerate}
+We write $\cARH_T$ for the larger class defined in the same way, except that in~(c) $A$ may also have poles with $|\operatorname{Im}s|\le T$ on the line $\operatorname{Re}s=1/2$ and in the half-plane $\operatorname{Re}s<0$.
+\end{definition}
+
+Thus $\cA_T\subseteq\cARH_T$, and $\cA_{T_1}\supseteq\cA_{T_2}$ for $T_1\le T_2$. For $T=\HRH$ the sequence $a=\Lambda$, with $A=-\zeta'/\zeta$, lies in $\cARH_T$: the poles of $-\zeta'/\zeta$ with $|\operatorname{Im}s|\le T$ are $s=1$, with residue $1$, the nontrivial zeros, which lie on $\operatorname{Re}s=1/2$ by Lemma~\ref{lem:PT}, and the trivial zeros $-2,-4,\dots$. We call an argument \emph{of type (a)--(c) at height $T$} if it is valid for every sequence in $\cARH_T$. Conditions (a)--(c) impose no growth condition on $A$. In particular they do not include the boundedness conditions of~\cite[Thm.~1.1]{CH25}, which the sequences of Theorem~E do not satisfy (Remark~\ref{rem:Enot}), so Theorem~E says nothing about arguments that use those conditions.
+
+For a sequence $a$ put
+\[
+\psi_a(y)=\sum_{n\le y}a_n,\qquad \pi_a(y)=\sum_{2\le n\le y}\frac{a_n}{\log n}.
+\]
+For $a=\Lambda$, $\pi_a$ is Riemann's prime-power counting function $\Pi(y)=\sum_{k\ge1}\pi(y^{1/k})/k$. It differs from $\pi(y)$ by $O(\sqrt y/\log y)$, and for $x\ge e^{700}$ replacing $\pi$ by $\Pi$ changes both sides of \eqref{R} by less than $10^{-100}x^2/\log^6x$, far below the margins considered here.
+
+\subsection{\texorpdfstring{The function $\Phi$}{The function Phi}}
+With $j$ as in Section~\ref{sec:inputs}, put
+\[
+M_0(L)=L^6\Bigl(\frac{j(L-1)}{L}-j(L)^2\Bigr)=\Main(L)+\Corr(L),
+\]
+the normalized margin~\eqref{eq:margin} with $d=0$. For $T'>0$ put $v=\pi/T'$,
+\[
+s_+=v(\coth v+1)-1,\qquad s_-=v(\coth v-1)-1,
+\]
+and
+\[
+\Phi(L,T')=M_0(L)+L^6\Bigl[\frac{s_-}{L(L-1)}-\frac{2j(L)s_+}{L}-\frac{s_+^2}{L^2}\Bigr]+\frac{2\pi^2L^3}{T'^2}.
+\]
+For fixed $L$ we also regard $\Phi$ as a function of $v$.
+
+\begin{lemma}\label{lem:Phi}
+Let $700\le L\le10^4+1$ and $10^6\le T'\le10^{17}$, and put $v=\pi/T'$. Then
+\begin{enumerate}
+\item[(a)] $-3.01\,L^4\le\partial\Phi/\partial v\le-3(1-v)L^4$;
+\item[(b)] $\partial\Phi/\partial L\le-11\,vL^3$.
+\end{enumerate}
+Consequently, for each $L\in[700,10^4+1]$ there is a unique $\Tb(L)\in(10^6,10^{17})$ with $\Phi(L,\Tb(L))=0$, and $\Phi(L,T')<0$ if and only if $T'<\Tb(L)$. The function $\Tb$ is increasing, with $\frac{d}{dL}\log\Tb(L)\ge3.6/L$. If $T'\le(1-\eps)\Tb(L)$ with $0<\eps<1$, then $\Phi(L,T')\le-2.99\,\eps L^4v$.
+\end{lemma}
+
+\begin{proof}
+We use three elementary facts. First, for $l\ge700$,
+\begin{equation}\label{eq:lj}
+1\le l\,j(l)\le1+\frac{1}{l-4}+10^{-100}.
+\end{equation}
+The lower bound holds because $J(x)\ge x/\log x$. For the upper bound write $j(l)=1/l+e^{-l}\int_2^{e^l}dt/\log^2t$, split the integral at $e^{20}$ and $e^{l/2}$, and apply Lemma~\ref{lem:int} to the two upper pieces (with $a=20$ and $a=l/2$). Second, $j'(l)=1/l-j(l)$, since $J'(x)=1/\log x$. Third, $1\le v\coth v\le1+v^2/3$ and $0\le f(v)\le v$ for $v>0$, where $f(v)=\coth v-v/\sinh^2v$ is the derivative of $v\coth v$. Hence $v\le s_+\le v+v^2/3$ and $-v\le s_-\le-v+v^2/3$.
+
+(a) Since $ds_\pm/dv=f(v)\pm1$,
+\[
+\frac{\partial\Phi}{\partial v}=-(1-f)\frac{L^5}{L-1}-2(1+f)L^5j(L)-2(1+f)s_+L^4+4vL^3.
+\]
+By~\eqref{eq:lj}, $3\le L/(L-1)+2Lj(L)\le3+3.02/L$. The upper bound follows from $f\ge0$, $s_+\ge0$ and $f\le v$: $\partial\Phi/\partial v\le-3L^4+vL^4\bigl(L/(L-1)+4/L\bigr)\le-3(1-v)L^4$. The lower bound follows from $f\le v\le\pi\cdot10^{-6}$ and $s_+\le2v$.
+
+(b) We have
+\[
+\frac{\partial\Phi}{\partial L}=M_0'(L)+s_-\frac{d}{dL}\frac{L^5}{L-1}-2s_+\frac{d}{dL}\bigl(L^5j(L)\bigr)-4s_+^2L^3+6v^2L^2.
+\]
+Here $\frac{d}{dL}\frac{L^5}{L-1}=\frac{L^4(4L-5)}{(L-1)^2}\ge4L^3$, and $\frac{d}{dL}(L^5j(L))=L^4\bigl(1-(L-5)j(L)\bigr)\ge3.8L^3$ by~\eqref{eq:lj}. For $M_0=\Main+\Corr$, put $w=1/L$. Then $\frac{d}{dw}\Main=Q(w)(1-w)^{-13}$ with $Q(w)=(1-w)N_6'(w)+12N_6(w)=14+108w+1558w^2+\cdots\in\mathbb Z[w]$. The negative coefficients of $Q$ occur only in degrees $\ge8$, and all coefficients of $Q$ are less than $5\cdot10^{19}$ in absolute value, so $Q>0$ on $[0,1/700]$. Hence $\Main$ is decreasing in $L\ge700$, and $\Main(L)\ge\Main(\infty)=1$. Proposition~\ref{prop:rho} (with $q\le0.024$) and $g'(l)=l^{-13}-g(l)$ give $|\rho(l)|\le4.91\cdot10^8\,l^{-13}$ and $|\rho'(l)|\le1.2\cdot10^7\,l^{-13}$ for $l\ge699$, and differentiating the formula for $\Corr$ gives $|\Corr(L)|\le10^{-13}$ and $|\Corr'(L)|\le10^{-14}$ for $L\ge700$. Therefore $M_0'(L)\le10^{-14}$, and
+\[
+\frac{\partial\Phi}{\partial L}\le10^{-14}-4L^3\Bigl(v-\frac{v^2}{3}\Bigr)-7.6\,vL^3+6v^2L^2\le-11\,vL^3,
+\]
+because $vL^3\ge\pi\cdot10^{-17}\cdot700^3>10^{-8}$.
+
+For the consequences, note that $\Phi=M_0(L)$ at $v=0$. By~(a), $M_0(L)-3.01L^4v\le\Phi(L,T')\le M_0(L)-2.99L^4v$. Since $1-10^{-13}\le M_0(L)\le\Main(700)+10^{-13}<1.03$, this gives $\Phi(L,10^6)<0<\Phi(L,10^{17})$, and~(a) gives the existence and uniqueness of $\Tb(L)$ and the equivalence. With $\bar v(L)=\pi/\Tb(L)$, implicit differentiation and~(a), (b) give $\bar v'=-\Phi_L/\Phi_v\le-11\bar vL^3/(3.01L^4)\le-3.6\,\bar v/L$, which is the bound for $\frac{d}{dL}\log\Tb$. Finally, if $T'\le(1-\eps)\Tb(L)$ then $\bar v\le(1-\eps)v$, so $\Phi(L,T')\le\Phi(L,\Tb(L))-3(1-v)L^4(v-\bar v)\le-2.99\,\eps L^4v$.
+\end{proof}
+
+\subsection{Theorem E}
+
+\begin{lthm}{E}
+Let $700\le L\le10^4$ and $T\ge10^6$. Let $m$ be an integer such that $T'=2\pi m+2\delta_0$, with $\delta_0=10^{-10}$, satisfies $T<T'\le\min\{T+2\pi+1,\,10^{17}\}$, and put $v=\pi/T'$. Suppose that
+\begin{equation}\label{eq:Ehyp}
+\Phi(L',T')\le-10^{-9}L'^4v\qquad\text{for every }L'\in[L,\,L+2\pi/T'].
+\end{equation}
+Then there are $a\in\cA_T$ and $x$ with $L\le\log x<L+2\pi/T'$ such that
+\[
+\pi_a(x)^2>\frac{ex}{\log x}\,\pi_a\Bigl(\frac xe\Bigr).
+\]
+In particular, the inequality $\pi_a(x)^2<\frac{ex}{\log x}\pi_a(x/e)$ does not hold for all $a\in\cARH_T$ and all $x$ with $L\le\log x\le L+2\pi/T'$.
+\end{lthm}
+
+Theorem~E therefore rules out, at such $x$, every proof of \eqref{R} that is valid for all of $\cARH_T$, that is, every argument of type (a)--(c) at height $T$: every argument whose only inputs are non-negativity, analytic continuation, and the location and residues of the poles up to height $T$ as recorded in~(c).
+
+\begin{remark}[What Theorem~E does not cover]\label{rem:Enot}
+Theorem~E concerns the class defined by (a)--(c) only. Arguments that use further arithmetic structure of $\Lambda$ are not covered: for instance the bound $\Lambda(n)\le\log n$, the Euler product, or the growth of $-\zeta'/\zeta$ in the left half-plane. The sequences of Theorem~E are far from arithmetic. Their first term is $a_1=F_H(0)=H+1=10^{40}+1$, and $a_n$ has spikes of that size wherever $T'\log n$ is close to a multiple of $2\pi$. Nor do they satisfy the boundedness conditions of~\cite[Thm.~1.1]{CH25}: by the functional equation, $|\zeta(\sigma+it)|$ grows like $\Gamma(1-\sigma)(2\pi)^\sigma e^{\pi|t|/2}$ as $\sigma\to-\infty$, so $A(s)$ is unbounded on horizontal lines in the left half-plane. Theorem~E is therefore a limitation of a class of methods, not a statement about the primes.
+\end{remark}
+
+\begin{proof}
+\emph{Step 1: the sequence.} This is the construction of~\cite[Prop.~3.1]{CH25}, with $T$ replaced by $T'$. Let $H=10^{40}$, and let
+\[
+F_H(t)=\sum_{|k|\le H}w_ke^{ikt},\qquad w_k=1-\frac{|k|}{H+1},
+\]
+be the Fej\'er kernel. Then $F_H(t)=\frac{1}{H+1}\bigl(\frac{\sin((H+1)t/2)}{\sin(t/2)}\bigr)^2\ge0$, $F_H(0)=H+1$, and $F_H(t)\le\pi^2/((H+1)t^2)$ for $0<|t|\le\pi$. Put $a_n=F_H(T'\log n)$. Then $a_n\ge0$, $a_1=H+1$, and
+\[
+A(s)=\sum_{|k|\le H}w_k\,\zeta(s-ikT').
+\]
+The poles of $A$ are at $1+ikT'$, $|k|\le H$, with residues $w_k$. Since $T'>T$, the only one with $|\operatorname{Im}s|\le T$ is $s=1$, with residue $w_0=1$. Since the sum is finite, $A$ converges absolutely for $\operatorname{Re}s>1$ and continues meromorphically to $\mathbb C$. Hence $a\in\cA_T$.
+
+\emph{Step 2: $\psi_a$.} For real $\tau$ and $y\ge1$, Euler--Maclaurin summation gives $\sum_{n\le y}n^{i\tau}=y^{1+i\tau}/(1+i\tau)+\mathcal E_\tau(y)$ with $|\mathcal E_\tau(y)|\le3+|\tau|\log y$. Hence
+\[
+\psi_a(y)=y\,S(y)+\mathcal E(y),\qquad S(y)=\sum_{|k|\le H}\frac{w_k\,y^{ikT'}}{1+ikT'},\qquad|\mathcal E(y)|\le(H+1)(3+HT'\log y).
+\]
+
+\emph{Step 3: values of $S$.} For $y>0$ let $G_y$ be the $2\pi$-periodic function with
+\[
+G_y(t)=v(\coth v+1)\exp\bigl(-r_y(t)/T'\bigr),
+\]
+where $r_y(t)\in[0,2\pi)$ is the residue of $T'\log y-t$ modulo $2\pi$. Since $v(\coth v+1)=(2\pi/T')/(1-e^{-2\pi/T'})$, a direct computation gives $\frac1{2\pi}\int_{-\pi}^{\pi}G_y(t)e^{ikt}\,dt=y^{ikT'}/(1+ikT')$, and therefore
+\[
+S(y)=\frac1{2\pi}\int_{-\pi}^{\pi}G_y(t)F_H(t)\,dt.
+\]
+Suppose that $T'\log y\equiv\pm\delta_0\pmod{2\pi}$. Then the only discontinuity of $G_y$ in $[-\pi,\pi]$ is at $t=\pm\delta_0$, so $G_y$ is smooth on $(-\delta_0,\delta_0)$ with $|G_y'|=G_y/T'\le2/T'$ there, and $0<G_y\le v(\coth v+1)\le2$ everywhere. Since $\frac1{2\pi}\int_{-\pi}^{\pi}F_H=1$ and $F_H(t)\le\min\{H+1,\pi^2/((H+1)t^2)\}$,
+\begin{align*}
+|S(y)-G_y(0)|&\le\frac1{2\pi}\int_{|t|<\delta_0}\frac{2|t|}{T'}F_H(t)\,dt+\frac1{2\pi}\int_{\delta_0\le|t|\le\pi}4F_H(t)\,dt\\
+&\le\frac{1+2\pi^2\log((H+1)\delta_0)}{\pi(H+1)T'}+\frac{4\pi}{(H+1)\delta_0}<10^{-28}.
+\end{align*}
+If $T'\log y=2\pi h+\delta_0$ with $h\in\mathbb Z$, then $r_y(0)=\delta_0$ and $G_y(0)=v(\coth v+1)e^{-\delta_0/T'}$. If $T'\log y=2\pi h-\delta_0$, then $r_y(0)=2\pi-\delta_0$ and $G_y(0)=v(\coth v+1)e^{-2v}e^{\delta_0/T'}=v(\coth v-1)e^{\delta_0/T'}$. Since $\delta_0/T'=(\delta_0/\pi)v$, $v(\coth v\pm1)\le1+2v$, and $10^{-28}<4\cdot10^{-12}v$ (as $v\ge\pi\cdot10^{-17}$), we obtain
+\begin{equation}\label{eq:Svals}
+|S(y)-1-s_\pm|<4\cdot10^{-11}\,v\qquad\text{if }T'\log y\equiv\pm\delta_0\pmod{2\pi}.
+\end{equation}
+
+\emph{Step 4: the choice of $x$.} Let $h=\lceil(T'L-\delta_0)/(2\pi)\rceil$ and $x=\exp\bigl((2\pi h+\delta_0)/T'\bigr)$. Then $L\le\log x<L+2\pi/T'$. Since $T'=2\pi m+2\delta_0$,
+\[
+\log(x/e)=\frac{2\pi h+\delta_0-T'}{T'}=\frac{2\pi(h-m)-\delta_0}{T'}.
+\]
+So~\eqref{eq:Svals} applies with the sign $+$ at $y=x$ and with the sign $-$ at $y=x/e$.
+
+\emph{Step 5: $\pi_a$.} Partial summation gives, for $y\ge2$,
+\[
+\pi_a(y)=\frac{\psi_a(y)}{\log y}-\frac{a_1}{\log2}+\int_2^y\frac{\psi_a(t)}{t\log^2t}\,dt
+=J(y)+\frac{y(S(y)-1)}{\log y}+\Osc(y)+W(y),
+\]
+where
+\[
+\Osc(y)=\int_2^y\frac{S(t)-1}{\log^2t}\,dt,\qquad
+W(y)=\frac{\mathcal E(y)}{\log y}-\frac{a_1}{\log2}+\int_2^y\frac{\mathcal E(t)}{t\log^2t}\,dt.
+\]
+For $\tau\ne0$, integration by parts gives
+\[
+\Bigl|\int_2^y\frac{t^{i\tau}}{\log^2t}\,dt\Bigr|\le\frac{1}{|1+i\tau|}\Bigl(\frac{y}{\log^2y}+\frac{2}{\log^22}+2\int_2^y\frac{dt}{\log^3t}\Bigr).
+\]
+Numerical quadrature gives $\int_2^{e^{20}}dt/\log^3t<7.3\cdot10^4$, and $\frac{d}{dt}\frac{t}{\log^3t}\ge\frac{0.85}{\log^3t}$ for $t\ge e^{20}$; hence $\int_2^ydt/\log^3t\le7.3\cdot10^4+1.18\,y/\log^3y$. For $\log y\ge600$ the integral above is therefore at most $(1.004\,y/\log^2y+1.5\cdot10^5)/|\tau|$. Since $S(t)-1=\sum_{k\ne0}w_kt^{ikT'}/(1+ikT')$ and $|1+ikT'|\ge|k|T'$,
+\[
+|\Osc(y)|\le\sum_{k\ne0}\frac{1}{k^2T'^2}\Bigl(\frac{1.004\,y}{\log^2y}+1.5\cdot10^5\Bigr)=\frac{\pi^2}{3T'^2}\Bigl(\frac{1.004\,y}{\log^2y}+1.5\cdot10^5\Bigr)\qquad(\log y\ge600).
+\]
+For the remaining term, $a_1=H+1$ and Step~2 give $|W(y)|\le4(H+1)^2T'\log y$, which is less than $10^{-200}y$ for $698\le\log y\le10^4+1$.
+
+\emph{Step 6: the margin.} Let $\lambda=\log x$, $\Delta=\frac{ex}{\lambda}\pi_a(x/e)-\pi_a(x)^2$, $\tilde s_+=S(x)-1$, $\tilde s_-=S(x/e)-1$ and $\mathcal R(y)=\Osc(y)+W(y)$. Since $J(x)=x\,j(\lambda)$ and $J(x/e)=(x/e)\,j(\lambda-1)$, Step~5 gives
+\[
+\frac{\lambda^6\Delta}{x^2}=M_0(\lambda)+\lambda^6\Bigl[\frac{\tilde s_-}{\lambda(\lambda-1)}-\frac{2j(\lambda)\tilde s_+}{\lambda}-\frac{\tilde s_+^2}{\lambda^2}\Bigr]+\Rem,
+\]
+\[
+\Rem=\lambda^6\Bigl[\frac{\mathcal R(x/e)}{\lambda\,x/e}-2\Bigl(j(\lambda)+\frac{\tilde s_+}{\lambda}\Bigr)\frac{\mathcal R(x)}{x}-\frac{\mathcal R(x)^2}{x^2}\Bigr].
+\]
+By Step~5, $R^*=\max\{|\mathcal R(x)|/x,\ |\mathcal R(x/e)|/(x/e)\}\le\frac{\pi^2}{3}\cdot\frac{1.004}{(\lambda-1)^2T'^2}+2\cdot10^{-200}$. Using~\eqref{eq:lj} and $|\tilde s_+|<2v$ (by~\eqref{eq:Svals}), we get $|\Rem|\le\lambda^5(3+4/\lambda)R^*\le1.05\,\pi^2\lambda^3/T'^2$. Next, by~\eqref{eq:Svals}, replacing $\tilde s_\pm$ by $s_\pm$ in the bracket changes $\lambda^6[\cdots]$ by at most
+\[
+4\cdot10^{-11}v\,\lambda^4\Bigl(\frac{\lambda}{\lambda-1}+2\lambda j(\lambda)+2s_++4\cdot10^{-11}v\Bigr)<1.3\cdot10^{-10}\lambda^4v.
+\]
+Comparing with the definition of $\Phi$, we conclude that
+\[
+\frac{\lambda^6\Delta}{x^2}\le\Phi(\lambda,T')+1.3\cdot10^{-10}\lambda^4v-0.95\,\frac{\pi^2\lambda^3}{T'^2}<\Phi(\lambda,T')+10^{-9}\lambda^4v\le0
+\]
+by~\eqref{eq:Ehyp}, since $\lambda\in[L,L+2\pi/T']$. Hence $\Delta<0$, which is the claim.
+\end{proof}
+
+\subsection{Proof of Corollary~E}\label{sec:corE}
+
+The script \texttt{barrier.py} evaluates $\Phi$ in $40$-digit arithmetic, with $M_0(L)$ replaced by the upper end of its interval enclosure ($\Main+\Corr$, as in Section~\ref{sec:proofs}) and $j(L)$ by the lower end of its enclosure. Since $j(L)$ and $s_+>0$ enter $\Phi$ with a minus sign, the computed function is an upper bound for $\Phi$, up to rounding errors of relative size $10^{-38}$. It computes $\Tb(L)$ by bisection in $T'$; by Lemma~\ref{lem:Phi}, the value returned is a lower bound for $\Tb(L)$.
+
+\begin{proof}[Proof of Corollary~E]
+(i) Let $T=\HRH$. A bisection in $L$ locates the point $754.39478\ldots$ where $\Tb$ crosses $T$: it finds $L_b<754.3948$ with $\Tb(L_b)\ge T$. By Lemma~\ref{lem:Phi}, $\log\bigl(\Tb(L')/\Tb(L_b)\bigr)\ge3.6\log(754.40/754.3948)>2\cdot10^{-5}$ for every $L'\ge754.40$. Given $L\in[754.40,10^4]$, choose an integer $m$ with $T<T'=2\pi m+2\delta_0\le T+2\pi+1$. Then $T'\le(1-10^{-9})\Tb(L')$ for every $L'\in[L,L+2\pi/T']$, so $\Phi(L',T')\le-2.99\cdot10^{-9}L'^4v$ by Lemma~\ref{lem:Phi}, and Theorem~E applies. Since $2\pi/T'<10^{-11}$, (i) follows.
+
+(ii), (iii) For (ii), let $(L_0,T_0,T_1)=(3035.002,\,7.9624\cdot10^{14},\,7.96241\cdot10^{14})$, and for (iii), let $(L_0,T_0,T_1)=(3157.93,\,9.3344\cdot10^{14},\,9.33450511\cdot10^{14})$. The script gives $\Tb(3035.002)\ge7.96241\cdot10^{14}$ and $\Tb(3157.93)\ge9.33450511\cdot10^{14}$, so in both cases $\Tb(L_0)\ge T_1$. Since $\cA_T\supseteq\cA_{10^6}$ for $T<10^6$, we may assume $10^6\le T\le T_0$. Choose $m$ with $T<T'=2\pi m+2\delta_0\le T+2\pi+1$. Then $T'\le T_0+2\pi+1<(1-10^{-9})T_1$. As $\Tb$ is increasing, $T'\le(1-10^{-9})\Tb(L')$ for every $L'\ge L_0$, so~\eqref{eq:Ehyp} holds with $L=L_0$, and Theorem~E applies. Since $2\pi/T'<10^{-5}$, (ii) and (iii) follow.
+\end{proof}
+
+Theorem~A reaches $\log x=753.985$, and $754.39478-753.985<0.41$. At the top of the open range the barrier is $\Tb(3035.002)=7.96241\cdot10^{14}$. The version of Theorem~D in which the zeros above $\HRH$ enter only through~\cite{CH25} (Remark~\ref{rem:Dzeros}) uses $7.9612\cdot10^{14}$, slightly less, because near the top the rows of Section~\ref{sec:C}, which carry zero-free-region and zero-density information, take over. With the rows of Remark~\ref{rem:Cvar}(d) that version uses $7.5192\cdot10^{14}$, against $\Tb(2992.002)\approx7.520\cdot10^{14}$, and with Theorem~\Cstar{} it uses $4.2290\cdot10^{14}$, against $\Tb(2591.002)\approx4.226\cdot10^{14}$. With the printed rows of~\cite{FKS23} it uses $\TDolduse$, which is $1.000124$ times $\Tb(3157.93)=9.33450511\cdot10^{14}$. None of these methods is of type (a)--(c), so Theorem~E does not bound them from below; the comparison shows how close to the barrier they come.
+
+\subsection{The barrier and the methods of Theorem D}
+Table~\ref{tab:barrier} compares $\Tb(L)$ with the least height $\Tsuf(L)$ at which the bounds of Section~\ref{sec:A} together with Lemma~\ref{lem:CH}(ii) at height $T$, as in the last part of Remark~\ref{rem:Dzeros}, prove $M>0$ on $[L-0.25,L]$; \texttt{barrier.py} computes $\Tsuf$ by a geometric bisection with $40$ steps. The last column is the approximation $3\pi L^4/(1+14/L)$, which agrees with $\Tb(L)$ to within $0.11\%$ on the table.
+
+\begin{table}[ht]
+\caption{The barrier height $\Tb(L)$, the height $\Tsuf(L)$ that suffices near $e^L$ when the zeros above $\HRH$ enter only through Lemma~\ref{lem:CH}(ii), and the approximation $3\pi L^4/(1+14/L)$.}\label{tab:barrier}
+\small
+\begin{tabular}{rllll}
+\toprule
+$L$ & $\Tb(L)$ & $\Tsuf(L)$ & $\Tsuf/\Tb$ & $3\pi L^4/(1+14/L)$\\
+\midrule
+800     & $3.7978905\cdot10^{12}$ & $3.8054345\cdot10^{12}$ & $1.001986$ & $3.7939942\cdot10^{12}$\\
+1000    & $9.3026197\cdot10^{12}$ & $9.3173894\cdot10^{12}$ & $1.001588$ & $9.2946528\cdot10^{12}$\\
+1500    & $4.7300245\cdot10^{13}$ & $4.7350252\cdot10^{13}$ & $1.001057$ & $4.7271736\cdot10^{13}$\\
+2000    & $1.4981773\cdot10^{14}$ & $1.4993645\cdot10^{14}$ & $1.000792$ & $1.4974821\cdot10^{14}$\\
+2500    & $3.6624326\cdot10^{14}$ & $3.6647536\cdot10^{14}$ & $1.000634$ & $3.661052\cdot10^{14}$\\
+3000    & $7.601022\cdot10^{14}$  & $7.6050353\cdot10^{14}$ & $1.000528$ & $7.59861\cdot10^{14}$\\
+3157.93 & $9.3345051\cdot10^{14}$ & $9.3207897\cdot10^{14}$ & $0.998531$ & $9.3316841\cdot10^{14}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For $800\le L\le3000$ this method comes within a factor $1+c(L)$ of the barrier, with $5\cdot10^{-4}<c(L)<2\cdot10^{-3}$ at the tabulated points. The method is not of type (a)--(c): it uses~\cite[Prop.~9.1]{CH25} and the bounds of~\cite{FKS23}, so Theorem~E does not bound $\Tsuf$ from below. At $L=3157.93$ the ratio $\Tsuf/\Tb$ is $0.998531<1$. There the bound $\eps_1$ of Lemma~\ref{lem:FKS}(ii) is smaller than $\eps_T$ at $T=\Tsuf(3157.93)$: $\eps_1(3158)\approx3.3542\cdot10^{-15}$ (Remark~\ref{rem:Cvar}), while $\pi/\Tsuf(3157.93)>3.37\cdot10^{-15}$. That bound rests on an explicit zero-free region, which the sequences of Theorem~E violate. This is where the version of Theorem~C in Remark~\ref{rem:Cvar}(c) begins.
+
+\emph{The combined method.} Theorem~D goes far below the barrier. It needs $T=\TDhyp$, about $0.52\,\Tb(3035.002)$, and $\TDpre$ with~\cite{BTY26} and~\cite{Bel24}. Its input~(D3) uses, above height $T$, the zero-free region of Lemma~\ref{lem:ZFR} and zero-density estimates. These are not of type (a)--(c), and the sequences of Theorem~E violate them: their poles at $1+ikT'$ lie on the line $\operatorname{Re}s=1$. Where it fails, at $T=4.15735\cdot10^{14}$, the first failure lies near the point where $\Tb(L)$ reaches $T$, that is, where the bound of Lemma~\ref{lem:CH}(ii) stops sufficing and~(D3) is not yet strong enough.
+
+\begin{remark}
+The sequences of Theorem~E have poles on the line $\operatorname{Re}s=1$, at the points $1+ikT'$ with $k\ne0$. For $-\zeta'/\zeta$ such poles are excluded by the nonvanishing of $\zeta$ on $\operatorname{Re}s=1$, and explicit zero-free regions and zero-density estimates quantify this. Such information is not of type (a)--(c). With it, Theorems~C and~\Cstar{} prove \eqref{R} for all $x\ge e^{3035.01}$ and all $x\ge e^{2591.01}$, respectively, although by Corollary~E(i) $\cA_T$ with $T=\HRH$ contains counterexamples within $10^{-11}$ in $\log x$ of every point with $754.40\le\log x\le10^4$.
+\end{remark}
+
+\begin{remark}
+To first order in $v$, $\Phi(L,T')=0$ reads $\pi/T'\approx M_0(L)/\bigl(L^4(L/(L-1)+2Lj(L))\bigr)$, which explains the size $\Tb(L)\approx3\pi L^4$. The Fej\'er sequence is a prime distribution that is consistent with every pole up to height $T$, yet it can raise $\psi_a(x)$ by about $(\pi/T)x$ just after one of its peaks and lower $\psi_a(x/e)$ by about $(\pi/T)(x/e)$ just before another. Inequality \eqref{R} weighs the first change twice, through $\pi(x)^2$, and the second once, which gives the factor $3$; the margin of \eqref{R} is $x^2/\log^6x$, which gives the factor $L^4$.
+\end{remark}
+
+% ===========================================================================
+\section{\texorpdfstring{What remains without the half-plane $\operatorname{Re}s>7/8$}{What remains without the half-plane Re s > 7/8}}\label{sec:gap}
+
+Corollary~F closes the whole range. If one relies only on the peer-reviewed literature, Theorems~A and~C leave the range $e^{753.98}<x<e^{3035.01}$ open; with the preprints~\cite{BTY26} and~\cite{Bel24}, Theorem~\Cstar{} reduces it to $e^{753.98}<x<e^{2591.01}$.
+
+\emph{Arguments of type (a)--(c) do not suffice.} By Corollary~E(i), for every $L\in[754.40,10^4]$ the class $\cA_T$ with $T=\HRH$ contains a sequence that violates the analogue of \eqref{R} at some $x$ with $L\le\log x\le L+10^{-11}$. An argument of type (a)--(c) at height $\HRH$ (Section~\ref{sec:barrier}) therefore cannot prove \eqref{R} on any interval $[e^L,e^{L+10^{-11}}]$ with $754.40\le L<3035.01$, and it can extend the range $\log x\le753.985$ verified for Theorem~A by less than $0.42$. The explicit methods for $\psi$ in this range (\cite{But16}, \cite{CH25}, \cite{BKLNW21,FKS23}) use, beyond pole data up to height $T$, only zero-free regions and zero-density estimates above $T$. Theorems~C and~\Cstar{} use these, through~\cite{FKS23} and Lemmas~\ref{lem:ZFR} and~\ref{lem:density}. Theorem~E does not cover arguments that use further arithmetic structure (Remark~\ref{rem:Enot}).
+
+\emph{Routes.} Each of the following closes the range and gives $N_R=\NN$:
+\begin{enumerate}
+\item a verification of RH up to height $\TDhyp$, about $139$ times $\HRH$; with~\cite{BTY26} and~\cite{Bel24}, up to height $\TDpre$, about $72$ times $\HRH$ (Theorem~D and Remark~\ref{rem:Dpre});
+\item a zero-free region $\beta\le1-1/(R\log|\gamma|)$ for $|\gamma|>3\cdot10^{12}$ with $R\le1.7373$, a constant about $3.2$ times smaller than that of Lemma~\ref{lem:ZFR}(i) and $2.8$ times smaller than that of Lemma~\ref{lem:ZFR}(ii) (Theorem~\Bp);
+\item a zero-free half-plane $\operatorname{Re}s>\thetaB$ (Theorem~B, refereed inputs and~\cite{Bha24}), or $\operatorname{Re}s>0.96897$ with the preprints~\cite{FJ26} and~\cite{CH25} (Theorem~\Bstar). Lemma~\ref{lem:OAI} provides $\operatorname{Re}s>7/8$ (Corollary~F).
+\end{enumerate}
+For Theorem~B the binding constraint lies at $L=672.5$, where Proposition~\ref{prop:Aref} ends; for Theorems~\Bstar{} and~\Bp{} it lies at $L\approx754$, where Lemma~\ref{lem:CH}(i) stops sufficing. For route~(1) it lies inside the range, at $L\approx2580$ ($L\approx2187$ with the preprints).
+
+\emph{Trade-off between routes~(1) and~(2).} Both are extreme cases of the hypothesis that every zero with $0<\gamma\le T$ has $\beta=1/2$ and that there are no zeros with $\beta\ge1-1/(R\log|\gamma|)$ and $|\gamma|>T$. Table~\ref{tab:tradeoff} gives, for several values of $R$, a height $T(R)$ for which this hypothesis implies $N_R=\NN$. The method is that of Theorem~D, with~(D3) computed for the constant $R$ and with rows from $\log x_0=700$ as in Section~\ref{sec:Bprime}; like Theorem~D it uses~\cite{CH25}. Each value comes from a geometric bisection with $12$ steps (\texttt{tradeoff.py}), and the failing value just below it is recorded in the output files. For $R=1.7373$ the current verification height suffices, which is Theorem~\Bp. For $R=5.558691$ the value is close to the height in Theorem~D, whose rows start at $\log x_0=1700$.
+
+\begin{table}[ht]
+\caption{Heights $T(R)$ such that RH for $0<\gamma\le T(R)$ and a zero-free region $\beta<1-1/(R\log|\gamma|)$ for $|\gamma|>T(R)$ imply $N_R=\NN$.}\label{tab:tradeoff}
+\small
+\begin{tabular}{rl}
+\toprule
+$R$ & $T(R)$\\
+\midrule
+1.7373   & $3.00018\cdot10^{12}$ (current verification height)\\
+2.0      & $5.43248\cdot10^{12}$\\
+2.5      & $1.40572\cdot10^{13}$\\
+3.0      & $3.08641\cdot10^{13}$\\
+3.5      & $5.48834\cdot10^{13}$\\
+4.0      & $9.74689\cdot10^{13}$\\
+4.896    & $2.37951\cdot10^{14}$\\
+5.558691 & $4.16074\cdot10^{14}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{remark}[Density sensitivity; hypothetical]\label{rem:sens}
+If the zero-density bounds of Lemma~\ref{lem:density}(i) (second block of~\cite[Table~7]{FKS23}) were smaller by a factor $K$, in both $\eps_3$ and $\eps_4$, the method of Theorem~C would verify \eqref{C} from $L=3035.0$ for $K=1$ (the control), $2548.0$ for $K=10$, $2032.0$ for $K=100$, $1464.0$ for $K=10^3$, $1238.0$ for $K=10^4$ and $1220.0$ for $K=10^6$, on a grid of step $0.5$ (\texttt{sens\_density.py}). So improved density estimates alone cannot reach $e^{754}$.
+\end{remark}
+
+\emph{The height needed at each point.} Table~\ref{tab:barrier} lists across the range the barrier $\Tb(L)$, below which arguments of type (a)--(c) at height $T$ cannot prove \eqref{R} near $e^L$, and the height $\Tsuf(L)$ at which the method of Remark~\ref{rem:Dzeros}, which uses~\cite[Prop.~9.1]{CH25} at height $T$, succeeds there. Up to $L=3000$ the two agree to within $0.2\%$. Both grow like $3\pi L^4$: at $L=2000$ the barrier is $1.498\cdot10^{14}$, about $50$ times $\HRH$, and at $L=3035.002$ it is $7.96241\cdot10^{14}$, about $265$ times $\HRH$. Route~(1) needs only about half of the latter, because above height $T$ it uses a zero-free region and zero-density estimates.
+
+% ===========================================================================
+\section{Remarks on the literature}\label{sec:lit}
+
+\subsection{The preprint arXiv:2408.02591}
+De~\cite{De24b} claims \eqref{R} for all $x\ge e^{43.51}$ unconditionally, which would contain Theorems~A and~C. The argument fails at its final step~(29). From $\pi(x)<e\,\pi(x/e)$ and $\pi(x)>x/\log x$ it concludes $\pi(x)^2<\frac{ex}{\log x}\pi(x/e)$. Multiplying the first inequality by $\pi(x)$ gives only $\pi(x)^2<e\,\pi(x)\pi(x/e)$. To reach \eqref{R} one needs $\pi(x)\le x/\log x$, which is the reverse of the inequality the step itself uses, and which is false for all $x\ge17$. The true margin in \eqref{R} is of size $x^2/\log^6x$ (Lemma~\ref{lem:N6}), and bounds as crude as these cannot detect it.
+
+\subsection{The preprint arXiv:2407.12052}
+De~\cite{De24a} (version~6) claims \eqref{R} for all $x\ge e^{547}$ unconditionally, which would cover the upper part of the range of Theorem~A and the whole range left open here. It is not a proof:
+\begin{itemize}
+\item its monotonicity step (Prop.~6.1) assumes Sterneck's conjecture $|M(x)|<\frac12\sqrt x$ for $x\ge201$, where here $M(x)=\sum_{n\le x}\mu(n)$ is the Mertens function. That conjecture is false; Neubauer~\cite{Neu63} found a counterexample near $7.8\cdot10^9$;
+\item its bounds for $\pi(x)$ carry $O$-terms with unspecified constants, so none of its estimates is explicit;
+\item its ``check'' at $e^{547}$ is a numerical evaluation of the auxiliary function $G$ of that paper, not a proven bound.
+\end{itemize}
+
+\subsection{Lemma~2.1 of Dudek--Platt and Axler's threshold}\label{sec:DP}
+Lemma~2.1 of~\cite{DP15} gives a sufficient condition for \eqref{R} in terms of the constants $m_a$ and $M_a$ in explicit lower and upper bounds for $\pi(x)$. IEANTN~\cite{IEANTN} (node \texttt{DudekPlatt.v3}) records a defect in its proof, reported by D.~Platt: the term carrying the lower-bound constant $m_a$ is bounded in the wrong direction when $m_a<0$, and $m_a<0$ in every application. IEANTN gives a repaired form of the criterion, checked in Lean, in which $m_a$ is multiplied by $(1+1/\log x_1)^6$ (notation of that node).
+
+Axler~\cite{Ax22} proves \eqref{R} for $x\ge e^{3158.442}$ by arguing ``as in the proof of'' \cite[Lemma~2.1]{DP15}, with $m_a=-936.646$. His threshold condition $\widetilde M_a-\widetilde m_a<\log x$ holds at $\log x=3158.442$ with a margin of only $0.003$. With the repair, the condition costs about $1.78$ more, and Axler's own parameters then give about $e^{3160.3}$ instead of $e^{3158.442}$. We have not re-optimized Axler's parameters. For \eqref{R}, Theorem~C settles the question, since its proof does not use~\cite[Lemma~2.1]{DP15}. Other thresholds obtained through~\cite[Lemma~2.1]{DP15} with $m_a<0$ need the same check; IEANTN notes that this includes the threshold $e^{3915}$ reached in the Prime\-Number\-Theorem\-And project.
+
+\subsection{\texorpdfstring{B\"uthe's Theorem~1 and Table~8 of BKLNW}{Buethe's Theorem 1 and Table 8 of BKLNW}}\label{sec:buthe}
+
+\emph{Prior work.} Bhattacharjee~\cite[\S2.3]{Bha24} lists errors in~\cite{But16}. Among them:
+\begin{itemize}
+\item the factor $\log(3c)$, which is present in~\cite[Prop.~3, (4.1)]{But16}, is missing from $E_2$ in Theorem~1;
+\item in~\cite[Lemma~2]{But16}, which is taken from~\cite[Lemma~2.4]{FKBJ17}, an integral is evaluated as $\log(2c/2\pi)/(2\pi c)$ instead of $\log(2c/(2\pi\eps))/(2\pi c)$;
+\item $E_1$ lacks the summand $e^{\alpha\eps}-1$;
+\item constant terms are missing from $E_2$ and $E_3$;
+\item the limits of integration in~\cite[Prop.~1]{But16} and the bound~(3.7) in~\cite[Lemma~1]{But16} need correction.
+\end{itemize}
+Her corrected Theorem~7 is our Lemma~\ref{lem:Buthe16}. She recomputes B\"uthe's Table~2 at his parameters and finds his values too small by $4.9$--$8.9\%$, except at $e^{55}$ ($0.003\%$) and $e^{60}$ ($1.4\%$). The missing factor $\log(3c)$ and the discrepancy in Table~2 were thus found by Bhattacharjee. B\"uthe's own partial correction, version~v4 of arXiv:1410.7015 (May 2022), adds the summand $e^{\alpha\eps}-1$ to $E_1$ and states that the explicit bounds in Tables~1 and~2 remain valid. The factor $\log(3c)$ is absent from $E_2$ in all versions (v1, v3 and v4), although it is present in~\cite[Lemma~2]{But16}, in~\cite[Prop.~3, (4.1)]{But16}, from which $E_2$ is derived, and in the corresponding step~(7.6) of the proof of~\cite[Thm.~2]{But16}.
+
+\emph{Our contributions.} They are the following.
+\begin{enumerate}
+\item The rows $40\le b\le2000$ of~\cite[Table~8]{BKLNW21} come from B\"uthe's Theorem~1 and reproduce from the printed formula (we checked $100\le b\le2000$), so they inherit the error; \cite{Bha24} does not discuss~\cite{BKLNW21}. After re-optimizing the parameters, the rows $b\le50$ change by less than $0.03\%$; the row $b=40$, at $x=10^{19}$, even stays below its printed value $1.93378\cdot10^{-8}$, at $1.91948\cdot10^{-8}$. The rows $100\le b\le2000$ rise by $1.3$--$2.2\%$. The rows $b=20,\dots,35$ coincide with B\"uthe's bound $0.94\,e^{-b/2}$ from~\cite{But18} and are not affected.
+\item The re-optimization shows that the gap persists at the best parameters (Table~\ref{tab:repro}).
+\item The consequences in the literature (Section~\ref{sec:downstream}).
+\end{enumerate}
+In the rest of this subsection ``with $\log(3c)$'' refers to the version of B\"uthe's Theorem~1 in which only the factor $\log(3c)$ is restored, with $E_2=0.16\,(1+x_*^{-1})(\sinh c)^{-1}e^{0.71\sqrt{c\eps}}\log(3c)\log(c/\eps)$ and $E_3$ as printed. The full correction of Lemma~\ref{lem:Buthe16} gives slightly larger values: re-optimized, the rows $b=100$, $200$, $600$, $1000$ and $2000$ of~\cite[Table~8]{BKLNW21} rise by $1.5$--$2.4\%$.
+
+\emph{At B\"uthe's parameters.} The published tables match the formula as printed. Evaluated without the factor $\log(3c)$ at the parameters used for them ($c=29$ for~\cite[Table~1]{But16} and $c=33$ for~\cite[Table~2]{But16}), Theorem~1 reproduces B\"uthe's values; see Table~\ref{tab:repro}. Both of his tables were therefore computed without the factor. With $\log(3c)$ restored at the same parameters, the values rise to those in the fourth column of Table~\ref{tab:repro}.
+
+\emph{With re-optimized parameters.} At fixed $c$ the correction looks large, but most of it can be recovered by choosing $c$ and $\alpha$ again. For each row of Table~\ref{tab:repro} the script \texttt{buthe\_reopt\_fine.py} minimizes the corrected bound, at the row's own height, over $c\in[20,48]$ and $\alpha\in[10^{-5},0.3]$. It evaluates $\mu_c(\alpha)$ and $|\nu_c(\alpha)|$ by $40$-digit quadrature, because the interval enclosures of Section~\ref{sec:Aref} are loose for larger $\alpha$ and would overstate the minimum. The least corrected values (last column) exceed the printed ones by $2.54\%$ for~\cite[Table~1]{But16} at $e^{500}$, by $2.17\%$ and $2.15\%$ for~\cite[Table~2]{But16} at $e^{1000}$ and $e^{4000}$, and by $1.27\%$ and $1.80\%$ for the rows $b=200$ and $b=600$ of~\cite[Table~8]{BKLNW21}. On this grid no $(c,\alpha)$ reaches a printed value, so the tables are not justified as printed. The same search with the rigorous enclosures (\texttt{buthe\_reopt.py}) gives values between $1.89\%$ and $2.62\%$ above the printed ones; those rigorous rows are the ones used for the range at the end of this subsection.
+
+\begin{table}[ht]
+\caption{B\"uthe's Theorem~1 against the published tables. Columns~3 and~4: our evaluation by quadrature, without and with $\log(3c)$, at the published parameters. Column~5: the least value with $\log(3c)$ after re-optimizing $(c,\alpha)$, by quadrature.}\label{tab:repro}
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lllll}
+\toprule
+Row & printed & without $\log(3c)$ & with $\log(3c)$ & re-optimized\\
+\midrule
+\cite[Table~1]{But16}, $x=e^{500}$   & $1.47067\cdot10^{-10}$ & $1.47057\cdot10^{-10}$ & $1.53869\cdot10^{-10}$ & $1.50799\cdot10^{-10}$\\
+\cite[Table~1]{But16}, $x=e^{1000}$  & $1.43770\cdot10^{-10}$ & $1.43760\cdot10^{-10}$ & $1.50572\cdot10^{-10}$ & --\\
+\cite[Table~1]{But16}, $x=e^{3000}$  & $1.41594\cdot10^{-10}$ & $1.41584\cdot10^{-10}$ & $1.48397\cdot10^{-10}$ & --\\
+\cite[Table~2]{But16}, $x=e^{1000}$  & $1.94751\cdot10^{-12}$ & $1.94737\cdot10^{-12}$ & $2.10026\cdot10^{-12}$ & $1.98974\cdot10^{-12}$\\
+\cite[Table~2]{But16}, $x=e^{4000}$  & $1.90866\cdot10^{-12}$ & $1.90852\cdot10^{-12}$ & $2.06141\cdot10^{-12}$ & $1.94976\cdot10^{-12}$\\
+\cite[Table~8]{BKLNW21}, $b=200$     & $2.18154\cdot10^{-12}$ & -- & -- & $2.20935\cdot10^{-12}$\\
+\cite[Table~8]{BKLNW21}, $b=600$     & $1.98894\cdot10^{-12}$ & -- & -- & $2.02478\cdot10^{-12}$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\emph{Quadrature check.} As a check on the enclosures of Section~\ref{sec:Aref}, which is not part of the proofs, we recomputed $\mu_c(\alpha)$ and $|\nu_c(\alpha)|$ by numerical quadrature (mpmath, $40$ digits, with $I_0$ and $I_1$). Every quadrature value lies inside the corresponding enclosure. For $c=35$, $\alpha=0.001$ gives $\mu_c(\alpha)=0.4976312704$ and $|\nu_c(\alpha)|=0.0662056161$, and $\alpha=0.003$ gives $0.492894138$ and $0.0652150908$. In the version with only $\log(3c)$ restored, the rows at $b=600$ and $b=700$ computed by quadrature, $1.65775\cdot10^{-12}$ and $1.64671\cdot10^{-12}$, lie just below the interval upper bounds $1.65801\cdot10^{-12}$ and $1.64697\cdot10^{-12}$; the enclosures are the same for Lemma~\ref{lem:Buthe16}.
+
+\emph{Consequences for this paper.} The rows $40\le b\le2000$ of~\cite[Table~8]{BKLNW21}, and B\"uthe's Tables~1 and~2, are not justified by the lemmas from which they are derived, although the corrected values exceed them by only $1.3$--$2.6\%$ at the rows we re-optimized. These rows of~\cite[Table~8]{BKLNW21} were computed with RH verified up to height $2{,}445{,}999{,}556{,}030$. With rows corrected for $\log(3c)$ and re-optimized at that height, the method of this paper proves \eqref{R} for $43.749\le\log x\le640.001$, that is, up to about $e^{640}$ (\texttt{buthe\_reopt.py}). Theorem~A and Proposition~\ref{prop:Aref} avoid these rows entirely; Proposition~\ref{prop:Aref} goes further because Lemma~\ref{lem:PT} provides a larger height. The printed values of~\cite[Table~8]{BKLNW21} quoted here agree with the independent machine extraction of that table in IEANTN (node \texttt{BKLNW.v1}).
+
+\subsection{Consequences in the literature}\label{sec:downstream}
+We searched the papers that cite~\cite{But16}, \cite{BKLNW21} and the papers below for numerical uses of B\"uthe's Theorem~1 or of the affected rows; the details and scripts are in the folder \texttt{downstream} of the data (\texttt{DOWNSTREAM\_REPORT.md}). We recomputed the first three items ourselves. The others are findings of a model-based search, labelled as such, which we have not verified independently.
+
+\emph{Johnston--Yang~\cite{JY23}.} Their Theorem~1.1 states $|\psi(x)-x|\le9.39\,x(\log x)^{1.515}\exp(-0.8274\sqrt{\log x})$ for $x\ge2$. Their Section~3.1 covers $(e^{2000},e^{2488}]$ by their Lemma~2.3, with $\eps=1.570\cdot10^{-12}$, a recomputation of~\cite[Thm.~1]{But16} with the printed $E_2$, $\alpha=0$, $c=33.6$ and $\eps=1.12\cdot10^{-11}$ in B\"uthe's notation. From these parameters we obtain $1.569362\cdot10^{-12}$; with $\log(3c)$, $1.654295\cdot10^{-12}$; re-optimized, $1.604805\cdot10^{-12}$ (at $c=35.156$, $\alpha=0.0029$). With $f(L)=9.39\,L^{1.515}e^{-0.8274\sqrt L}$ we have $f(2488)=1.562386\cdot10^{-12}<1.570\cdot10^{-12}$, so even as printed Lemma~2.3 covers only $\log x\le2487.367$, and corrected only $\log x\le2484.515$. Their Theorem~1.1 itself remains true, because~\cite[Cor.~1.4]{FKS23}, valid for $x>2$, implies it, and $x=2$ is trivial.
+
+\emph{Lichtman--Pomerance~\cite{LP18}.} Their Proposition~2.1 states $|\theta(x)-x|<2.9\cdot10^{-10}x$ for $x>e^{55}$. It follows from B\"uthe's Table~1 value $2.885\cdot10^{-10}$ (printed as $2.88434\cdot10^{-10}$) and $\psi(x)-\theta(x)<1.02\sqrt x+3x^{1/3}$, with $0.14\%$ to spare. With $\log(3c)$ restored, the least value of B\"uthe's bound over a broad parameter scan is $2.90948\cdot10^{-10}$, which gives $2.92111\cdot10^{-10}$, $0.73\%$ above the stated bound. This uses a model of the zero sum, which reproduces B\"uthe's printed value $2.88434\cdot10^{-10}$ as $2.88432\cdot10^{-10}$. The statement remains true by later bounds~\cite[Table~2]{FKS23b}.
+
+\emph{PrimeNumberTheoremAnd.} In the Lean project~\cite{PNT}, the file \texttt{IEANTN/BKLNW\_app.lean} states~\cite[Thm.~1]{But16} as the theorem \texttt{bklnw\_thm\_16} with $E_2=0.16\,(1+x_0^{-1})(\sinh c)^{-1}e^{0.71\sqrt{c\eps}}\log(c/\eps)$, without the factor $\log(3c)$; its proof is \texttt{sorry}.
+
+\emph{Findings of the model-based search.}
+\begin{itemize}
+\item Fiori, Kadiri and Swidinsky~\cite{FKS23b} recompute B\"uthe's Theorem~1 with the printed $E_2$. Six of the eleven range endpoints in~\cite[Table~7]{FKS23b} shrink, for example from $1358.6$ to $1357.4$--$1357.5$ for the bound $x^{-1/50}$, and from $270.8$ to $270.66$--$270.68$ for $x^{-1/10}$.
+\item In~\cite[Table~15 and Cor.~11.1]{BKLNW21}, $M_1$ and $M_2$ rise by about $2\%$. The values $M_3=0.024334$ and $M_4=57.184$ are exceeded on the grid of step $25$ used there ($0.02462$ and $57.24$), but look recoverable on a finer grid.
+\item In Johnston, Leong and Tudzi~\cite{JLT25}, the constant $B_4=75.109$ becomes $76.65$.
+\end{itemize}
+No published theorem we examined becomes false, but several proofs need a patch or a newer reference. Of the papers we checked, $40$ were unaffected, and $7$ could not be checked. Results that rely on the affected rows of~\cite[Table~8]{BKLNW21}, or on~\cite[Thm.~1]{But16} as printed, should be rechecked with the corrected constant.
+
+% ===========================================================================
+\section*{Acknowledgments}
+The computations and the drafting of this paper were carried out with assistance from an AI system (Claude, Anthropic).
+
+\section*{Data availability}
+The Python scripts used in the proofs and their outputs are available from the author. They require Python~3 and mpmath; \texttt{fks\_\allowbreak{}eps.py} and the scripts that use it also require NumPy and SciPy. The outputs for Theorems~C, \Cstar, \Bp{} and~D and their variants are regenerated by \texttt{regen\_\allowbreak{}final.sh} with the final scripts; it calls \texttt{fks\_\allowbreak{}fine\_\allowbreak{}R.py} with arguments $R$, the range of $\log x_0$, a tag and a density mode (\texttt{KLN}: first block of~\cite[Table~7]{FKS23}, $a_1=0.77$; \texttt{KLN618}: second block, $a_1=0.618$; \texttt{BEL618}: pointwise minimum of the second block and~\cite{Bel24}), and \texttt{hybrid\_\allowbreak{}D.py} and \texttt{zfr\_\allowbreak{}B.py} with the corresponding arguments.
+\begin{itemize}
+\item \texttt{final\_\allowbreak{}C\_\allowbreak{}PUB.txt}: Theorem~C ($R=5.558691$, \texttt{KLN618}) and the first case of Remark~\ref{rem:Dzeros};
+\item \texttt{final\_\allowbreak{}C\_\allowbreak{}PUBBEL.txt}: Remark~\ref{rem:Cvar}(d) and the corresponding case of Remark~\ref{rem:Dzeros};
+\item \texttt{final\_\allowbreak{}C\_\allowbreak{}BTYBEL.txt}: Theorem~\Cstar{} ($R=4.896$, \texttt{BEL618}) and the corresponding case of Remark~\ref{rem:Dzeros};
+\item \texttt{final\_\allowbreak{}C\_\allowbreak{}MTY77.txt}, \texttt{final\_\allowbreak{}C\_\allowbreak{}FKSR.txt}: Remark~\ref{rem:Cvar}(a) and~(b);
+\item \texttt{final\_\allowbreak{}C\_\allowbreak{}BTYKLN.txt}: Remark~\ref{rem:Cstarvar};
+\item \texttt{final\_\allowbreak{}D\_\allowbreak{}PUB.txt}: Theorem~D (\texttt{hybrid\_\allowbreak{}D.py}, $R=5.558691$, \texttt{KLN618});
+\item \texttt{final\_\allowbreak{}D\_\allowbreak{}BTYBEL.txt}: Remark~\ref{rem:Dpre} ($R=4.896$, \texttt{BEL618});
+\item \texttt{final\_\allowbreak{}Bprime.txt}: Theorem~\Bp{} (\texttt{zfr\_\allowbreak{}B.py});
+\item \texttt{buthe\_\allowbreak{}reopt\_\allowbreak{}fine\_\allowbreak{}output.txt}: the re-optimized values of Table~\ref{tab:repro} (\texttt{buthe\_\allowbreak{}reopt\_\allowbreak{}fine.py}, quadrature);
+\item \texttt{buthe\_\allowbreak{}reopt\_\allowbreak{}output.txt}: the re-optimization with rigorous enclosures and the range at height $2{,}445{,}999{,}556{,}030$ in Section~\ref{sec:buthe} (\texttt{buthe\_\allowbreak{}reopt.py});
+\item \texttt{qrh\_\allowbreak{}ramanujan\_\allowbreak{}output.txt}: the case $\theta=7/8$ in Section~\ref{sec:B} (\texttt{qrh\_\allowbreak{}ramanujan.py});
+\item \texttt{qrh\_\allowbreak{}theta\_\allowbreak{}output.txt}: Theorem~B (\texttt{qrh\_\allowbreak{}theta.py});
+\item \texttt{buthe\_\allowbreak{}thesis\_\allowbreak{}output.txt}: Proposition~\ref{prop:Aref} and the bisection of Remark~\ref{rem:DButhe} (\texttt{buthe\_\allowbreak{}thesis\_\allowbreak{}run.py}, with \texttt{D\_\allowbreak{}TOP=3035.502});
+\item \texttt{confirm\_\allowbreak{}D\_\allowbreak{}thesis\_\allowbreak{}output.txt}: the verification at height $\TB$ in Remark~\ref{rem:DButhe} (\texttt{confirm\_\allowbreak{}theorem\_\allowbreak{}D\_\allowbreak{}thesis.py});
+\item \texttt{robust\_\allowbreak{}Aref\_\allowbreak{}K*.txt}: the robustness of Proposition~\ref{prop:Aref} in Section~\ref{sec:B} (\texttt{robust\_\allowbreak{}Aref.py});
+\item \texttt{tradeoff\_\allowbreak{}R*.txt}: Table~\ref{tab:tradeoff} (\texttt{tradeoff.py});
+\item \texttt{sens\_\allowbreak{}K*.txt}: Remark~\ref{rem:sens} (\texttt{sens\_\allowbreak{}density.py});
+\item the folder \texttt{downstream}: the report \texttt{DOWNSTREAM\_\allowbreak{}REPORT.md} and the scripts and outputs for Section~\ref{sec:downstream}.
+\end{itemize}
+The remaining scripts and their outputs are:
+\begin{itemize}
+\item \texttt{ch\_\allowbreak{}ramanujan.py}: Theorems~A and~\Bstar, and the printed-rows version of Theorem~D in Remark~\ref{rem:Dzeros};
+\item \texttt{fks\_\allowbreak{}eps.py}: the re-implementation of~\cite[Thm.~1.1]{FKS23} and Table~\ref{tab:fksval}; \texttt{fks\_\allowbreak{}eps\_\allowbreak{}mpcheck.py}: its $40$-digit check;
+\item \texttt{barrier.py}: Corollary~E and Table~\ref{tab:barrier};
+\item \texttt{extend\_\allowbreak{}ramanujan.py}: the tail $L\ge10^4$ and Remark~\ref{rem:Cvar}(c);
+\item \texttt{buthe\_\allowbreak{}bound.py} and \texttt{buthe\_\allowbreak{}ramanujan.py}: the evaluation of Lemma~\ref{lem:Buthe16}, in the corrected form and in the version with only $\log(3c)$ restored;
+\item \texttt{verify\_\allowbreak{}ramanujan.py}: the main term, the interval routines shared by all scripts, and Remark~\ref{rem:78};
+\item \texttt{crosscheck.py}: the independent check of Section~\ref{sec:crosscheck};
+\item \texttt{crosscheck\_\allowbreak{}buthe.py}: the quadrature values in Section~\ref{sec:buthe} and Table~\ref{tab:repro}.
+\end{itemize}
+
+
+% ===========================================================================
+\begin{thebibliography}{BKLNW21}
+
+\bibitem[Ax18]{Ax17}
+C.~Axler, \emph{Estimates for $\pi(x)$ for large values of $x$ and Ramanujan's prime counting inequality}, Integers \textbf{18} (2018), Paper No.~A61; arXiv:1703.02407.
+
+\bibitem[Ax22]{Ax22}
+C.~Axler, \emph{On Ramanujan's prime counting inequality}, Math.\ Inequal.\ Appl.\ \textbf{25} (2022), no.~4, 1147--1154; arXiv:2207.02486.
+
+\bibitem[Ber94]{Ber94}
+B.~C.~Berndt, \emph{Ramanujan's Notebooks, Part IV}, Springer, 1994.
+
+\bibitem[Bel24]{Bel24}
+C.~Bellotti, \emph{An explicit log-free zero density estimate for the Riemann zeta-function}, preprint, arXiv:2405.12545, 2024.
+
+\bibitem[Bha24]{Bha24}
+S.~Bhattacharjee, \emph{A survey of B\"uthe's method for estimating prime counting functions}, M.Sc.\ thesis, University of Lethbridge, 2024 (supervisor N.~Ng), \url{https://hdl.handle.net/10133/6755}.
+
+\bibitem[BKLNW21]{BKLNW21}
+S.~Broadbent, H.~Kadiri, A.~Lumley, N.~Ng, and K.~Wilk, \emph{Sharper bounds for the Chebyshev function $\theta(x)$}, Math.\ Comp.\ \textbf{90} (2021), 2281--2315; arXiv:2002.11068.
+
+\bibitem[BTY26]{BTY26}
+C.~Bellotti, T.~Trudgian, and A.~Yang, \emph{Zero-free regions inspired by work of Heath-Brown}, preprint, arXiv:2603.21490, 2026.
+
+\bibitem[B\"ut16]{But16}
+J.~B\"uthe, \emph{Estimating $\pi(x)$ and related functions under partial RH assumptions}, Math.\ Comp.\ \textbf{85} (2016), 2483--2498; arXiv:1410.7015v4, 2022.
+
+\bibitem[B\"ut18]{But18}
+J.~B\"uthe, \emph{An analytic method for bounding $\psi(x)$}, Math.\ Comp.\ \textbf{87} (2018), no.~312, 1991--2009.
+
+\bibitem[CH25]{CH25}
+A.~Chirre and H.~A.~Helfgott, \emph{Optimal bounds for sums of non-negative arithmetic functions}, preprint, arXiv:2512.15709, 2025.
+
+\bibitem[CHJ23]{CHJ23}
+M.~Cully-Hugill and D.~R.~Johnston, \emph{On the error term in the explicit formula of Riemann--von Mangoldt}, Int.\ J.\ Number Theory \textbf{19} (2023), no.~6, 1205--1228; arXiv:2111.10001v5.
+
+\bibitem[De24a]{De24a}
+S.~De, \emph{On proving an inequality of Ramanujan using explicit order estimates for the Mertens function}, preprint, arXiv:2407.12052v6, 2024.
+
+\bibitem[De24b]{De24b}
+S.~De, \emph{On proving Ramanujan's inequality using a sharper bound for the prime counting function $\pi(x)$}, preprint, arXiv:2408.02591, 2024.
+
+\bibitem[DP15]{DP15}
+A.~W.~Dudek and D.~J.~Platt, \emph{On solving a curious inequality of Ramanujan}, Exp.\ Math.\ \textbf{24} (2015), no.~3, 289--294.
+
+\bibitem[FJ26]{FJ26}
+A.~Fiori and M.~Jaskari, \emph{Explicit bounds for the prime number theorem}, preprint, arXiv:2609.23222v2, 2026.
+
+\bibitem[FKBJ17]{FKBJ17}
+J.~Franke, T.~Kleinjung, J.~B\"uthe, and A.~Jost, \emph{A practical analytic method for calculating $\pi(x)$}, Math.\ Comp.\ \textbf{86} (2017), no.~308, 2889--2909.
+
+\bibitem[FKS23]{FKS23}
+A.~Fiori, H.~Kadiri, and J.~Swidinsky, \emph{Sharper bounds for the Chebyshev function $\psi(x)$}, J.\ Math.\ Anal.\ Appl.\ \textbf{527} (2023), Paper No.~127426; arXiv:2204.02588.
+
+\bibitem[FKS23b]{FKS23b}
+A.~Fiori, H.~Kadiri, and J.~Swidinsky, \emph{Sharper bounds for the error term in the prime number theorem}, Res.\ Number Theory (2023); arXiv:2206.12557.
+
+\bibitem[Has21]{Has21}
+M.~Hassani, \emph{Remarks on Ramanujan's inequality concerning the prime counting function}, Commun.\ Math.\ \textbf{29} (2021), 473--482.
+
+\bibitem[HPY24]{HPY24}
+G.~A.~Hiary, D.~Patel, and A.~Yang, \emph{An improved explicit estimate for $\zeta(1/2+it)$}, J.\ Number Theory (2024); arXiv:2207.02366.
+
+\bibitem[Tao+26]{IEANTN}
+T.~Tao et al., \emph{Integrated Explicit Analytic Number Theory Network (IEANTN)}, \url{https://github.com/teorth/IEANTN}, nodes \texttt{DudekPlatt.v3} and \texttt{BKLNW.v1}, 2026.
+
+\bibitem[Joh22]{Joh22}
+D.~R.~Johnston, \emph{Improving bounds on prime counting functions by partial verification of the Riemann hypothesis}, Ramanujan J.\ \textbf{59} (2022); arXiv:2109.02249.
+
+\bibitem[JLT25]{JLT25}
+D.~R.~Johnston, N.~Leong, and S.~Tudzi, \emph{New bounds and progress towards a conjecture on the summatory function of $(-2)^{\Omega(n)}$}, Exp.\ Math.\ (2025); arXiv:2408.04143.
+
+\bibitem[JY23]{JY23}
+D.~R.~Johnston and A.~Yang, \emph{Some explicit estimates for the error term in the prime number theorem}, J.\ Math.\ Anal.\ Appl.\ \textbf{527} (2023); arXiv:2204.01980.
+
+\bibitem[Liu26]{Liu26}
+B.~Liu, \emph{Slightly improved zero-free half-planes for the quasi-Riemann hypothesis}, preprint, arXiv:2610.12234, 2026.
+
+\bibitem[LP18]{LP18}
+J.~D.~Lichtman and C.~Pomerance, \emph{Explicit estimates for the distribution of numbers free of large prime factors}, J.\ Number Theory (2018); arXiv:1705.02442.
+
+\bibitem[MTY23]{MTY23}
+M.~J.~Mossinghoff, T.~S.~Trudgian, and A.~Yang, \emph{Explicit zero-free regions for the Riemann zeta-function}, Res.\ Number Theory (2023); arXiv:2212.06867.
+
+\bibitem[Neu63]{Neu63}
+G.~Neubauer, \emph{Eine empirische Untersuchung zur Mertensschen Funktion}, Numer.\ Math.\ \textbf{5} (1963), 1--13.
+
+\bibitem[OAI26]{OAI26}
+OpenAI, \emph{The quasi-Riemann hypothesis: a zero-free half-plane $\operatorname{Re}s>7/8$}, preprint, 30 September 2026; Lean~4 formalization in \url{https://github.com/openai/math}, file \texttt{lean/Comparator\-Challenges/Quasi\-Riemann\-Hypothesis.lean}.
+
+\bibitem[PNT]{PNT}
+The PrimeNumberTheoremAnd project, \url{https://github.com/AlexKontorovich/PrimeNumberTheoremAnd}.
+
+\bibitem[PT21a]{PT21a}
+D.~J.~Platt and T.~S.~Trudgian, \emph{The Riemann hypothesis is true up to $3\cdot10^{12}$}, Bull.\ Lond.\ Math.\ Soc.\ \textbf{53} (2021), no.~3, 792--797.
+
+\bibitem[PT21b]{PT21b}
+D.~J.~Platt and T.~S.~Trudgian, \emph{The error term in the prime number theorem}, Math.\ Comp.\ \textbf{90} (2021), no.~328, 871--881.
+
+\bibitem[RS62]{RS62}
+J.~B.~Rosser and L.~Schoenfeld, \emph{Approximate formulas for some functions of prime numbers}, Illinois J.\ Math.\ \textbf{6} (1962), 64--94.
+
+\bibitem[Tom26]{Tom26}
+tomoto0, \emph{quasi-riemann-hypothesis-7-8-verification}, independent rebuild of the Lean formalization of~\cite{OAI26}, \url{https://github.com/tomoto0/quasi-riemann-hypothesis-7-8-verification}, 2026.
+
+\end{thebibliography}
+
+\end{document}

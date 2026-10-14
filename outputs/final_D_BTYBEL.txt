@@ -1,0 +1,13 @@
+   [D-hybrid, R=4.896] T = 3e+14: closes   (171 s)
+   [D-hybrid, R=4.896] T = 2.12132e+14: fails at (2180.985, 2181.485)   (250 s)
+   [D-hybrid, R=4.896] T = 2.52269e+14: closes   (327 s)
+   [D-hybrid, R=4.896] T = 2.31332e+14: closes   (410 s)
+   [D-hybrid, R=4.896] T = 2.21524e+14: closes   (503 s)
+   [D-hybrid, R=4.896] T = 2.16777e+14: closes   (595 s)
+   [D-hybrid, R=4.896] T = 2.14442e+14: fails at (2186.485, 2186.985)   (680 s)
+   [D-hybrid, R=4.896] T = 2.15606e+14: closes   (775 s)
+   [D-hybrid, R=4.896] T = 2.15023e+14: closes   (862 s)
+   [D-hybrid, R=4.896] T = 2.14733e+14: fails at (2187.485, 2187.985)   (945 s)
+   [D-hybrid, R=4.896] T = 2.14878e+14: closes   (1020 s)
+[D-hybrid, R=4.896, BTYBEL3] RH to height 2.14878e+14 suffices; fails at 2.14733e+14   (1020 s)
+done

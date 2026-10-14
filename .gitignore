@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+fks_rows_*.json
+downstream/pdfs/
+downstream/pnt/
